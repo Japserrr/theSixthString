@@ -11,7 +11,7 @@ In de balk bovenin GitHub Desktop staat nu waarschijnlijk `Current branch live`.
 ### Een ticket oppakken
 Als je een ticket gaat maken klik dan weer op de branch (master) en klik op 'new branch'. Geef als branchnaam de naam die in het ticket titel staat. **Zorg er dan voor dat de branch gebaseerd is op master. Dit is heel belangrijk!**
 ```
-Stel je hebt het ticket `[frontend-37] navigatebalk maken` dan is `frontend-37` de branchnaam.
+Stel je hebt het ticket `[TSS-37] navigatebalk maken` dan is `TSS-37` de branchnaam.
 ````
 Als je klaar bent met het ticket geef je links onder in GitHub Desktop naast je naam een titel en (optioneel) een beschrijving. Klik daarna op `Commit to 'branchnaam'` en klik in de bovenste balk op `publish branch`. Ga nu naar GitHub in de browser en als het goed is zie je dat je een pull request hebt gemaakt. Klik hierop en check of de code, de titel en de beschrijving kloppen.
 
