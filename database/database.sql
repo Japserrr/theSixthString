@@ -34,5 +34,27 @@ CREATE TABLE product_category (
     FOREIGN KEY (category_id) REFERENCES category(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE user (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    first_name varchar(50) NOT NULL,
+    infix varchar(20) NULL,
+    last_name varchar(50) NOT NULL,
+    phone_number int(11) NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE auth (
+    user_id int(11) NOT NULL,
+    password varchar(256) NOT NULL,
+    email varchar(50) NOT NULL,
+    active tinyint(1) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE employee (
+    user_id int(11) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
