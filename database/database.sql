@@ -56,5 +56,35 @@ CREATE TABLE employee (
     FOREIGN KEY (user_id) REFERENCES user(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE address (
+  id INT NOT NULL AUTO_INCREMENT,
+  street_name VARCHAR(50) NOT NULL,
+  zipcode VARCHAR(6) NOT NULL,
+  house_number VARCHAR(45) NOT NULL,
+  city VARCHAR(45) NULL DEFAULT NULL,
+  country VARCHAR(45) NULL DEFAULT NULL,
+  address_type VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
 
-
+CREATE TABLE user_has_address (
+  id INT NOT NULL AUTO_INCREMENT,
+ address_id INT NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX fk_UHA_address_idx (address_id ASC) VISIBLE,
+  INDEX fk_UHA_user_idx (user_id ASC) VISIBLE,
+  CONSTRAINT fk_UHA_address
+    FOREIGN KEY (address_id)
+    REFERENCES erd_sixth_string.address (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_UHA_user
+    FOREIGN KEY (user_id)
+    REFERENCES erd_sixth_string.user (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
