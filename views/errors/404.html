@@ -2,11 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>404</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/eqcss/1.5.0/EQCSS-polyfills.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/eqcss/1.5.0/EQCSS.min.js"></script>
+
+    <link href="//fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic"
+          rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic"
+          rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,600,700,900" rel="stylesheet"/>
+
+    <style>
+        /* Flashlight Overlay */
+        :root {
+            cursor: none;
+            --cursorX: 50vw;
+            --cursorY: 50vh;
+        }
+
+        :root:before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            pointer-events: none;
+            background: radial-gradient(
+                    circle 10vmax at var(--cursorX) var(--cursorY),
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, .5) 80%,
+                    rgba(0, 0, 0, .95) 100%
+            )
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 120px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 50px;
+        }
+    </style>
 </head>
+
 <body>
+<div>
     <h1>404</h1>
+    <h3>Oh, we can't find this page either...</h3>
+</div>
+
+<script>
+    function update(e) {
+        var x = e.clientX || e.touches[0].clientX
+        var y = e.clientY || e.touches[0].clientY
+
+        document.documentElement.style.setProperty('--cursorX', x + 'px')
+        document.documentElement.style.setProperty('--cursorY', y + 'px')
+    }
+
+    document.addEventListener('mousemove', update)
+    document.addEventListener('touchmove', update)
+</script>
 </body>
 </html>
