@@ -1,21 +1,20 @@
 // Create a function to handle the account creation
 function createAccount() {
     // Get the values of the input fields
-    var name = document.getElementById("form_name").value;
-    var username = document.getElementById("form_username").value;
-    var password = document.getElementById("form_password").value;
-    var confirmPassword = document.getElementById("form_control_password").value;
+    var name = document.getElementById("form_name");
+    var password = document.getElementById("form_password");
+    var confirmPassword = document.getElementById("form_control_password");
     var regex = /'/;
-
     // Check the username and password for single quotes
-    if (regex.test(username) || regex.test(password)) {
+    if (regex.test(name) || regex.test(password) || regex.test(confirmPassword)) {
       alert("Invalid input: single quotes are not allowed");
       return;
     }
+    alert("ok")
     var parsedPassword = password.replace(/[!@#$%^]/g, "\\$&");
     var confirmedParsedPassword = confirmPassword.replace(/[!@#$%^]/g, "\\$&");
     // Validate the input values
-    if (username == "") {
+    if (name == "") {
       alert("Please enter a username");
       return;
     }
