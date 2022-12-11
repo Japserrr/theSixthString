@@ -11,15 +11,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <!-- include stylesheet -->
 <link rel="stylesheet" href="../../css/" />
-
+<script src="../../controllers/login/login_handler.js" defer></script>
 </head>
 <body style="overflow: hidden;">
-  <script src="../../controllers/login/login_handler.js"></script>
 
   <img  
       src="../../public/img/stock_foto_guitars.jpeg"
      alt=""
-          style=" position: absolute; " >
+          style=" position: absolute;  height: 100%; width: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;" >
 </img>
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
@@ -30,7 +29,7 @@
               <h2 class="text-uppercase text-center mb-5">Maak een account aan</h2>
               <!-- <h2 class="text-uppercase text-center mb-5">Inloggen met een bestaand account</h2> -->
 
-              <form >
+              <form  >
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form_name">Uw naam</label>
@@ -60,10 +59,10 @@
 
                 <div class="d-flex justify-content-center">
                   <button type="button"
-                  onclick="createAccount()"                
+                  onClick="createAccount()"                
                    class="btn  btn-block btn-lg gradient-custom-4 text-body" style="background-color: firebrick; ;">Registeren</button>
                 </div>
-
+                <p id="test">test</p>
                 <p class="text-center text-muted mt-5 mb-0">Heeft u al een account <a href="#!"
                     class="fw-bold text-body"><u>Inloggen</u></a></p>
 
@@ -96,5 +95,7 @@
       </div>
     </div>
   </div>
+ 
+
 </body>
 </html>
