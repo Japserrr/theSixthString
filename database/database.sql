@@ -34,7 +34,7 @@ CREATE TABLE product_category (
     FOREIGN KEY (category_id) REFERENCES category(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE user (
+CREATE TABLE "user" (
     id int(11) NOT NULL AUTO_INCREMENT,
     first_name varchar(50) NOT NULL,
     infix varchar(20) NULL,

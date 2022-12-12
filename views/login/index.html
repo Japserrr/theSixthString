@@ -29,37 +29,36 @@
               <h2 class="text-uppercase text-center mb-5">Maak een account aan</h2>
               <!-- <h2 class="text-uppercase text-center mb-5">Inloggen met een bestaand account</h2> -->
 
-              <form  >
+              <form action="login.php" method="post" >
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form_name">Uw naam</label>
-                  <input type="text" id="form_name" class="form-control form-control-lg" name=""/>
-
+                  <input type="text" id="form_name" class="form-control form-control-lg" name="form_name" required/>
+ 
                   
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form_email">Emailadres</label>
 
-                  <input type="email" id="form_email" class="form-control form-control-lg" />
+                  <input type="email" id="form_email" class="form-control form-control-lg" name="form_email" required />
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form_password">Wachtwoord</label>
 
-                  <input type="password" id="form_password" class="form-control form-control-lg" />
+                  <input type="password" id="form_password" class="form-control form-control-lg" name="form_password" required />
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form_control_password">Herhaal het wachtwoord</label>
 
-                  <input type="password" id="form_control_password" class="form-control form-control-lg" />
+                  <input type="password" id="form_control_password" class="form-control form-control-lg" name="form_control_password" required />
                 </div>
 
 
                 <div class="d-flex justify-content-center">
-                  <button type="button"
-                  onClick="createAccount()"                
+                  <button type="submit"         
                    class="btn  btn-block btn-lg gradient-custom-4 text-body" style="background-color: firebrick; ;">Registeren</button>
                 </div>
                 <p id="test">test</p>
