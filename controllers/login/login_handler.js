@@ -1,8 +1,12 @@
+window.addEventListener("onload", function() {
 
+  
+});
 // Create a function to handle the account creation
 function createAccount() {
 
 
+  console.log(document.getElementById("form_name").value);
   var accountDetails = [];
   // Get the values from the form
   for (const element of document.forms[0].elements) {
@@ -33,19 +37,6 @@ function createAccount() {
 
   alert("Account created successfully!");
 
- 
-
-  
-  
-  
-  
-
-  // if (parsedPassword != confirmedParsedPassword) {
-  //   alert("The passwords do not match");
-  //   return;
-  // }
- 
-  // Create the account
 }
 function checkRegex(value)
 {

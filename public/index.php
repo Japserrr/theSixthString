@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,8 @@
     <link href="./public/css/style.css" rel="stylesheet">
     <script src="./public/js/popper/popper.min.js"></script>
     <script src="./public/js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
+
 
     <title><?= SITE_NAME ?></title>
 </head>
