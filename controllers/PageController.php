@@ -20,6 +20,19 @@ function home()
     include_once '../views/home.php';
 }
 
+
+function create_user()
+{
+    $conn = getDbConnection();
+
+    $sql = 'INSERT INTO user (first_name, infix, last_name) VALUES (:first_name, :infix, :last_name)';
+    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    $sth->execute([
+        'first_name' => 'Timo',
+        'infix' => 'van',
+        'last_name' => 'der Laan',
+    ]);
+}
 function productManagement(): void
 {
     require_once('../views/product-management.html');
