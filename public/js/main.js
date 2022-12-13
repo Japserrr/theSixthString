@@ -1,5 +1,3 @@
-//include CryptoJS
-const CryptoJS = require("crypto-js");
 
 //Get password field and button
 const togglePassword = document.getElementById('togglePassword');
@@ -16,41 +14,55 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
 })
 // Create a function to handle the account creation
 async function register() {
-    let name = document.getElementById("form_name").value;
     let email = document.getElementById("form_email").value.toLowerCase();
     let password = document.getElementById("form_password").value;
-    let confirmPassword = document.getElementById("form_control_password").value;
+    let first_name = document.getElementById("form_firstname").value;
+    let last_name = document.getElementById("form_lastname").value;
+    try{
+        let infix = document.getElementById("form_infix").value;
+        let phone = document.getElementById("form_phone").value;
+        let address = document.getElementById("form_address").value;
+        let postal_code = document.getElementById("form_postalcode").value;
+        let city = document.getElementById("form_city").value;
+        let country = document.getElementById("form_country").value;
+
+        if(checkRegex(infix) || checkRegex(phone) || checkRegex(address) || checkRegex(postal_code) || checkRegex(city) || checkRegex(country))
+        {
+            alert("Please do not use single quotes in the input fields");
+            return;
+        }
+    }
+    catch(e)
+    {
+        console.log(e.message);
+    }
+   
+
     let registerDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     // Check the username and password for single quotes
     
-    if(name == "" || email == "" || password == "" || confirmPassword == "")
+    if(first_name == "" || email == "" || password == "" || last_name == "")
     {
-        alert("Please fill in all the fields");
+        alert("Vul A.U.B. alle benodigde velden in.");
         return;
     }
   
-    if(checkRegex(name) || checkRegex(email))
+    if(checkRegex(email) ||  checkRegex(first_name) || checkRegex(last_name))
     {
-        alert("Please do not use single quotes in the input fields");
+        alert("Gebruik A.U.B. geen enkele aanhalingstekens in de invoervelden");
         return;
     }
-    let parsedPassword = password.replace(/[!@#$%^]/g, "\\$&");
     
-    if (parsedPassword != confirmPassword.replace(/[!@#$%^]/g, "\\$&")) {
-        alert("The passwords do not match");
-        return;
-      }
-
-
     //encrypt password
-    let encryptedPassword = CryptoJS.AES.encrypt(parsedPassword, "secret").toString();
-    console.log(parsedPassword, encryptedPassword, name, email)
+    let encryptedPassword = CryptoJS.AES.encrypt(password, "secret").toString();
+  
       //build user info object
     let userInfo = {
-        name: name,
+        first_name: first_name,
         email: email,
         password: encryptedPassword,
+        last_name: last_name,
         createdAt: registerDate
     }
         

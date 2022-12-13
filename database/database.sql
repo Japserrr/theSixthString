@@ -77,14 +77,13 @@ CREATE TABLE user_has_address (
   INDEX fk_UHA_user_idx (user_id ASC) VISIBLE,
   CONSTRAINT fk_UHA_address
     FOREIGN KEY (address_id)
-    REFERENCES erd_sixth_string.address (id)
+    REFERENCES the_sixth_string.address (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_UHA_user
     FOREIGN KEY (user_id)
-    REFERENCES erd_sixth_string.user (id)
+    REFERENCES the_sixth_string.user (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
