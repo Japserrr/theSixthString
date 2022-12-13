@@ -57,10 +57,9 @@ async function register() {
 
      try{
           //make call to backend
-          await fetch('/api/users', {
+          await fetch('/controllers/PageController.php', {
               method: 'POST',
               headers: {
-
                   'Content-Type': 'application/json'
               },
               body: JSON.stringify(userInfo)
