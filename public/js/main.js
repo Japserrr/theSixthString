@@ -15,7 +15,7 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
     register();
 })
 // Create a function to handle the account creation
-function register() {
+async function register() {
     let name = document.getElementById("form_name").value;
     let email = document.getElementById("form_email").value.toLowerCase();
     let password = document.getElementById("form_password").value;
@@ -56,11 +56,34 @@ function register() {
         
 
      try{
-            //make call to database
+          //make call to backend
+          await fetch('/api/users', {
+              method: 'POST',
+              headers: {
+
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(userInfo)
+          })
+          .then(response => response.json())
+          .then(data => {
+
+              if(data.success)
+              {
+                  alert("Account created successfully");
+                  window.location.href = "/login";
+              }
+              else
+              {
+                  alert(data.message);
+              }
+          })
      }
      catch(e)
      {
             //catch if error
+            alert("Error: " + e.message)
+
      }
 }
   function checkRegex(value)
