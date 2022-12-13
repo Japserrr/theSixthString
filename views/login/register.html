@@ -1,5 +1,4 @@
 <body style="overflow: hidden;">
-
   <img  
       src="./public/img/stock_foto_guitars.jpeg"
      alt=""
@@ -13,8 +12,8 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Maak een account aan</h2>
               <!-- <h2 class="text-uppercase text-center mb-5">Inloggen met een bestaand account</h2> -->
-
-              <form action="login.php" method="post" >
+              <!-- action="../../controllers/login/login.php" method="post" -->
+              <form  >
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form_name">Uw naam</label>
@@ -29,10 +28,13 @@
                   <input type="email" id="form_email" class="form-control form-control-lg" name="form_email" required />
                 </div>
 
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-4 ">
                   <label class="form-label" for="form_password">Wachtwoord</label>
-
-                  <input type="password" id="form_password" class="form-control form-control-lg" name="form_password" required />
+                    <div class="d-flex justify-content-between ">    
+                      <input type="password" id="form_password" class="form-control form-control-lg" name="form_password" required />
+                      <em class="far fa-eye d-flex  justify-content-center align-self-center rounded-right" id="togglePassword" style=" line-height: 0;margin-left: -50px; cursor: pointer; background-color: gray; width:50px;"></em>
+                    </div>
+             
                 </div>
 
                 <div class="form-outline mb-4">
@@ -43,10 +45,11 @@
 
 
                 <div class="d-flex justify-content-center">
-                  <button type="submit"         
-                   class="btn  btn-block btn-lg gradient-custom-4 text-body" style="background-color: firebrick; ;">Registeren</button>
+                  <button type="button"
+                      
+                   class="btn  btn-block btn-lg gradient-custom-4 text-body" id="submit-btn"style="background-color: firebrick; ;">Registreren</button>
                 </div>
-                <p class="text-center text-muted mt-5 mb-0">Heeft u al een account <a href="#!"
+                <p class="text-center text-muted mt-5 mb-0">Heeft u al een account <a href="./login"
                     class="fw-bold text-body"><u>Inloggen</u></a></p>
 
               </form>
@@ -78,8 +81,10 @@
       </div>
     </div>
   </div>
- 
-  <script src="../../controllers/login/login_handler.js" defer></script>
+  <script src="./public/js/main.js"></script>
+
+
+
 
 </body>
 </html>

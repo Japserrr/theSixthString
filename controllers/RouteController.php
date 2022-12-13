@@ -14,6 +14,10 @@ switch ($request) {
     case URL_ROOT . '/register':
         require_once '../views/login/register.html';
         break;
+    case URL_ROOT . '/login':
+        require_once '../views/login/login.html';
+        break;
+
     default:
         http_response_code(404);
         require '../views/errors/404.html';
