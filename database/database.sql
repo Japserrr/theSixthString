@@ -19,7 +19,6 @@ CREATE TABLE product (
     FOREIGN KEY (brand_id) REFERENCES brand(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- maybe create tables to add multiple images and videos to a product?
 
 CREATE TABLE category (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -57,27 +56,26 @@ CREATE TABLE employee (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE address (
-  id INT NOT NULL AUTO_INCREMENT,
-  street_name VARCHAR(50) NOT NULL,
-  zipcode VARCHAR(6) NOT NULL,
-  house_number VARCHAR(45) NOT NULL,
-  city VARCHAR(45) NULL DEFAULT NULL,
-  country VARCHAR(45) NULL DEFAULT NULL,
-  address_type VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (id))
+    id INT NOT NULL AUTO_INCREMENT,
+    street_name VARCHAR(50) NOT NULL,
+    zipcode VARCHAR(6) NOT NULL,
+    house_number VARCHAR(45) NOT NULL,
+    city VARCHAR(45) NULL DEFAULT NULL,
+    country VARCHAR(45) NULL DEFAULT NULL,
+    address_type VARCHAR(45) NULL DEFAULT NULL,
+PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
 CREATE TABLE user_has_address (
-  id INT NOT NULL AUTO_INCREMENT,
- address_id INT NOT NULL,
-  user_id INT NOT NULL,
-  PRIMARY KEY (id),
- FOREIGN KEY (address_id)
-REFERENCES the_sixth_string.address (id),
-   
+    id INT NOT NULL AUTO_INCREMENT,
+    address_id INT NOT NULL,
+    user_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (address_id)
+    REFERENCES the_sixth_string.address (id),   
     FOREIGN KEY (user_id)
     REFERENCES the_sixth_string.user (id)
-  )
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;

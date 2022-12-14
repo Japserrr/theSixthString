@@ -102,7 +102,7 @@
         <div class="col-12">
           <div class="card card-registration card-registration-2" style="border-radius: 15px;">
             <div class="card-body p-0">
-              <form>
+              <form method="post" id="registration_form" action="./CreateAccount">
               <div class="row g-0">
                 <div class="col-lg-6">
                   <div class="p-5">
@@ -111,13 +111,13 @@
                       <div class="row">
                         <div class="mb-4  pb-2 ">
                           <div class="form-outline form-white">
-                            <input type="text" id="form_email" class="form-control  form-control-lg" />
+                            <input type="text"  name="form_email" id="form_email" class="form-control  form-control-lg" />
                             <label class="form-label required" for="form_email" >Uw Emailadres</label>
                           </div>                          
                         </div>
                         <div class="mb-4 pb-2">
                           <div class="d-flex justify-content-between ">    
-                            <input type="password" id="form_password" class="form-control  form-control-lg" name="form_password" required />
+                            <input type="password" name="form_password" id="form_password" class="form-control  form-control-lg" name="form_password" required />
                             <em class="far fa-eye d-flex  justify-content-center align-self-center rounded-right" id="togglePassword" style=" line-height: 0;margin-left: -50px; cursor: pointer; background-color: gray; width:50px;"></em>
                           </div>
                           <label class="form-label required" for="form_password">Wachtwoord</label>
@@ -126,24 +126,24 @@
                         
                           <div class="col-md-8 mb-4 pb-2">
                            <div class="form-outline">
-                           <input type="text" id="form_firstname" class="form-control  form-control-lg" required />
+                           <input type="text" name="form_firstname" id="form_firstname" class="form-control  form-control-lg" required />
                            <label class="form-label required" for="form_first_name">Voornaam</label>
                           </div>
                             </div>
                             <div class="col-md-4 mb-4 pb-2">
                               <div class="form-outline">
-                              <input type="text" id="form_infix" class="form-control form-control-lg" />
+                              <input type="text"  name="form_inifx"  id="form_infix" class="form-control form-control-lg" />
                               <label class="form-label" for="form_infix">Tussenvoegsel</label>
                              </div>
                             </div> 
                         <div class="col-md-12 mb-4 pb-2">
     
                           <div class="form-outline">
-                            <input type="text" id="form_lastname" class="form-control form-control-lg" required/>
+                            <input type="text" name="form_lastname" id="form_lastname" class="form-control form-control-lg" required/>
                             <label class="form-label required" for="form_lastname">Achternaam</label>
                           </div>    
                         </div>
-                        <button type="button" class="btn btn-success  btn-lg" id="submit-btn">Registeren</button>
+                        <button type="button" class="btn btn-success  btn-lg" id="submit-btn">Registreren</button>
                     </div>
                                        
   
@@ -153,49 +153,59 @@
                   <div class="p-5">
                     <h3 class="fw-normal">Extra gegevens </h3>
                     <p class="fw-normal ">(Optioneel) </p>
-                    <div class="mb-4 pb-2">
+
+
+                    <div class="row">
+                      <div class="col-md-9 mb-4 pb-2"> 
+                    
                       <div class="form-outline form-white">
-                        <input type="text" id="form_adres" class="form-control form-control-lg" required />
-                        <label class="form-label" for="form_adres">Straatnaam + Huisnummer</label>
+                        <input type="text" name="form_address" id="form_address" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form_address">Straatnaam </label>
                       </div>
-                    </div>
-  
+                    
+                  </div>
+                  <div class="col-md-3 mb-4 pb-2"> 
+                    
+                      <div class="form-outline form-white">
+                        <input type="text" name="form_house_number" id="form_house_number" class="form-control form-control-lg"  />
+                        <label class="form-label" for="form_house_number"> Huisnummer</label>
+                      </div>
+                    
+                  </div>
+                </div>
                     
                     <div class="row">
-                      <div class="col-md-5 mb-4 pb-2">  
+                      <div class="col-md-4 mb-4 pb-2">  
                         <div class="form-outline form-white">
-                          <input type="text" id="form_zipcode" class="form-control form-control-lg" required/>
+                          <input type="text" name="form_zipcode" id="form_zipcode" class="form-control form-control-lg" />
                           <label class="form-label" for="form_zipcode">Postcode</label>
                         </div>  
                       </div>
 
-                      <div class="col-md-7 mb-4 pb-2">  
+                      <div class="col-md-8 mb-4 pb-2">  
                         <div class="form-outline form-white">
-                          <input type="text" id="form_place" class="form-control form-control-lg" required />
-                          <label class="form-label" for="form_place">Plaats</label>
+                          <input type="text" name="form_city" id="form_city" class="form-control form-control-lg"  />
+                          <label class="form-label" for="form_city">Stad</label>
                         </div>  
                       </div>
                     </div>
   
                     <div class="mb-4 pb-2">
                       <div class="form-outline form-white">
-                        <input type="text" id="form_country" class="form-control form-control-lg" required />
+                        <input type="text" name="form_country" id="form_country" class="form-control form-control-lg"  />
                         <label class="form-label" for="form_country">Land</label>
                       </div>
                     </div>
-  
-                   
-                      
-                      <div class="mb-4 pb-2">  
+                       <div class="mb-4 pb-2">  
                         <div class="form-outline form-white">
-                          <input type="text" id="form_phone" class="form-control form-control-lg" required />
+                          <input type="text" name="form_phone" id="form_phone" class="form-control form-control-lg"  />
                           <label class="form-label" for="form_phone">Telefoon Nummer</label>
                         </div>  
                       </div>
-                   
-                  
-                     
-                  </div>
+                      <p class="text-center  mb-0">Verkeerd geklikt?<br> Klik hier om te <a href="./login"
+                        class="fw-bold text-body"> <u>Inloggen</u></a></p>
+                    </div>
+                    
                 </div>
               </div>
             </form>
@@ -206,9 +216,5 @@
     </div>
   </section>
   <script src="./public/js/main.js" defer></script>
-
-
-
-
 </body>
 </html>

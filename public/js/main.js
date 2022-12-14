@@ -15,85 +15,25 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
 // Create a function to handle the account creation
 async function register() {
     let email = document.getElementById("form_email").value.toLowerCase();
-    let password = document.getElementById("form_password").value;
     let first_name = document.getElementById("form_firstname").value;
     let last_name = document.getElementById("form_lastname").value;
-    try{
-        let infix = document.getElementById("form_infix").value;
-        let phone = document.getElementById("form_phone").value;
-        let address = document.getElementById("form_address").value;
-        let postal_code = document.getElementById("form_postalcode").value;
-        let city = document.getElementById("form_city").value;
-        let country = document.getElementById("form_country").value;
-
-        if(checkRegex(infix) || checkRegex(phone) || checkRegex(address) || checkRegex(postal_code) || checkRegex(city) || checkRegex(country))
-        {
-            alert("Please do not use single quotes in the input fields");
-            return;
-        }
-    }
-    catch(e)
-    {
-        console.log(e.message);
-    }
-   
-
-    let registerDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-    // Check the username and password for single quotes
-    
-    if(first_name == "" || email == "" || password == "" || last_name == "")
-    {
-        alert("Vul A.U.B. alle benodigde velden in.");
-        return;
-    }
   
-    if(checkRegex(email) ||  checkRegex(first_name) || checkRegex(last_name))
+    let infix = document.getElementById("form_infix").value;
+    let phone = document.getElementById("form_phone").value;
+    let address = document.getElementById("form_address").value;
+    let postal_code = document.getElementById("form_zipcode").value;
+    let city = document.getElementById("form_city").value;
+    let country = document.getElementById("form_country").value;   
+   
+    
+    if(checkRegex(email) ||  checkRegex(first_name) || checkRegex(last_name) || checkRegex(infix) || checkRegex(phone) || checkRegex(address) || checkRegex(postal_code) || checkRegex(city) || checkRegex(country) )
     {
         alert("Gebruik A.U.B. geen enkele aanhalingstekens in de invoervelden");
         return;
     }
-    
-  
-      //build user info object
-    let userInfo = {
-        first_name: first_name,
-        email: email,
-        password: password,
-        last_name: last_name,
-        createdAt: registerDate
-    }
-        
+    document.getElementById("registration_form").requestSubmit();
 
-     try{
-          //make call to backend
-          await fetch('/controllers/PageController.php', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(userInfo)
-          })
-          .then(response => response.json())
-          .then(data => {
-
-              if(data.success)
-              {
-                  alert("Account created successfully");
-                  window.location.href = "/login";
-              }
-              else
-              {
-                  alert(data.message);
-              }
-          })
-     }
-     catch(e)
-     {
-            //catch if error
-            alert("Error: " + e.message)
-
-     }
+       
 }
   function checkRegex(value)
   {
