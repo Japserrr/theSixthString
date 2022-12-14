@@ -16,4 +16,5 @@
 
 <?php include_once '../controllers/RouteController.php'; ?>
 
+    <script src="./public/js/main.js"></script>
 </html>
