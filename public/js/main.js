@@ -54,14 +54,12 @@ async function register() {
         return;
     }
     
-    //encrypt password
-    let encryptedPassword = CryptoJS.AES.encrypt(password, "secret").toString();
   
       //build user info object
     let userInfo = {
         first_name: first_name,
         email: email,
-        password: encryptedPassword,
+        password: password,
         last_name: last_name,
         createdAt: registerDate
     }
