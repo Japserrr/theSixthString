@@ -13,30 +13,13 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
     register();
 })
 // Create a function to handle the account creation
-async function register() {
-    let email = document.getElementById("form_email").value.toLowerCase();
-    let first_name = document.getElementById("form_firstname").value;
-    let last_name = document.getElementById("form_lastname").value;
-  
-    let infix = document.getElementById("form_infix").value;
-    let phone = document.getElementById("form_phone").value;
-    let address = document.getElementById("form_address").value;
-    let postal_code = document.getElementById("form_zipcode").value;
-    let city = document.getElementById("form_city").value;
-    let country = document.getElementById("form_country").value;   
-   
-    
-    if(checkRegex(email) ||  checkRegex(first_name) || checkRegex(last_name) || checkRegex(infix) || checkRegex(phone) || checkRegex(address) || checkRegex(postal_code) || checkRegex(city) || checkRegex(country) )
-    {
-        alert("Gebruik A.U.B. geen enkele aanhalingstekens in de invoervelden");
+function register() {
+      //check if postal code is valid with regex
+    if (/(^[0-9]{4}[A-Z]{2}$)/g.test( document.getElementById("form_zipcode").value)) {
+        alert("Uw postcode is niet geldig");
         return;
     }
+ 
     document.getElementById("registration_form").requestSubmit();
-
-       
 }
-  function checkRegex(value)
-  {
-    return !!(new RegExp(/'/g).test(value));
-  }
   
