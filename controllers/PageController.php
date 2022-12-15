@@ -33,20 +33,28 @@ function create_account(): void
     //build object with data from the post
     insert_user($conn, $user);
 
-    $address = ['street' => $_POST['form_address'], 'house_number' => $_POST['form_house_number'],  'zip_code' => $_POST['form_zipcode'], 'city' => $_POST['form_city'], 'country' => $_POST['form_country']];
+    $address = ['street_name' => $_POST['form_address'], 'house_number' => $_POST['form_house_number'],  'zipcode' => $_POST['form_zipcode'], 'city' => $_POST['form_city'], 'country' => $_POST['form_country']];
 
     foreach ($address as $key => $value) {
         if (!empty($value)) {
-            insert_address($conn, $address);
+            $address_id = insert_address($conn, $address);
+            insert_uha($conn, $auth_id, $address_id);
             break;
         }
     }
 }
+function insert_uha($conn, $auth_id, $address_id)
+{
+    $sql = 'INSERT INTO user_has_address (auth_id, address_id) VALUES (?,?)';
+    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    $sth->execute([$auth_id, $address_id]);
+}
 function insert_address($conn, $address)
 {
-    $sql = 'INSERT INTO address (street, house_number, zip_code, city, country) VALUES (?,?,?,?,?)';
+    $sql = 'INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-    $sth->execute([$address['street'], $address['house_number'], $address['zip_code'], $address['city'], $address['country']]);
+    $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country']]);
+    return $conn->lastInsertId();
 }
 function insert_auth($conn, $auth)
 {

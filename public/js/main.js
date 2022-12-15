@@ -10,16 +10,17 @@ togglePassword.addEventListener('click', function (e) {
 })
 document.getElementById("submit-btn").addEventListener("click", function (event) {
     event.preventDefault();
-    register();
+    checkZipCode();
 })
 // Create a function to handle the account creation
-function register() {
+function checkZipCode() {
+    var form_zipcode = document.getElementById("form_zipcode").value;
       //check if postal code is valid with regex
-    if (/(^[0-9]{4}[A-Z]{2}$)/g.test( document.getElementById("form_zipcode").value)) {
-        alert("Uw postcode is niet geldig");
+    if (/(^[0-9]{4}[A-Z]{2}$)/gi.test(form_zipcode )) {
+        document.getElementById("registration_form").requestSubmit();
+    
         return;
     }
- 
-    document.getElementById("registration_form").requestSubmit();
+    alert("Please enter a valid postal code");
 }
   
