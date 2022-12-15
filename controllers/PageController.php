@@ -20,7 +20,19 @@ function home()
     include_once '../views/home.php';
 }
 
+function send_mail($adress)
+{
+    $to = $adress;
 
+    $subject = 'Uw account is aangemaakt';
+
+    $message = 'Welkom bij de webshop, uw account is aangemaakt.<br>
+    Voordat u kunt inloggen met uw emailadres en wachtwoord moet u uw account nog activeren.<br>
+    Klik op de onderstaande link om uw account te activeren.<br>
+    <a href="http://localhost:8080/activate-account">Activeer uw account</a>';
+
+    mail($to, $subject, $message);
+}
 function create_account(): void
 {
 
@@ -42,6 +54,9 @@ function create_account(): void
             break;
         }
     }
+    //send_mail($_POST['form_email']);
+    header("Location: ./login");
+    exit();
 }
 function insert_uha($conn, $auth_id, $address_id)
 {

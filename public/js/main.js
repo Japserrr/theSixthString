@@ -16,7 +16,7 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
 function checkZipCode() {
     var form_zipcode = document.getElementById("form_zipcode").value;
       //check if postal code is valid with regex
-    if (/(^[0-9]{4}[A-Z]{2}$)/gi.test(form_zipcode )) {
+    if (/(^[0-9]{4}[A-Z]{2}$)/gi.test(form_zipcode ) || form_zipcode == "") {
         document.getElementById("registration_form").requestSubmit();
     
         return;
