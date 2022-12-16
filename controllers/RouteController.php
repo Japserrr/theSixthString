@@ -1,5 +1,6 @@
 <?php
 require_once '../controllers/PageController.php';
+require_once '../controllers/ProductController.php';
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 switch ($request) {
@@ -12,7 +13,7 @@ switch ($request) {
         productManagement();
         break;
     case URL_ROOT . '/product':
-        product();
+        productShow();
         break;
     default:
         http_response_code(404);
