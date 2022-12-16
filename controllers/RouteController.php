@@ -1,5 +1,6 @@
 <?php
 require_once '../controllers/PageController.php';
+require_once '../controllers/RegisterController.php';
 
 $request = $_SERVER['REQUEST_URI'];
 switch ($request) {
@@ -12,7 +13,7 @@ switch ($request) {
         productManagement();
         break;
     case URL_ROOT . '/register':
-        require_once '../views/login/register.html';
+        register();
         break;
     case URL_ROOT . '/CreateAccount':
         create_account();

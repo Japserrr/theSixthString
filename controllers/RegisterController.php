@@ -1,25 +1,5 @@
+
 <?php
-
-include_once '../helpers/database.php';
-
-function home()
-{
-    // Example Database
-    $conn = getDbConnection();
-
-    $sql = 'SELECT first_name, infix, last_name FROM user WHERE first_name LIKE :name LIMIT 1';
-
-    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-
-    $sth->execute(['name' => 'Timo']);
-
-    $user = $sth->fetchAll()[0] ?? null;
-
-    $conn = null;
-
-    include_once '../views/home.php';
-}
-
 function send_mail($adress)
 {
     $to = $adress;
@@ -113,8 +93,4 @@ function insert_user($conn, $user)
     $sql = 'INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?,?,?,?,?)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'], $user['phone_number']]);
-}
-function productManagement(): void
-{
-    require_once('../views/product-management.html');
 }

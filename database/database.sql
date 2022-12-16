@@ -36,7 +36,7 @@ CREATE TABLE product_category (
 CREATE TABLE auth (
     id int(11) NOT NULL  AUTO_INCREMENT,
     password varchar(256) NOT NULL,
-    email varchar(50) NOT NULL,
+    email varchar(50) UNIQUE NOT NULL,
     active tinyint(1) NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
