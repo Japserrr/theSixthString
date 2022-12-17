@@ -18,5 +18,5 @@ function productShow(): void
 
     $product = (new Product)->get($id);
 
-    require_once('../views/product/show.php');
+    require_once('../views/product/show.phtml');
 }
