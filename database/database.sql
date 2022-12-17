@@ -1,6 +1,8 @@
 DROP DATABASE IF EXISTS the_sixth_string;
 CREATE DATABASE IF NOT EXISTS the_sixth_string;
 
+use the_sixth_string;
+
 CREATE TABLE brand (
     id int(11) NOT NULL AUTO_INCREMENT,
     brand_name varchar(50) NOT NULL,

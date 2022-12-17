@@ -176,8 +176,17 @@ function generateUsers(int $amount): bool
         $surname = $lastNameArray[rand(0, count($lastNameArray) - 1)];
         $phone = intval(316 . rand(10000, 99999));
 
-        $sql = "INSERT INTO user (first_name, infix, last_name, phone_number) VALUES (?,?,?,?)";
-        $conn->prepare($sql)->execute([$name, $infix, $surname, $phone]);
+        $sqlAuth = "INSERT INTO auth (`password`, `email`, `active`) VALUES (?, ?, ?)";
+        $conn->prepare($sqlAuth)->execute([
+            'geheim',
+            $name . $infix . $surname . '@email.com',
+            true
+        ]);
+
+        $authId = $conn->lastInsertId();
+
+        $sql = "INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?, ?, ?, ?, ?)";
+        $conn->prepare($sql)->execute([$authId, $name, $infix, $surname, $phone]);
     }
 
     $conn = null;
