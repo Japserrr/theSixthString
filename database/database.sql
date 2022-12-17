@@ -48,6 +48,7 @@ CREATE TABLE `user` (
     last_name varchar(50) NOT NULL,
     phone_number int(11) NULL,
     FOREIGN KEY (auth_id) REFERENCES auth(id)
+    PRIMARY KEY (auth_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE employee (
