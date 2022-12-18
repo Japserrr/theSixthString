@@ -81,3 +81,45 @@ CREATE TABLE user_has_address (
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+
+
+-- NOG NIET GEDAAN
+-- -----------------------------------------------------
+-- Table `erd_sixth_string`.`order`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS the_sixth_string . payment (
+  id INT NOT NULL AUTO_INCREMENT,
+  auth_id INT NOT NULL,
+  payment_method VARCHAR(45) NOT NULL,
+  payment_status TINYINT NOT NULL,
+  amount INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (auth_id) REFERENCES auth(id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS the_sixth_string.order (
+  id INT NOT NULL,
+  customer_id INT NOT NULL,
+  payment_id INT NOT NULL,
+  shipping_address_id INT NOT NULL,
+  order_date DATETIME NOT NULL,
+  status VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id)    REFERENCES the_sixth_string.auth(id)   ,
+  FOREIGN KEY (shipping_address_id)    REFERENCES the_sixth_string.address (id)   ,
+  FOREIGN KEY (payment_id)    REFERENCES the_sixth_string.payment (id)  )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS the_sixth_string.order_has_products(
+  id INT NOT NULL,
+  product_id INT NOT NULL,
+  order_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (order_id) REFERENCES the_sixth_string.order(id),
+  FOREIGN KEY (product_id) REFERENCES the_sixth_string.product(id)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;

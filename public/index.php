@@ -12,7 +12,9 @@
 
     <title><?= SITE_NAME ?></title>
 </head>
-
+<body>
 <?php include_once '../controllers/RouteController.php'; ?>
+
+</body>
 
 </html>
