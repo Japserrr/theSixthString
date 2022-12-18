@@ -24,3 +24,7 @@ function productManagement(): void
 {
     require_once('../views/product-management.html');
 }
+function homepage(): void
+{
+    require_once('../views/productlist.phtml');
+}
