@@ -25,7 +25,7 @@ function check_email($conn, $email)
 
     return false;
 }
-function register($error = null)
+function register($error = null, $values = null)
 {
 
     require_once '../views/login/register.phtml';
@@ -49,7 +49,8 @@ function create_account(): void
 
 
     if (check_email($conn, $_POST['form_email'])) {
-        register(["email" =>  "Email is al in gebruik"]);
+        register(["email" =>  "Email is al in gebruik"], $_POST);
+
         exit();
     }
 

@@ -129,20 +129,20 @@
 
                         <div class="col-md-8 mb-4 pb-2">
                           <div class="form-outline">
-                            <input type="text" name="form_firstname" id="form_firstname" class="form-control form-control-lg <?= empty($error["firstname"]) ? "" : "is-invalid" ?>" required />
+                            <input type="text" name="form_firstname" id="form_firstname" value="<?= empty($value["form_firstname"]) ? "" : $value['form_firstname'] ?>" class="form-control form-control-lg <?= empty($error["firstname"]) ? "" : "is-invalid" ?>" required />
                             <label class="form-label required" for="form_first_name">Voornaam</label>
                           </div>
                         </div>
                         <div class="col-md-4 mb-4 pb-2">
                           <div class="form-outline">
-                            <input type="text" name="form_inifx" id="form_infix" class="form-control form-control-lg" />
+                            <input type="text" name="form_inifx" id="form_infix" value="<?= empty($value["form_infix"]) ? "" : $value['form_infix'] ?>" class="form-control form-control-lg" />
                             <label class="form-label" for="form_infix">Tussenvoegsel</label>
                           </div>
                         </div>
                         <div class="col-md-12 mb-4 pb-2">
 
                           <div class="form-outline">
-                            <input type="text" name="form_lastname" id="form_lastname" class="form-control form-control-lg  <?= empty($error["lastname"]) ? "" : "is-invalid" ?>" required />
+                            <input type="text" name="form_lastname" id="form_lastname" value="<?= empty($value["form_lastname"]) ? "" : $value['form_lastname'] ?>" class="form-control form-control-lg  <?= empty($error["lastname"]) ? "" : "is-invalid" ?>" required />
                             <label class="form-label required" for="form_lastname">Achternaam</label>
                           </div>
 
@@ -163,7 +163,7 @@
                         <div class="col-md-9 mb-4 pb-2">
 
                           <div class="form-outline form-white">
-                            <input type="text" name="form_address" id="form_address" class="form-control form-control-lg" />
+                            <input type="text" name="form_address" placeholder="Straatnaam" value="<?= empty($value["form_address"]) ? "" : $value['form_address'] ?>" id="form_address" class="form-control form-control-lg" />
                             <label class="form-label" for="form_address">Straatnaam </label>
                           </div>
 
@@ -171,7 +171,7 @@
                         <div class="col-md-3 mb-4 pb-2">
 
                           <div class="form-outline form-white">
-                            <input type="text" name="form_house_number" id="form_house_number" class="form-control form-control-lg" />
+                            <input type="text" name="form_house_number" placeholder="1A" value="<?= empty($value["form_house_number"]) ? "" : $value['form_house_number'] ?>" id="form_house_number" class="form-control form-control-lg" />
                             <label class="form-label" for="form_house_number"> Huisnummer</label>
                           </div>
 
@@ -181,14 +181,14 @@
                       <div class="row">
                         <div class="col-md-4 mb-4 pb-2">
                           <div class="form-outline form-white">
-                            <input type="text" name="form_zipcode" id="form_zipcode" class="form-control form-control-lg " />
+                            <input type="text" name="form_zipcode" placeholder="1234AB" value="<?= empty($value["form_zipcode"]) ? "" : $value['form_zipcode'] ?>" id="form_zipcode" class="form-control form-control-lg " />
                             <label class="form-label" id="label_form_zipcode" for="form_zipcode">Postcode</label>
                           </div>
                         </div>
 
                         <div class="col-md-8 mb-4 pb-2">
                           <div class="form-outline form-white">
-                            <input type="text" name="form_city" id="form_city" class="form-control form-control-lg" />
+                            <input type="text" name="form_city" placeholder="Amsterdam" value="<?= empty($value["form_city"]) ? "" : $value['form_city'] ?>" id="form_city" class="form-control form-control-lg" />
                             <label class="form-label" for="form_city">Stad</label>
                           </div>
                         </div>
@@ -196,14 +196,21 @@
 
                       <div class="mb-4 pb-2">
                         <div class="form-outline form-white">
-                          <input type="text" name="form_country" id="form_country" class="form-control form-control-lg" />
+                          <select class="form-control form-control-lg">
+                            <option value="Nederland">Nederland</option>
+                            <option value="Belgie">België</option>
+                            <option value="Luxemburg">Luxemburg</option>
+                            <!-- and so on -->
+                          </select>
                           <label class="form-label" for="form_country">Land</label>
+                          <!-- <input type="text" name="form_country" value="<?= empty($value["form_country"]) ? "" : $value['form_country'] ?>" id="form_country" class="form-control form-control-lg" /> -->
+
                         </div>
                       </div>
                       <div class="mb-4 pb-2">
                         <div class="form-outline form-white">
-                          <input type="text" name="form_phone" id="form_phone" class="form-control form-control-lg" />
-                          <label class="form-label" for="form_phone">Telefoon Nummer</label>
+                          <input type="text" name="form_phone" placeholder="+316 123 456 78" value="<?= empty($value["form_phone"]) ? "" : $value['form_phone'] ?>" id="form_phone" class="form-control form-control-lg" />
+                          <label class="form-label" id="label_phone_number" for="form_phone">Telefoonnummer</label>
                         </div>
                       </div>
                       <p class="text-center  mb-0">Verkeerd geklikt?<br> Klik hier om te <a href="./login" class="fw-bold text-body"> <u>Inloggen</u></a></p>

@@ -11,18 +11,43 @@ togglePassword.addEventListener('click', function (e) {
 document.getElementById("submit-btn").addEventListener("click", function (event) {
     event.preventDefault();
     checkZipCode();
+    checkPhoneNumber();
+
+    if (checkZipCode() && checkPhoneNumber()) {
+        submitForm();
+    }
 })
+function checkPhoneNumber()
+{
+    
+
+    if (/^((\+|00)(32|31|352)\s?|0)((\s?\d{2}){3}|(\s?\d{3}){2,3})$/gi.test(document.getElementById("form_phone").value.replace(/\s/g, '')) || document.getElementById("form_phone").value == "") {
+        document.getElementById("form_phone").classList.replace("is-invalid","is-valid");
+        document.getElementById("label_phone_number").innerHTML = "Telefoonnummer";
+        return true;
+    }
+    document.getElementById("form_phone").classList.add("is-invalid");
+    document.getElementById("label_phone_number").innerHTML = "Ongeldig Telefoonnummer!";
+    return false
+}
 // Create a function to handle the account creation
 function checkZipCode() {
     var form_zipcode = document.getElementById("form_zipcode").value;
       //check if postal code is valid with regex
     if (/(^[0-9]{4}[A-Z]{2}$)/gi.test(form_zipcode ) || form_zipcode == "") {
-        document.getElementById("registration_form").requestSubmit();
+       
+        document.getElementById("form_zipcode").classList.replace("is-invalid","is-valid");
+        document.getElementById("label_form_zipcode").innerHTML = "Postcode";
         
-        return;
+        return true;
     }
 
     document.getElementById("form_zipcode").classList.add("is-invalid");
     document.getElementById("label_form_zipcode").innerHTML = "Ongeldige postcode!";
+    return false;
 }   
+function submitForm()
+{
+    document.getElementById("registration_form").requestSubmit();
+}
   
