@@ -13,10 +13,22 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
     checkZipCode();
     checkPhoneNumber();
 
-    if (checkZipCode() && checkPhoneNumber()) {
+    if (checkZipCode() && checkPhoneNumber() && checkHouseNumber()) {
         submitForm();
     }
 })
+function checkHouseNumber()
+{
+    var form_housenumber = document.getElementById("form_house_number").value;
+    if (/^[0-9]{1,4}[a-zA-Z]{0,2}$/.test(form_housenumber) || form_housenumber == "") {
+        document.getElementById("form_house_number").classList.replace("is-invalid","is-valid");
+        document.getElementById("label_house_number").innerHTML = "Huisnummer";
+        return true;
+    }
+    document.getElementById("form_house_number").classList.add("is-invalid");
+    document.getElementById("label_house_number").innerHTML = "Ongeldig Huisnummer!";
+    return false;
+}
 function checkPhoneNumber()
 {
     

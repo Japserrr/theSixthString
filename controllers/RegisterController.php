@@ -27,7 +27,6 @@ function check_email($conn, $email)
 }
 function register($error = null, $values = null)
 {
-
     require_once '../views/login/register.phtml';
 }
 function create_account(): void
@@ -41,7 +40,7 @@ function create_account(): void
         $firstname = empty($_POST['form_firstname']) ? "Voornaam is verplicht" : "";
         $lastname = empty($_POST['form_lastname']) ? "Achternaam is verplicht" : "";
         array_push($errors, ["email" => $email, "password" => $password, "firstname" => $firstname, "lastname" => $lastname]);
-        register("Vul alle velden in");
+        register($errors,  $_POST);
         exit();
     }
 
@@ -49,7 +48,17 @@ function create_account(): void
 
 
     if (check_email($conn, $_POST['form_email'])) {
-        register(["email" =>  "Email is al in gebruik"], $_POST);
+        register(["email" =>  "Email is al in gebruik"], [
+            "firstname" => empty($_POST['form_firstname']) ? "" : $_POST['form_firstname'],
+            "infix" => empty($_POST['form_inifx']) ? "" : $_POST['form_inifx'],
+            "lastname" => empty($_POST['form_lastname']) ? "" : $_POST['form_lastname'],
+            "phone" => empty($_POST['form_phone']) ? "" : $_POST['form_phone'],
+            "address" => empty($_POST['form_address']) ? "" : $_POST['form_address'],
+            "house_number" => empty($_POST['form_house_number']) ? "" : $_POST['form_house_number'],
+            "zipcode" => empty($_POST['form_zipcode']) ? "" : $_POST['form_zipcode'],
+            "city" => empty($_POST['form_city']) ? "" : $_POST['form_city'],
+            "country" => empty($_POST['form_country']) ? "" : $_POST['form_country']
+        ]);
 
         exit();
     }
@@ -71,9 +80,22 @@ function create_account(): void
         }
     }
     //send_mail($_POST['form_email']);
-    header("Location: ./home");
+    creation_succesful($_POST['form_email'], $auth_id);
     exit();
 }
+
+function creation_succesful($auth_id)
+{
+    session_start();
+    $_SESSION['logged_in'] = true;
+    $_SESSION['email'] = $_POST['form_email'];
+    $_SESSION['firstname'] = $_POST['form_firstname'];
+    $_SESSION['lastname'] = $_POST['form_lastname'];
+    $_SESSION['auth_id'] = $auth_id;
+
+    require_once '../views/home.php';
+}
+
 function insert_uha($conn, $auth_id, $address_id)
 {
     $sql = 'INSERT INTO user_has_address (auth_id, address_id) VALUES (?,?)';
