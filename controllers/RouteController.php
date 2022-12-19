@@ -1,5 +1,7 @@
 <?php
+
 require_once '../controllers/PageController.php';
+require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 
 require_once '../models/ProductManagement/ProductOverview.php';
@@ -8,10 +10,10 @@ require_once '../models/ProductManagement/AddProduct.php';
 require_once '../models/ProductManagement/EditProduct.php';
 require_once '../models/ProductManagement/DeleteProduct.php';
 require_once '../models/ProductManagement/AddBrand.php';
-
 require_once '../models/ProductManagement/AddCategory.php';
 
-$request = $_SERVER['REQUEST_URI'];
+$request = explode('?', $_SERVER['REQUEST_URI'])[0];
+
 switch ($request) {
     case URL_ROOT . '/':
     case URL_ROOT . '/home':
@@ -47,6 +49,9 @@ switch ($request) {
         break;
     case URL_ROOT . '/login':
         require_once '../views/login/login.html';
+        break;
+    case URL_ROOT . '/product':
+        productShow();
         break;
     default:
         http_response_code(404);
