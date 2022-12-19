@@ -15,6 +15,7 @@ CREATE TABLE product (
     quantity int(4) NOT NULL,
     description text NULL,
     video_url varchar(255) NULL,
+    img_path varchar(272) NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (brand_id) REFERENCES brand(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
