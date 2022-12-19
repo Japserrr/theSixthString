@@ -26,5 +26,13 @@ function productManagement(): void
 }
 function homepage(): void
 {
+    $conn = getDbConnection();
+    $conn = getDbConnection();
+    $sql = "SELECT id, product_name,price FROM product";
+    $r = $conn->prepare($sql);
+    $r->execute();
+    $products = $r->fetchAll();
+    $conn = null;
+
     require_once('../views/productlist.phtml');
 }

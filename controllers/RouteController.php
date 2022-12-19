@@ -5,10 +5,7 @@ $request = $_SERVER['REQUEST_URI'];
 
 switch ($request) {
     case URL_ROOT . '/' :
-    
     case URL_ROOT . '' :
-        home();
-        break; 
     case URL_ROOT . '/home' :
         homepage();
         break;
