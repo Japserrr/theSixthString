@@ -119,9 +119,9 @@ function insert_uha($conn, $auth_id, $address_id)
 }
 function insert_address($conn, $address)
 {
-    $sql = 'INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?)';
+    $sql = 'INSERT INTO address (street_name, house_number, zipcode, city, country, address_type) VALUES (?,?,?,?,?,?)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-    $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country']]);
+    $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country'], 2]);
     return $conn->lastInsertId();
 }
 function insert_auth($conn, $auth)
@@ -138,5 +138,5 @@ function insert_user($conn, $user)
     //strip + from phone number
     $sql = 'INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?,?,?,?,?)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-    $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'],  str_replace("+", "", $user['phone_number'])]);
+    $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'],  $user['phone_number']]);
 }
