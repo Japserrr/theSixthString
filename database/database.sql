@@ -47,7 +47,7 @@ CREATE TABLE `user` (
     infix varchar(20) NULL,
     last_name varchar(50) NOT NULL,
     phone_number int(11) NULL,
-    FOREIGN KEY (auth_id) REFERENCES auth(id)
+    FOREIGN KEY (auth_id) REFERENCES auth(id),
     PRIMARY KEY (auth_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -56,6 +56,12 @@ CREATE TABLE employee (
     FOREIGN KEY (auth_id) REFERENCES auth(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS the_sixth_string . address_type (
+  id INT NOT NULL AUTO_INCREMENT,
+  address_type VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4; 
 CREATE TABLE address (
     id INT NOT NULL AUTO_INCREMENT,
     street_name VARCHAR(50) NOT NULL,
@@ -63,10 +69,13 @@ CREATE TABLE address (
     house_number VARCHAR(45) NOT NULL,
     city VARCHAR(45) NULL DEFAULT NULL,
     country VARCHAR(45) NULL DEFAULT NULL,
-    address_type VARCHAR(45) NULL DEFAULT NULL,
-PRIMARY KEY (id))
+    address_type INT NULL DEFAULT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (address_type) REFERENCES address_type(id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+
 
 CREATE TABLE user_has_address (
     id INT NOT NULL AUTO_INCREMENT,
@@ -90,6 +99,8 @@ CREATE TABLE IF NOT EXISTS the_sixth_string . payment (
   FOREIGN KEY (auth_id) REFERENCES auth(id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
+
+
 
 CREATE TABLE IF NOT EXISTS the_sixth_string.order (
   id INT NOT NULL,

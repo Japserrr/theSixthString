@@ -57,7 +57,7 @@ function create_account(): void
             "house_number" => empty($_POST['form_house_number']) ? "" : $_POST['form_house_number'],
             "zipcode" => empty($_POST['form_zipcode']) ? "" : $_POST['form_zipcode'],
             "city" => empty($_POST['form_city']) ? "" : $_POST['form_city'],
-            "country" => empty($_POST['form_country']) ? "" : $_POST['form_country']
+            "country" => array_key_exists("form_country", $_POST) ? "" : $_POST['form_country']
         ]);
 
         exit();
@@ -70,7 +70,11 @@ function create_account(): void
     //build object with data from the post
     insert_user($conn, $user);
 
-    $address = ['street_name' => $_POST['form_address'], 'house_number' => $_POST['form_house_number'],  'zipcode' => $_POST['form_zipcode'], 'city' => $_POST['form_city'], 'country' => $_POST['form_country']];
+
+    $address = [
+        'street_name' => $_POST['form_address'], 'house_number' => $_POST['form_house_number'],
+        'zipcode' => $_POST['form_zipcode'], 'city' => $_POST['form_city'], 'country' =>  array_key_exists("form_country", $_POST) ? "" : $_POST['form_country']
+    ];
 
     foreach ($address as $key => $value) {
         if (!empty($value)) {
@@ -80,19 +84,30 @@ function create_account(): void
         }
     }
     //send_mail($_POST['form_email']);
-    creation_succesful($_POST['form_email'], $auth_id);
+    creation_succesful($auth_id);
     exit();
 }
 
 function creation_succesful($auth_id)
 {
-    session_start();
+    //check if session exists 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    } else {
+        //remove all session variables
+        session_unset();
+        //destroy the session
+        session_destroy();
+        //start new session
+        session_start();
+    }
+
     $_SESSION['logged_in'] = true;
     $_SESSION['email'] = $_POST['form_email'];
     $_SESSION['firstname'] = $_POST['form_firstname'];
     $_SESSION['lastname'] = $_POST['form_lastname'];
     $_SESSION['auth_id'] = $auth_id;
-
+    print_r($_SESSION);
     require_once '../views/home.php';
 }
 
@@ -120,7 +135,8 @@ function insert_auth($conn, $auth)
 }
 function insert_user($conn, $user)
 {
+    //strip + from phone number
     $sql = 'INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?,?,?,?,?)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-    $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'], $user['phone_number']]);
+    $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'],  str_replace("+", "", $user['phone_number'])]);
 }

@@ -196,8 +196,8 @@
 
                       <div class="mb-4 pb-2">
                         <div class="form-outline form-white">
-                          <select class="form-control form-select form-control-lg" name="form_country" id="form_country" value="<?= empty($values["country"]) ? "" : $values['country'] ?>">
-                            <option value="" selected disabled>Kies je land</option>
+                          <select class="form-control form-select form-control-lg" name="form_country" id="form_country">
+                            <option value="none" selected hidden disabled>Kies je land</option>
                             <option value="Nederland">Nederland</option>
                             <option value="Belgie">België</option>
                             <option value="Luxemburg">Luxemburg</option>
