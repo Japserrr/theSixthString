@@ -20,7 +20,6 @@ CREATE TABLE product (
     FOREIGN KEY (brand_id) REFERENCES brand(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- maybe create tables to add multiple images and videos to a product?
 
 CREATE TABLE category (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -35,49 +34,96 @@ CREATE TABLE product_category (
     FOREIGN KEY (category_id) REFERENCES category(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE user (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    first_name varchar(50) NOT NULL,
-    infix varchar(20) NULL,
-    last_name varchar(50) NOT NULL,
-    phone_number int(11) NULL,
+CREATE TABLE auth (
+    id int(11) NOT NULL  AUTO_INCREMENT,
+    password varchar(256) NOT NULL,
+    email varchar(50) UNIQUE NOT NULL,
+    active tinyint(1) NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE auth (
-    user_id int(11) NOT NULL,
-    password varchar(256) NOT NULL,
-    email varchar(50) NOT NULL,
-    active tinyint(1) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+CREATE TABLE `user` (
+    auth_id int(11) NOT NULL,
+    first_name varchar(50) NOT NULL,
+    infix varchar(20) NULL,
+    last_name varchar(50) NOT NULL,
+    phone_number varchar(20) NULL,
+    FOREIGN KEY (auth_id) REFERENCES auth(id),
+    PRIMARY KEY (auth_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE employee (
-    user_id int(11) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    auth_id int(11) NOT NULL,
+    FOREIGN KEY (auth_id) REFERENCES auth(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE address (
+CREATE TABLE IF NOT EXISTS the_sixth_string . address_type (
   id INT NOT NULL AUTO_INCREMENT,
-  street_name VARCHAR(50) NOT NULL,
-  zipcode VARCHAR(6) NOT NULL,
-  house_number VARCHAR(45) NOT NULL,
-  city VARCHAR(45) NULL DEFAULT NULL,
-  country VARCHAR(45) NULL DEFAULT NULL,
-  address_type VARCHAR(45) NULL DEFAULT NULL,
+  address_type VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4; 
+CREATE TABLE address (
+    id INT NOT NULL AUTO_INCREMENT,
+    street_name VARCHAR(50) NOT NULL,
+    zipcode VARCHAR(6) NOT NULL,
+    house_number VARCHAR(45) NOT NULL,
+    city VARCHAR(45) NULL DEFAULT NULL,
+    country VARCHAR(45) NULL DEFAULT NULL,
+    address_type INT NULL DEFAULT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (address_type) REFERENCES address_type(id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
+
+
 CREATE TABLE user_has_address (
+    id INT NOT NULL AUTO_INCREMENT,
+    address_id INT NOT NULL,
+    auth_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (address_id)
+    REFERENCES the_sixth_string.address (id),   
+    FOREIGN KEY (auth_id)
+    REFERENCES the_sixth_string.auth (id)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+CREATE TABLE IF NOT EXISTS the_sixth_string . payment (
   id INT NOT NULL AUTO_INCREMENT,
- address_id INT NOT NULL,
-  user_id INT NOT NULL,
+  auth_id INT NOT NULL,
+  payment_method VARCHAR(45) NOT NULL,
+  payment_status TINYINT NOT NULL,
+  amount INT NOT NULL,
   PRIMARY KEY (id),
- FOREIGN KEY (address_id)
-REFERENCES the_sixth_string.address (id),   
-    FOREIGN KEY (user_id)
-    REFERENCES the_sixth_string.user (id)
-  )
+  FOREIGN KEY (auth_id) REFERENCES auth(id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+
+CREATE TABLE IF NOT EXISTS the_sixth_string.order (
+  id INT NOT NULL,
+  customer_id INT NOT NULL,
+  payment_id INT NOT NULL,
+  shipping_address_id INT NOT NULL,
+  order_date DATETIME NOT NULL,
+  status VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id)    REFERENCES the_sixth_string.auth(id)   ,
+  FOREIGN KEY (shipping_address_id)    REFERENCES the_sixth_string.address (id)   ,
+  FOREIGN KEY (payment_id)    REFERENCES the_sixth_string.payment (id)  )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS the_sixth_string.order_has_products(
+  id INT NOT NULL,
+  product_id INT NOT NULL,
+  order_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (order_id) REFERENCES the_sixth_string.order(id),
+  FOREIGN KEY (product_id) REFERENCES the_sixth_string.product(id)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
