@@ -18,9 +18,11 @@ function checkZipCode() {
       //check if postal code is valid with regex
     if (/(^[0-9]{4}[A-Z]{2}$)/gi.test(form_zipcode ) || form_zipcode == "") {
         document.getElementById("registration_form").requestSubmit();
-    
+        
         return;
     }
-    alert("Please enter a valid postal code");
-}
+
+    document.getElementById("form_zipcode").classList.add("is-invalid");
+    document.getElementById("label_form_zipcode").innerHTML = "Ongeldige postcode!";
+}   
   

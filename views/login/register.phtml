@@ -96,7 +96,7 @@
       </div>
     </div>
   </div> -->
-  <?= $error ?>
+
   <section class="h-100 h-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -112,13 +112,15 @@
                       <div class="row">
                         <div class="mb-4  pb-2 ">
                           <div class="form-outline form-white">
-                            <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg" />
-                            <label class="form-label required" for="form_email">Uw Emailadres</label>
+                            <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
+                            <label class="form-label required <?= empty($error["email"]) ? "" : "invalid-feedback" ?> " for="form_email">
+                              <?= empty($error["email"]) ? "Uw Emailadres" : $error["email"] ?>
+                            </label>
                           </div>
                         </div>
                         <div class="mb-4 pb-2">
                           <div class="d-flex justify-content-between ">
-                            <input type="password" name="form_password" id="form_password" class="form-control  form-control-lg" name="form_password" required />
+                            <input type="password" name="form_password" id="form_password" class="form-control  form-control-lg <?= empty($error["password"]) ? "" : "is-invalid" ?>" name="form_password" required />
                             <em class="far fa-eye d-flex  justify-content-center align-self-center rounded-right" id="togglePassword" style=" line-height: 0;margin-left: -50px; cursor: pointer; background-color: gray; width:50px;"></em>
                           </div>
                           <label class="form-label required" for="form_password">Wachtwoord</label>
@@ -127,7 +129,7 @@
 
                         <div class="col-md-8 mb-4 pb-2">
                           <div class="form-outline">
-                            <input type="text" name="form_firstname" id="form_firstname" class="form-control  form-control-lg" required />
+                            <input type="text" name="form_firstname" id="form_firstname" class="form-control form-control-lg <?= empty($error["firstname"]) ? "" : "is-invalid" ?>" required />
                             <label class="form-label required" for="form_first_name">Voornaam</label>
                           </div>
                         </div>
@@ -140,9 +142,10 @@
                         <div class="col-md-12 mb-4 pb-2">
 
                           <div class="form-outline">
-                            <input type="text" name="form_lastname" id="form_lastname" class="form-control form-control-lg" required />
+                            <input type="text" name="form_lastname" id="form_lastname" class="form-control form-control-lg  <?= empty($error["lastname"]) ? "" : "is-invalid" ?>" required />
                             <label class="form-label required" for="form_lastname">Achternaam</label>
                           </div>
+
                         </div>
                         <button type="button" class="btn btn-success  btn-lg" id="submit-btn">Registreren</button>
                       </div>
@@ -178,8 +181,8 @@
                       <div class="row">
                         <div class="col-md-4 mb-4 pb-2">
                           <div class="form-outline form-white">
-                            <input type="text" name="form_zipcode" id="form_zipcode" class="form-control form-control-lg" />
-                            <label class="form-label" for="form_zipcode">Postcode</label>
+                            <input type="text" name="form_zipcode" id="form_zipcode" class="form-control form-control-lg " />
+                            <label class="form-label" id="label_form_zipcode" for="form_zipcode">Postcode</label>
                           </div>
                         </div>
 

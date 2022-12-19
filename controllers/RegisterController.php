@@ -6,7 +6,7 @@ function send_mail($adress)
 
     $subject = 'Uw account is aangemaakt';
 
-    $message = 'Welkom bij de webshop, uw account is aangemaakt.<br>
+    $message = 'Welkom bij the sixth string, uw account is aangemaakt.<br>
     Voordat u kunt inloggen met uw emailadres en wachtwoord moet u uw account nog activeren.<br>
     Klik op de onderstaande link om uw account te activeren.<br>
     <a href="http://localhost:8080/activate-account">Activeer uw account</a>';
@@ -34,6 +34,13 @@ function create_account(): void
 {
 
     if (empty($_POST['form_email']) || empty($_POST['form_password']) || empty($_POST['form_firstname']) || empty($_POST['form_lastname'])) {
+        //"email" => "Email is verplicht", "password" => "Wachtwoord is verplicht", "firstname" => "Voornaam is verplicht", "lastname" => "Achternaam is verplicht"
+        $errors = [];
+        $email = empty($_POST['form_email']) ? "Email is verplicht" : "";
+        $password = empty($_POST['form_password']) ? "Wachtwoord is verplicht" : "";
+        $firstname = empty($_POST['form_firstname']) ? "Voornaam is verplicht" : "";
+        $lastname = empty($_POST['form_lastname']) ? "Achternaam is verplicht" : "";
+        array_push($errors, ["email" => $email, "password" => $password, "firstname" => $firstname, "lastname" => $lastname]);
         register("Vul alle velden in");
         exit();
     }
@@ -42,7 +49,7 @@ function create_account(): void
 
 
     if (check_email($conn, $_POST['form_email'])) {
-        register("Email is al in gebruik");
+        register(["email" =>  "Email is al in gebruik"]);
         exit();
     }
 
