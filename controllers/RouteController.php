@@ -3,6 +3,8 @@
 require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
+require_once '../controllers/LoginController.php';
+
 
 require_once '../models/ProductManagement/ProductOverview.php';
 require_once '../models/ProductManagement/SearchProduct.php';
@@ -42,14 +44,11 @@ switch ($request) {
     case URL_ROOT . '/add-category':
         addCategory();
         break;
+    case URL_ROOT . '/login':
+        login();
+        break;
     case URL_ROOT . '/register':
         register();
-        break;
-    case URL_ROOT . '/CreateAccount':
-        create_account();
-        break;
-    case URL_ROOT . '/login':
-        require_once '../views/login/login.html';
         break;
     case URL_ROOT . '/product':
         productShow();
