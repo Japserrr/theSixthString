@@ -22,7 +22,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `erd_sixth_string` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `erd_sixth_string` ;
-
+-- GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`address`
 -- -----------------------------------------------------
@@ -38,7 +38,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`brand`
 -- -----------------------------------------------------
@@ -57,7 +57,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`category`
 -- -----------------------------------------------------
@@ -69,7 +69,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`user`
 -- -----------------------------------------------------
@@ -88,7 +88,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- NOG NIET GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`payment`
 -- -----------------------------------------------------
@@ -109,7 +109,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- NOG NIET GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`order`
 -- -----------------------------------------------------
@@ -144,7 +144,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`product`
 -- -----------------------------------------------------
@@ -178,7 +178,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- UIT SCOPE
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`discount`
 -- -----------------------------------------------------
@@ -201,7 +201,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- NOG NIET GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`order_has_products`
 -- -----------------------------------------------------
@@ -227,6 +227,7 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
+--AL GEDAAN
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`employee`
 -- -----------------------------------------------------
@@ -255,6 +256,9 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
+
+
+-- UIT SCOPE 
 -- -----------------------------------------------------
 -- Table `erd_sixth_string`.`giftcard`
 -- -----------------------------------------------------
@@ -275,55 +279,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
--- -----------------------------------------------------
--- Table `erd_sixth_string`.`billing_address`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `erd_sixth_string`.`billing_address` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `address_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_billing_address_idx` (`address_id` ASC) VISIBLE,
-  INDEX `fk_billing_user_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_billing_address`
-    FOREIGN KEY (`address_id`)
-    REFERENCES `erd_sixth_string`.`address` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_billing_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `erd_sixth_string`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `erd_sixth_string`.`shipping_address`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `erd_sixth_string`.`shipping_address` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `address_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_shipping_address_idx` (`address_id` ASC) VISIBLE,
-  INDEX `fk_shipping_user_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_shipping_address`
-    FOREIGN KEY (`address_id`)
-    REFERENCES `erd_sixth_string`.`address` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_shipping_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `erd_sixth_string`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
