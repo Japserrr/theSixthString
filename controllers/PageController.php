@@ -19,3 +19,19 @@ function home()
 
     include_once '../views/home.php';
 }
+
+function productManagement(): void
+{
+    require_once('../views/product-management.html');
+}
+function homepage(): void
+{
+    $conn = getDbConnection();
+    $sql = "SELECT id, product_name,price FROM product";
+    $r = $conn->prepare($sql);
+    $r->execute();
+    $products = $r->fetchAll();
+    $conn = null;
+
+    require_once('../views/productlist.phtml');
+}

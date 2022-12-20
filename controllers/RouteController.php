@@ -15,10 +15,11 @@ require_once '../models/ProductManagement/AddCategory.php';
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
 switch ($request) {
-    case URL_ROOT . '/':
-    case URL_ROOT . '/home':
-    case URL_ROOT . '':
-        home();
+
+    case URL_ROOT . '/' :
+    case URL_ROOT . '' :
+    case URL_ROOT . '/home' :
+        homepage();
         break;
     case URL_ROOT . '/product-overview':
         productOverview();
