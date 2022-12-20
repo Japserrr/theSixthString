@@ -1,5 +1,10 @@
 <?php
-function login()
+
+function login($error = null)
+{
+    require_once '../views/login/login.phtml';
+}
+function login_account()
 {
     //get email and password from $_POST
     $email = $_POST['form_email'];
@@ -7,7 +12,9 @@ function login()
     //check if record exists in database
     $auth = get_account_status($email, $password);
     if (!$auth) {
-        return;
+        return [
+            "email" => "Email of wachtwoord is onjuist"
+        ];
     }
     //create session 
     if (session_status() == PHP_SESSION_NONE) {
@@ -15,13 +22,10 @@ function login()
     }
 
     $_SESSION['logged_in'] = true;
-    $_SESSION['email'] = $auth['email'];
-    // $_SESSION['firstname'] = $auth['form_firstname'];
-    // $_SESSION['infix'] = $auth['form_inifx'] ?? null;
-    // $_SESSION['lastname'] = $auth['form_lastname'];
     $_SESSION['auth_id'] = $auth['id'];
     $_SESSION['admin'] = false;
     $_POST = [];
+    header('Location: ' . URL_ROOT . '/home');
 }
 
 function get_account_status($email, $password)

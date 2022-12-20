@@ -37,17 +37,17 @@
   }
 </style>
 <?php
-// require_once './controllers/RegisterController.php';
 
-// if (!empty($_POST)) {
-//   create_account();
-// }
+if (!empty($_POST)) {
+  $error = create_account();
+}
+
 ?>
 
-<body>
-  <img src="./public/img/stock_foto_guitars.jpeg" alt="" style=" position: fixed;  height: 100%; width: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;">
-  </img>
-  <!-- <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+
+<img src="./public/img/stock_foto_guitars.jpeg" alt="" style=" position: fixed;  height: 100%; width: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;">
+</img>
+<!-- <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -104,135 +104,132 @@
     </div>
   </div> -->
 
-  <section class="h-100 h-custom">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-            <div class="card-body p-0">
-              <form method="post" id="registration_form" action="./CreateAccount">
-                <div class="row g-0">
-                  <div class="col-lg-6">
-                    <div class="p-5">
-                      <h3 class="fw-normal mb-5" style="color: #1d7743;">Account aanmaken</h3>
+<section class="h-100 h-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <form method="post" id="registration_form" action="">
+              <div class="row g-0">
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <h3 class="fw-normal mb-5" style="color: #1d7743;">Account aanmaken</h3>
 
-                      <div class="row">
-                        <div class="mb-4  pb-2 ">
-                          <div class="form-outline form-white">
-                            <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
-                            <label class="form-label required <?= empty($error["email"]) ? "" : "invalid-feedback" ?> " for="form_email">
-                              <?= empty($error["email"]) ? "Uw Emailadres" : $error["email"] ?>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="mb-4 pb-2">
-                          <div class="d-flex justify-content-between ">
-                            <input type="password" name="form_password" id="form_password" class="form-control  form-control-lg <?= empty($error["password"]) ? "" : "is-invalid" ?>" name="form_password" required />
-                            <em class="far fa-eye d-flex  justify-content-center align-self-center rounded-right" id="togglePassword" style=" line-height: 0;margin-left: -50px; cursor: pointer; background-color: gray; width:50px;"></em>
-                          </div>
-                          <label class="form-label required" for="form_password">Wachtwoord</label>
-                        </div>
-
-
-                        <div class="col-md-8 mb-4 pb-2">
-                          <div class="form-outline">
-                            <input type="text" name="form_firstname" id="form_firstname" value="<?= empty($values["firstname"]) ? "" : $values['firstname'] ?>" class="form-control form-control-lg <?= empty($error["firstname"]) ? "" : "is-invalid" ?>" required />
-                            <label class="form-label required" for="form_first_name">Voornaam</label>
-                          </div>
-                        </div>
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline">
-                            <input type="text" name="form_inifx" id="form_infix" value="<?= empty($values["infix"]) ? "" : $values['infix'] ?>" class="form-control form-control-lg" />
-                            <label class="form-label" for="form_infix">Tussenvoegsel</label>
-                          </div>
-                        </div>
-                        <div class="col-md-12 mb-4 pb-2">
-
-                          <div class="form-outline">
-                            <input type="text" name="form_lastname" id="form_lastname" value="<?= empty($values["lastname"]) ? "" : $values['lastname'] ?>" class="form-control form-control-lg  <?= empty($error["lastname"]) ? "" : "is-invalid" ?>" required />
-                            <label class="form-label required" for="form_lastname">Achternaam</label>
-                          </div>
-
-                        </div>
-                        <button type="button" class="btn btn-success  btn-lg" id="submit-btn">Registreren</button>
-                      </div>
-
-
-                    </div>
-                  </div>
-                  <div class="col-lg-6 bg-indigo text-white">
-                    <div class="p-5">
-                      <h3 class="fw-normal">Extra gegevens </h3>
-                      <p class="fw-normal ">(Optioneel) </p>
-
-
-                      <div class="row">
-                        <div class="col-md-9 mb-4 pb-2">
-
-                          <div class="form-outline form-white">
-                            <input type="text" name="form_address" placeholder="Straatnaam" value="<?= empty($values["address"]) ? "" : $values['address'] ?>" id="form_address" class="form-control form-control-lg" />
-                            <label class="form-label" for="form_address">Straatnaam </label>
-                          </div>
-
-                        </div>
-                        <div class="col-md-3 mb-4 pb-2">
-
-                          <div class="form-outline form-white">
-                            <input type="text" name="form_house_number" placeholder="1A" value="<?= empty($values["house_number"]) ? "" : $values['house_number'] ?>" id="form_house_number" class="form-control form-control-lg" />
-                            <label class="form-label" id="label_house_number" for="form_house_number"> Huisnummer</label>
-                          </div>
-
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-md-4 mb-4 pb-2">
-                          <div class="form-outline form-white">
-                            <input type="text" name="form_zipcode" placeholder="1234AB" value="<?= empty($values["zipcode"]) ? "" : $values['zipcode'] ?>" id="form_zipcode" class="form-control form-control-lg " />
-                            <label class="form-label" id="label_form_zipcode" for="form_zipcode">Postcode</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-8 mb-4 pb-2">
-                          <div class="form-outline form-white">
-                            <input type="text" name="form_city" placeholder="Amsterdam" value="<?= empty($values["city"]) ? "" : $values['city'] ?>" id="form_city" class="form-control form-control-lg" />
-                            <label class="form-label" for="form_city">Stad</label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="mb-4 pb-2">
+                    <div class="row">
+                      <div class="mb-4  pb-2 ">
                         <div class="form-outline form-white">
-                          <select class="form-control form-select form-control-lg" name="form_country" id="form_country">
-                            <option value="none" selected hidden disabled>Kies je land</option>
-                            <option value="Nederland">Nederland</option>
-                            <option value="Belgie">België</option>
-                            <option value="Luxemburg">Luxemburg</option>
-                          </select>
-                          <label class="form-label" for="form_country">Land</label>
-                          <!-- <input type="text" name="form_country" values="" id="form_country" class="form-control form-control-lg" /> -->
-
+                          <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
+                          <label class="form-label required <?= empty($error["email"]) ? "" : "invalid-feedback" ?> " for="form_email">
+                            <?= empty($error["email"]) ? "Uw Emailadres" : $error["email"] ?>
+                          </label>
                         </div>
                       </div>
                       <div class="mb-4 pb-2">
-                        <div class="form-outline form-white">
-                          <input type="text" name="form_phone" placeholder="+316 123 456 78" value="<?= empty($values["phone"]) ? "" : $values['phone'] ?>" id="form_phone" class="form-control form-control-lg" />
-                          <label class="form-label" id="label_phone_number" for="form_phone">Telefoonnummer</label>
+                        <div class="d-flex justify-content-between ">
+                          <input type="password" name="form_password" id="form_password" class="form-control  form-control-lg <?= empty($error["password"]) ? "" : "is-invalid" ?>" name="form_password" required />
+                          <em class="far fa-eye d-flex  justify-content-center align-self-center rounded-right" id="togglePassword" style=" line-height: 0;margin-left: -50px; cursor: pointer; background-color: gray; width:50px;"></em>
+                        </div>
+                        <label class="form-label required" for="form_password">Wachtwoord</label>
+                      </div>
+
+
+                      <div class="col-md-8 mb-4 pb-2">
+                        <div class="form-outline">
+                          <input type="text" name="form_firstname" id="form_firstname" value="<?= empty($_POST["form_firstname"]) ? "" : $_POST['form_firstname'] ?>" class="form-control form-control-lg <?= empty($error["firstname"]) ? "" : "is-invalid" ?>" required />
+                          <label class="form-label required" for="form_first_name">Voornaam</label>
                         </div>
                       </div>
-                      <p class="text-center  mb-0">Verkeerd geklikt?<br> Klik hier om te <a href="./login" class="fw-bold text-body"> <u>Inloggen</u></a></p>
+                      <div class="col-md-4 mb-4 pb-2">
+                        <div class="form-outline">
+                          <input type="text" name="form_inifx" id="form_infix" value="<?= empty($_POST["form_infix"]) ? "" : $_POST['form_infix'] ?>" class="form-control form-control-lg" />
+                          <label class="form-label" for="form_infix">Tussenvoegsel</label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-4 pb-2">
+
+                        <div class="form-outline">
+                          <input type="text" name="form_lastname" id="form_lastname" value="<?= empty($_POST["form_lastname"]) ? "" : $_POST['form_lastname'] ?>" class="form-control form-control-lg  <?= empty($error["lastname"]) ? "" : "is-invalid" ?>" required />
+                          <label class="form-label required" for="form_lastname">Achternaam</label>
+                        </div>
+
+                      </div>
+                      <button type="button" class="btn btn-success  btn-lg" id="submit-btn">Registreren</button>
                     </div>
+
 
                   </div>
                 </div>
-              </form>
-            </div>
+                <div class="col-lg-6 bg-indigo text-white">
+                  <div class="p-5">
+                    <h3 class="fw-normal">Extra gegevens </h3>
+                    <p class="fw-normal ">(Optioneel) </p>
+
+
+                    <div class="row">
+                      <div class="col-md-9 mb-4 pb-2">
+
+                        <div class="form-outline form-white">
+                          <input type="text" name="form_address" placeholder="Straatnaam" value="<?= empty($_POST["form_address"]) ? "" : $_POST['form_address'] ?>" id="form_address" class="form-control form-control-lg" />
+                          <label class="form-label" for="form_address">Straatnaam </label>
+                        </div>
+
+                      </div>
+                      <div class="col-md-3 mb-4 pb-2">
+
+                        <div class="form-outline form-white">
+                          <input type="text" name="form_house_number" placeholder="1A" value="<?= empty($_POST["form_house_number"]) ? "" : $_POST['form_house_number'] ?>" id="form_house_number" class="form-control form-control-lg" />
+                          <label class="form-label" id="label_house_number" for="form_house_number"> Huisnummer</label>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4 mb-4 pb-2">
+                        <div class="form-outline form-white">
+                          <input type="text" name="form_zipcode" placeholder="1234AB" value="<?= empty($_POST["form_zipcode"]) ? "" : $_POST['form_zipcode'] ?>" id="form_zipcode" class="form-control form-control-lg " />
+                          <label class="form-label" id="label_form_zipcode" for="form_zipcode">Postcode</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-8 mb-4 pb-2">
+                        <div class="form-outline form-white">
+                          <input type="text" name="form_city" placeholder="Amsterdam" value="<?= empty($_POST["form_city"]) ? "" : $_POST['form_city'] ?>" id="form_city" class="form-control form-control-lg" />
+                          <label class="form-label" for="form_city">Stad</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline form-white">
+                        <select class="form-control form-select form-control-lg" name="form_country" id="form_country">
+                          <option value="none" selected hidden disabled>Kies je land</option>
+                          <option value="Nederland">Nederland</option>
+                          <option value="Belgie">België</option>
+                          <option value="Luxemburg">Luxemburg</option>
+                        </select>
+                        <label class="form-label" for="form_country">Land</label>
+                        <!-- <input type="text" name="form_country" values="" id="form_country" class="form-control form-control-lg" /> -->
+
+                      </div>
+                    </div>
+                    <div class="mb-4 pb-2">
+                      <div class="form-outline form-white">
+                        <input type="text" name="form_phone" placeholder="+316 123 456 78" value="<?= empty($_POST["phone"]) ? "" : $_POST['phone'] ?>" id="form_phone" class="form-control form-control-lg" />
+                        <label class="form-label" id="label_phone_number" for="form_phone">Telefoonnummer</label>
+                      </div>
+                    </div>
+                    <p class="text-center  mb-0">Verkeerd geklikt?<br> Klik hier om te <a href="./login" class="fw-bold text-body"> <u>Inloggen</u></a></p>
+                  </div>
+
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <script src="./public/js/main.js" defer></script>
-</body>
-
-</html>
+  </div>
+</section>
+<script src="./public/js/main.js" defer></script>
