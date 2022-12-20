@@ -17,6 +17,13 @@ document.getElementById("submit-btn").addEventListener("click", function (event)
         submitForm();
     }
 })
+
+document.getElementById("submit-btn-login").addEventListener("click", function (event) {
+    event.preventDefault();
+    document.getElementById("login_form").requestSubmit();
+    
+})
+
 function checkHouseNumber()
 {
     var form_housenumber = document.getElementById("form_house_number").value;
@@ -30,8 +37,7 @@ function checkHouseNumber()
     return false;
 }
 function checkPhoneNumber()
-{
-    
+{   
 
     if (/^((\+|00)(32|31|352)\s?|0)((\s?\d{2}){3}|(\s?\d{3}){2,3})$/gi.test(document.getElementById("form_phone").value.replace(/\s/g, '')) || document.getElementById("form_phone").value == "") {
         document.getElementById("form_phone").classList.replace("is-invalid","is-valid");
@@ -62,4 +68,3 @@ function submitForm()
 {
     document.getElementById("registration_form").requestSubmit();
 }
-  
