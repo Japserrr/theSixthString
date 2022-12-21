@@ -1,16 +1,26 @@
 <?php
-require_once '../controllers/PageController.php';
 
-$request = $_SERVER['REQUEST_URI'];
+require_once '../controllers/PageController.php';
+require_once '../controllers/ProductController.php';
+require_once '../controllers/RegisterController.php';
+require_once '../controllers/LoginController.php';
+
+$request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
 switch ($request) {
-    case URL_ROOT . '/' :
-    case URL_ROOT . '/home' :
-    case URL_ROOT . '' :
-        home();
+    case URL_ROOT . '/':
+    case URL_ROOT . '':
+    case URL_ROOT . '/home':
+        homepage();
         break;
-    case URL_ROOT . '/product-management':
-        productManagement();
+    case URL_ROOT . '/login':
+        login();
+        break;
+    case URL_ROOT . '/register':
+        register();
+        break;
+    case URL_ROOT . '/product':
+        productShow();
         break;
     default:
         http_response_code(404);
