@@ -32,6 +32,10 @@ function check_email($conn, $email)
 function register($error = null)
 {
 
+    if (isLoggedIn()) {
+        header('Location: ' . URL_ROOT . '/home');
+        exit();
+    }
     require_once '../views/login/register.phtml';
 }
 function create_account()
@@ -59,8 +63,7 @@ function create_account()
         ];
     }
 
-
-    $auth = ['email' => $_POST['form_email'], 'password' => hash('sha256', $_POST['form_password']), 'active' => 1];
+    $auth = ['email' => $_POST['form_email'], 'password' => password_hash($_POST['form_password'], PASSWORD_BCRYPT), 'active' => 1];
     $auth_id = insert_auth($conn, $auth);
     $user = ['auth_id' => $auth_id, 'first_name' => $_POST['form_firstname'], 'infix' => $_POST['form_inifx'], 'last_name' => $_POST['form_lastname'], 'phone_number' => $_POST['form_phone']];
     //build object with data from the post
@@ -86,21 +89,15 @@ function create_account()
 function creation_succesful($auth_id)
 {
     //check if session exists 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth_id;
     $_SESSION['admin'] = false;
 
     //set session duration to 1 hour
     $_SESSION['expire'] = time() + 3600;
-
-
-    // print_r($_SESSION);
-    homepage();
-    exit();
+    var_dump($_SESSION);
+    //navitage to homepage
+    header('Location: ' . URL_ROOT . '/home');
 }
 
 
