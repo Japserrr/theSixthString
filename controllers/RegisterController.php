@@ -1,4 +1,8 @@
+
 <?php
+
+
+
 
 function send_mail($adress)
 {
@@ -13,7 +17,6 @@ function send_mail($adress)
 
     mail($to, $subject, $message);
 }
-
 function check_email($conn, $email)
 {
     $sql = 'SELECT email FROM auth WHERE email = ?';
@@ -26,13 +29,11 @@ function check_email($conn, $email)
 
     return false;
 }
-
 function register($error = null)
 {
 
     require_once '../views/login/register.phtml';
 }
-
 function create_account()
 {
     if (empty($_POST['form_email']) || empty($_POST['form_password']) || empty($_POST['form_firstname']) || empty($_POST['form_lastname'])) {
@@ -93,11 +94,17 @@ function creation_succesful($auth_id)
     $_SESSION['auth_id'] = $auth_id;
     $_SESSION['admin'] = false;
 
-    $_POST = [];
-    print_r($_SESSION);
+    //set session duration to 1 hour
+    $_SESSION['expire'] = time() + 3600;
+
+
+    // print_r($_SESSION);
     homepage();
     exit();
 }
+
+
+
 
 function insert_uha($conn, $auth_id, $address_id)
 {
