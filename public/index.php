@@ -1,5 +1,8 @@
 <?php include_once '../config/config.php';
-session_start(); ?>
+include_once '../helpers/validate.php';
+session_start();
+
+check_expire_time(); ?>
 
 <!DOCTYPE html>
 <html lang="nl">

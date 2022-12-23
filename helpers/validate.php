@@ -19,3 +19,17 @@ function isLoggedIn()
     }
     return true;
 }
+function check_expire_time()
+{
+    if (session_status() == 2 && !empty($_SESSION)) {
+        if ($_SESSION['expire'] < time()) {
+            //clear session
+            $_SESSION = [];
+            // remove all session variables
+            session_unset();
+            //destroy session
+            session_destroy();
+            return login();
+        }
+    }
+}

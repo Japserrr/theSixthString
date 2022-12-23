@@ -7,7 +7,6 @@ function login($error = null)
         session_destroy();
     }
 
-    session_start();
     //check if already logged in with validate.php helper function
     if (isLoggedIn()) {
 
@@ -49,10 +48,6 @@ function check_hash($password, $hash)
 
 function get_account_status($email, $password)
 {
-
-
-
-
     $conn = getDbConnection();
     $sql = 'SELECT * FROM auth WHERE email = ?';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
@@ -67,8 +62,6 @@ function get_account_status($email, $password)
         }
         if ($auth['active'] == 1) {
             //account is active
-
-
             return $auth;
         } else {
             //account is not active
