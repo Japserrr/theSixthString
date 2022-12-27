@@ -6,6 +6,7 @@ require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
 require_once '../controllers/LogoutController.php';
 
+
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
 switch ($request) {
@@ -26,8 +27,11 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
+        case URL_ROOT . '/adminPortal':
+            AdminPage();
+            break;
     default:
         http_response_code(404);
         require '../views/errors/404.html';
-        break;
+        break; 
 }
