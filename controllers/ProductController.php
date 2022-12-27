@@ -1,6 +1,5 @@
 <?php
 
-
 function productShow(): void
 {
     include_once '../models/Product.php';

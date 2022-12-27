@@ -23,6 +23,7 @@ function check_email($conn, $email)
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$email]);
     //check if email is already in use
+
     if ($sth->rowCount() > 0) {
         return true;
     }
@@ -32,6 +33,10 @@ function check_email($conn, $email)
 function register($error = null)
 {
 
+    if (isLoggedIn()) {
+        header('Location: ' . URL_ROOT . '/home');
+        exit();
+    }
     require_once '../views/login/register.phtml';
 }
 function create_account()
@@ -59,8 +64,7 @@ function create_account()
         ];
     }
 
-
-    $auth = ['email' => $_POST['form_email'], 'password' => hash('sha256', $_POST['form_password']), 'active' => 1];
+    $auth = ['email' => $_POST['form_email'], 'password' => password_hash($_POST['form_password'], PASSWORD_BCRYPT), 'active' => 1];
     $auth_id = insert_auth($conn, $auth);
     $user = ['auth_id' => $auth_id, 'first_name' => $_POST['form_firstname'], 'infix' => $_POST['form_inifx'], 'last_name' => $_POST['form_lastname'], 'phone_number' => $_POST['form_phone']];
     //build object with data from the post
@@ -86,19 +90,23 @@ function create_account()
 function creation_succesful($auth_id)
 {
     //check if session exists 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth_id;
     $_SESSION['admin'] = false;
 
-    $_POST = [];
-    print_r($_SESSION);
-    require_once '../views/home.php';
+    //set session duration to 1 hour
+    $_SESSION['expire'] = time() + 3600;
+    var_dump($_SESSION);
+    //navitage to homepage
+    //todo make session last longer if user is active on website
+
+
+    header('Location: ' . URL_ROOT . '/home');
     exit();
 }
+
+
+
 
 function insert_uha($conn, $auth_id, $address_id)
 {
@@ -116,7 +124,7 @@ function insert_address($conn, $address)
 function insert_auth($conn, $auth)
 {
 
-    $sql = 'INSERT INTO auth (email, password, active) VALUES (?,?, 1)';
+    $sql = 'INSERT INTO auth (email, password, active, created_at) VALUES (?,?, 1, NOW())';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$auth['email'], $auth['password']]);
 

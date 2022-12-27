@@ -187,7 +187,6 @@ function generateUsers(int $amount): bool
 
         $sql = "INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?, ?, ?, ?, ?)";
         $conn->prepare($sql)->execute([$authId, $name, $infix, $surname, $phone]);
-
     }
 
     $conn = null;
