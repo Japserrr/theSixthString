@@ -3,7 +3,7 @@
 require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
-
+require_once '../controllers/AdminPagecontroller.php';
 require_once '../models/ProductManagement/ProductOverview.php';
 require_once '../models/ProductManagement/SearchProduct.php';
 require_once '../models/ProductManagement/AddProduct.php';
@@ -54,8 +54,11 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
+        case URL_ROOT . '/adminPortal':
+            AdminPage();
+            break;
     default:
         http_response_code(404);
         require '../views/errors/404.html';
-        break;
+        break; 
 }
