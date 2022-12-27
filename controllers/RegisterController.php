@@ -1,5 +1,9 @@
 
 <?php
+
+
+
+
 function send_mail($adress)
 {
     $to = $adress;
@@ -19,19 +23,24 @@ function check_email($conn, $email)
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$email]);
     //check if email is already in use
+
     if ($sth->rowCount() > 0) {
         return true;
     }
 
     return false;
 }
-function register($error = null, $values = null)
-{
-    require_once '../views/login/register.phtml';
-}
-function create_account(): void
+function register($error = null)
 {
 
+    if (isLoggedIn()) {
+        header('Location: ' . URL_ROOT . '/home');
+        exit();
+    }
+    require_once '../views/login/register.phtml';
+}
+function create_account()
+{
     if (empty($_POST['form_email']) || empty($_POST['form_password']) || empty($_POST['form_firstname']) || empty($_POST['form_lastname'])) {
         //"email" => "Email is verplicht", "password" => "Wachtwoord is verplicht", "firstname" => "Voornaam is verplicht", "lastname" => "Achternaam is verplicht"
         $errors = [];
@@ -48,29 +57,20 @@ function create_account(): void
 
 
     if (check_email($conn, $_POST['form_email'])) {
-        register(["email" =>  "Email is al in gebruik"], [
-            "firstname" => empty($_POST['form_firstname']) ? "" : $_POST['form_firstname'],
-            "infix" => empty($_POST['form_inifx']) ? "" : $_POST['form_inifx'],
-            "lastname" => empty($_POST['form_lastname']) ? "" : $_POST['form_lastname'],
-            "phone" => empty($_POST['form_phone']) ? "" : $_POST['form_phone'],
-            "address" => empty($_POST['form_address']) ? "" : $_POST['form_address'],
-            "house_number" => empty($_POST['form_house_number']) ? "" : $_POST['form_house_number'],
-            "zipcode" => empty($_POST['form_zipcode']) ? "" : $_POST['form_zipcode'],
-            "city" => empty($_POST['form_city']) ? "" : $_POST['form_city'],
-            "country" => array_key_exists("form_country", $_POST) ? "" : $_POST['form_country']
-        ]);
+        return [
 
-        exit();
+            "email" =>  "Email is al in gebruik"
+
+        ];
     }
 
-
-    $auth = ['email' => $_POST['form_email'], 'password' => hash('sha256', $_POST['form_password']), 'active' => 1];
+    $auth = ['email' => $_POST['form_email'], 'password' => password_hash($_POST['form_password'], PASSWORD_BCRYPT), 'active' => 1];
     $auth_id = insert_auth($conn, $auth);
     $user = ['auth_id' => $auth_id, 'first_name' => $_POST['form_firstname'], 'infix' => $_POST['form_inifx'], 'last_name' => $_POST['form_lastname'], 'phone_number' => $_POST['form_phone']];
     //build object with data from the post
     insert_user($conn, $user);
 
-    $country = array_key_exists("form_country", $_POST) ? "" : $_POST['form_country'];
+    $country = array_key_exists("form_country", $_POST) ? $_POST['form_country'] : "";
     $address = [
         'street_name' => $_POST['form_address'], 'house_number' => $_POST['form_house_number'],
         'zipcode' => $_POST['form_zipcode'], 'city' => $_POST['form_city'], 'country' =>   $country
@@ -85,34 +85,38 @@ function create_account(): void
     }
     //send_mail($_POST['form_email']);
     creation_succesful($auth_id);
-    exit();
 }
 
 function creation_succesful($auth_id)
 {
     //check if session exists 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
     $_SESSION['logged_in'] = true;
-    $_SESSION['email'] = $_POST['form_email'];
-    $_SESSION['firstname'] = $_POST['form_firstname'];
-    $_SESSION['lastname'] = $_POST['form_lastname'];
     $_SESSION['auth_id'] = $auth_id;
-    print_r($_SESSION);
-    // require_once '../views/home.php';
+    $_SESSION['admin'] = false;
+
+    //set session duration to 1 hour
+    $_SESSION['expire'] = time() + 3600;
+    var_dump($_SESSION);
+    //navitage to homepage
+    //todo make session last longer if user is active on website
+
+
+    header('Location: ' . URL_ROOT . '/home');
+    exit();
 }
+
+
+
 
 function insert_uha($conn, $auth_id, $address_id)
 {
-    $sql = 'INSERT INTO user_has_address (auth_id, address_id) VALUES (?,?)';
+    $sql = 'INSERT INTO user_has_address (auth_id, address_id, address_type) VALUES (?,?, 1)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$auth_id, $address_id]);
 }
 function insert_address($conn, $address)
 {
-    $sql = 'INSERT INTO address (street_name, house_number, zipcode, city, country, address_type) VALUES (?,?,?,?,?,?)';
+    $sql = 'INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?,?)';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country'], 2]);
     return $conn->lastInsertId();
@@ -120,7 +124,7 @@ function insert_address($conn, $address)
 function insert_auth($conn, $auth)
 {
 
-    $sql = 'INSERT INTO auth (email, password, active) VALUES (?,?, 1)';
+    $sql = 'INSERT INTO auth (email, password, active, created_at) VALUES (?,?, 1, NOW())';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$auth['email'], $auth['password']]);
 
