@@ -35,3 +35,5 @@ function homepage(): void
 
     require_once('../views/productlist.phtml');
 }
+
+

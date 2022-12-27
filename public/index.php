@@ -34,9 +34,13 @@
     </ul>
 
     <div class="col-md-3 text-end">
-        <button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success me-2">inloggen
-        </button>
-        <button onclick="window.location.href='./register'" type="button" class="btn btn-success">Registreren</button>
+        <?php require_once '../helpers/validate.php';
+        if (isLoggedIn()) {
+           echo "<a href='./login' type='button' class='btn btn-outline-success me-2'>uitlogge</a>";
+        } else {
+        echo "<a href='./login' type='button' class='btn btn-outline-success me-2'>Inloggen</a>";
+        echo "<a href='./register' type='button' class='btn btn-success me-2'>Registreren</a>";
+} ?>
     </div>
 </header>
 <?php include_once '../controllers/RouteController.php'; ?>

@@ -4,6 +4,7 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
+require_once '../controllers/AdminController.php';
 
 
 require_once '../models/ProductManagement/ProductOverview.php';
@@ -25,6 +26,9 @@ switch ($request) {
         break;
     case URL_ROOT . '/product-overview':
         productOverview();
+        break;
+    case URL_ROOT . '/convertionratio':
+        convertionRatio();
         break;
     case str_starts_with($request, URL_ROOT . '/product-overview?'):
         searchProduct();
