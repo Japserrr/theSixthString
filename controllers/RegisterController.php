@@ -23,6 +23,7 @@ function check_email($conn, $email)
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$email]);
     //check if email is already in use
+
     if ($sth->rowCount() > 0) {
         return true;
     }
@@ -97,7 +98,11 @@ function creation_succesful($auth_id)
     $_SESSION['expire'] = time() + 3600;
     var_dump($_SESSION);
     //navitage to homepage
+    //todo make session last longer if user is active on website
+
+
     header('Location: ' . URL_ROOT . '/home');
+    exit();
 }
 
 
@@ -119,7 +124,7 @@ function insert_address($conn, $address)
 function insert_auth($conn, $auth)
 {
 
-    $sql = 'INSERT INTO auth (email, password, active) VALUES (?,?, 1)';
+    $sql = 'INSERT INTO auth (email, password, active, created_at) VALUES (?,?, 1, NOW())';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $sth->execute([$auth['email'], $auth['password']]);
 
