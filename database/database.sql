@@ -43,7 +43,6 @@ CREATE TABLE auth (
     active tinyint(1) NOT NULL,
     created_at datetime NOT NULL,
     PRIMARY KEY (id)
-    
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `user` (

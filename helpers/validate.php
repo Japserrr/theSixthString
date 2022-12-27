@@ -1,7 +1,6 @@
 <?php
 function isLoggedIn()
 {
-
     if (session_status() == 1 || empty($_SESSION)) {
         return false;
     }
@@ -16,6 +15,7 @@ function isLoggedIn()
         //destroy session
         // session_destroy();
         return login();
+
     }
     return true;
 }

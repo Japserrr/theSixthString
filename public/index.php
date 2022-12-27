@@ -4,6 +4,7 @@ session_start();
 
 check_expire_time(); ?>
 
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -28,7 +29,33 @@ check_expire_time(); ?>
 
     <?php include_once '../controllers/RouteController.php'; ?>
 
-    <script src="./public/js/main.js"></script>
+
+<header class="sticky-top px-4 bg-white w-100 d-flex align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a href="./home" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <h1><?= SITE_NAME ?></h1>
+    </a>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="./home" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="./product-overview" class="nav-link px-2 link-dark">Product management</a></li>
+        <!--        <li><a href="#" class="nav-link px-2 link-dark">test3</a></li>-->
+        <!--        <li><a href="#" class="nav-link px-2 link-dark">test4</a></li>-->
+        <!--        <li><a href="#" class="nav-link px-2 link-dark">test5</a></li>-->
+    </ul>
+
+    <div class="col-md-3 text-end">
+        <?php require_once '../helpers/validate.php';
+        if (isLoggedIn()) {
+           echo "<a href='./login' type='button' class='btn btn-outline-success me-2'>uitlogge</a>";
+        } else {
+        echo "<a href='./login' type='button' class='btn btn-outline-success me-2'>Inloggen</a>";
+        echo "<a href='./register' type='button' class='btn btn-success me-2'>Registreren</a>";
+} ?>
+    </div>
+</header>
+<?php include_once '../controllers/RouteController.php'; ?>
 </body>
+<script src="./public/js/main.js"></script>
+
 
 </html>

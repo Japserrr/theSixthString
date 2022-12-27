@@ -1,7 +1,7 @@
 <?php
 
 //site name
-define('SITE_NAME', 'The sixth string');
+define('SITE_NAME', 'The Sixth String');
 
 //App Root
 define('APP_ROOT', dirname(dirname(__FILE__)));

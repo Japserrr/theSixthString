@@ -5,6 +5,9 @@ require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
 require_once '../controllers/LogoutController.php';
+require_once '../controllers/AdminController.php';
+
+
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
