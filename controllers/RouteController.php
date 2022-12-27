@@ -17,6 +17,9 @@ switch ($request) {
     case URL_ROOT . '/home':
         homepage();
         break;
+    case URL_ROOT . '/convertionratio':
+        convertionRatio();
+        break;
     case URL_ROOT . '/login':
         login();
         break;
