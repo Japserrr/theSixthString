@@ -1,7 +1,6 @@
 <?php
 function isLoggedIn()
 {
-
     if (session_status() == 1 || empty($_SESSION)) {
         return false;
     }
@@ -15,7 +14,8 @@ function isLoggedIn()
         session_unset();
         //destroy session
         // session_destroy();
-        return login();
+        header('Location: ' . URL_ROOT . '/login');
+        exit();
     }
     return true;
 }
@@ -29,7 +29,18 @@ function check_expire_time()
             session_unset();
             //destroy session
             session_destroy();
-            return login();
+            header('Location: ' . URL_ROOT . '/login');
+            exit();
         }
     }
+}
+function counter()
+{
+    if (isset($_SESSION['counter'])) {
+        $_SESSION['counter'] += 1;
+    } else {
+        $_SESSION['counter'] = 1;
+    }
+
+    return $_SESSION['counter'];
 }

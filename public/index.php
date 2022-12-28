@@ -4,6 +4,7 @@ session_start();
 
 check_expire_time(); ?>
 
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -28,7 +29,15 @@ check_expire_time(); ?>
 
     <?php include_once '../controllers/RouteController.php'; ?>
 
-    <script src="./public/js/main.js"></script>
 </body>
+<script src="./public/js/main.js"></script>
+<script>
+    //reload page
+    $(document).ready(function() {
+        $("#reload").click(function() {
+            location.reload();
+        });
+    });
+</script>
 
 </html>
