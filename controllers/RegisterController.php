@@ -83,21 +83,13 @@ function creation_succesful($auth_id)
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth_id;
     $_SESSION['admin'] = false;
-
-    //set session duration to 1 hour
     $_SESSION['expire'] = time() + 3600;
-    var_dump($_SESSION);
+    //set session duration to 1 hour
     //navitage to homepage
     //todo make session last longer if user is active on website
-
-
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
-
-
-
-
 
 function insert_uha($conn, $auth_id, $address_id)
 {

@@ -2,6 +2,7 @@
 include_once '../helpers/validate.php';
 session_start();
 
+
 check_expire_time(); ?>
 
 
@@ -31,13 +32,5 @@ check_expire_time(); ?>
 
 </body>
 <script src="./public/js/main.js"></script>
-<script>
-    //reload page
-    $(document).ready(function() {
-        $("#reload").click(function() {
-            location.reload();
-        });
-    });
-</script>
 
 </html>
