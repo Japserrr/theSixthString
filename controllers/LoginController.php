@@ -37,8 +37,8 @@ function login_account()
     $_POST = [];
 
     // header('Location: ' . URL_ROOT . '/home');
-
-    header('Location: ' . URL_ROOT . '/home');
+    var_dump($_SESSION);
+    //header('Location: ' . URL_ROOT . '/home');
     exit();
 }
 function check_hash($password, $hash)
