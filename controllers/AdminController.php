@@ -29,9 +29,14 @@ return 0;
 
 function totalorders($conn)
 {
-    $sql = "SELECT COUNT(*) as order_count, MAX(order_date) as last_order FROM order";
-    $result1 = $conn->query($sql);
-    $count = $result1->fetchColumn();
-    print $count;
+    $result1 = $conn->prepare("SELECT COUNT(*) as order_count, MAX(order_date) as last_order FROM `order`");
+    $result1->execute();
+
+    if($result1->rowCount()>0)
+    {
+
+        return $result1->fetch(PDO::FETCH_ASSOC);
+    }
+    return 0;
 }
     ?>;
