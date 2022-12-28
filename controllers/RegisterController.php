@@ -1,9 +1,4 @@
-
 <?php
-
-
-
-
 function send_mail($adress)
 {
     $to = $adress;
@@ -52,15 +47,10 @@ function create_account()
         register($errors,  $_POST);
         exit();
     }
-
     $conn = getDbConnection();
-
-
     if (check_email($conn, $_POST['form_email'])) {
         return [
-
             "email" =>  "Email is al in gebruik"
-
         ];
     }
 
@@ -104,6 +94,7 @@ function creation_succesful($auth_id)
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
+
 
 
 

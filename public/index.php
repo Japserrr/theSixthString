@@ -25,12 +25,19 @@ check_expire_time(); ?>
 </head>
 
 <body>
-    <?php include_once '../views/navbar.phtml'; ?>;
+    <?php include_once '../views/navbar.phtml'; ?>
 
-    <?php include_once '../controllers/RouteController.php'; ?>;
+    <?php include_once '../controllers/RouteController.php'; ?>
 
 </body>
 <script src="./public/js/main.js"></script>
-
+<script>
+    //reload page
+    $(document).ready(function() {
+        $("#reload").click(function() {
+            location.reload();
+        });
+    });
+</script>
 
 </html>
