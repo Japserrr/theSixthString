@@ -3,11 +3,11 @@
     <div class="card-header">
     </div>
     <div class="card-body">
-        <h5 class="card-title">Convertion ratio</h5>
+        <h5 class="card-title">Conversie ratio</h5>
         <p class="card-text"><?php echo($ratio[0]["ratio"]) ?>%</p>
     </div>
     <div class="card-footer text-muted">
-        Last updated: <?php echo($ratio[0]["update_date"]) ?>
+        Laatst bijgewerkt: <?php echo($ratio[0]["update_date"]) ?>
     </div>
 </div>
 
@@ -16,11 +16,11 @@
     <div class="card-header">
     </div>
     <div class="card-body">
-        <h5 class="card-title">Total registered users</h5>
+        <h5 class="card-title">Totaal geregistreerde gebruikers</h5>
         <p class="card-text"><?php echo ($registered_users)["user_count"] ?></p>
     </div>
     <div class="card-footer text-muted">
-        <?php echo($registered_users["latest_created_at"] == 0 ? "Er zijn nog geen klanten geregistreerd." : sprintf("Last updated: %s", $registered_users["latest_created_at"])) ?>
+        <?php echo($registered_users["latest_created_at"] == 0 ? "Er zijn nog geen klanten geregistreerd." : sprintf("Laatst bijgewerkt: %s", $registered_users["latest_created_at"])) ?>
     </div>
 </div>
 
@@ -29,10 +29,10 @@
     <div class="card-header">
     </div>
     <div class="card-body">
-        <h5 class="card-title">Total order count</h5>
+        <h5 class="card-title">totaal geplaatste bestellingen</h5>
         <p class="card-text"><?php echo ($total_orders)["order_count"] ?></p>
     </div>
     <div class="card-footer text-muted">
-        <?php echo($total_orders["last_order"] == 0 ? "Er zijn geen bestellingen geplaatst." : sprintf("Last updated: %s", $total_orders["last_order"])) ?>
+        <?php echo($total_orders["last_order"] == 0 ? "Er zijn geen bestellingen geplaatst." : sprintf("Laatst bijgewerkt: %s", $total_orders["last_order"])) ?>
     </div>
 </div>
