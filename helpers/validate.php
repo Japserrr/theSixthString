@@ -33,3 +33,9 @@ function check_expire_time()
         }
     }
 }
+
+/** @return int|null */
+function userId(): ?int
+{
+    return empty($_SESSION['auth_id']) ? null : (int)$_SESSION['auth_id'];
+}
