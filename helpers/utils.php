@@ -17,3 +17,10 @@ function getSession()
     }
     return false;
 }
+function getAdmin()
+{
+    if (isset($_SESSION['admin'])) {
+        return $_SESSION['admin'];
+    }
+    return false;
+}
