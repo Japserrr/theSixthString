@@ -8,3 +8,15 @@ function isLoggedIn()
     }
     return true;
 }
+
+
+/**
+ * @return bool
+ */
+function isAdmin(): bool
+{
+    if (!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
+        return false;
+    }
+    return true;
+}

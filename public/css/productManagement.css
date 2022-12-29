@@ -87,7 +87,7 @@
 }
 .brand-list,
 .category-list {
-    height: 12rem;
+    height: 11.1rem;
     overflow-y: auto;
 }
 .brand-list:hover,

@@ -123,7 +123,11 @@ class ProductManagementController {
      */
     public function productManagement(): void
     {
-        /** TODO add auth check */
+//        require_once '../helpers/validate.php';
+
+//        if (!isLoggedIn() || !isAdmin()) {
+//            header('Location: ' . URL_ROOT . '/home');
+//        }
 
         require_once '../views/management/productManagement.phtml';
     }
@@ -147,13 +151,6 @@ class ProductManagementController {
 
         require_once '../models/Product.php';
 
-        if ($searchString === 'disco baby') {
-            $this->printJavascript('search', $searchString);
-            $this->printJavascript('disco', true);
-            $this->printJavascript('products', (new Product())->findAll());
-            return;
-        }
-
         if ($searchString) {
             $this->printJavascript('search', $searchString);
             $this->printJavascript('products', (new Product())->findAll($searchString));
@@ -168,6 +165,17 @@ class ProductManagementController {
     public function addProduct(): void
     {
         $productData = $_POST[self::ADD_PRODUCT_POST_REQUEST];
+
+        $categoryIds = [];
+        if (!empty($productData['categoryIds'])) {
+            $categoryIds = $productData['categoryIds'];
+
+        }
+        $productData['categoryIds'] = [];
+        foreach ($categoryIds as $categoryId) {
+            $productData['categoryIds'][] += (int)$categoryId;
+        }
+
         $imageData = $_FILES[self::ADD_PRODUCT_POST_REQUEST];
         $name = $_POST[self::ADD_PRODUCT_POST_REQUEST]['name'];
         /** TODO add better data validation */
@@ -192,11 +200,18 @@ class ProductManagementController {
     public function updateProduct(): void
     {
         $productData = $_POST[self::UPDATE_PRODUCT_POST_REQUEST];
+        $categoryIds = [];
+        if (!empty($productData['categoryIds'])) {
+            $categoryIds = $productData['categoryIds'];
+
+        }
+        $productData['categoryIds'] = [];
+        foreach ($categoryIds as $categoryId) {
+            $productData['categoryIds'][] += (int)$categoryId;
+        }
+
         $imageData = $_FILES[self::UPDATE_PRODUCT_POST_REQUEST];
         $name = $_POST[self::UPDATE_PRODUCT_POST_REQUEST]['name'];
-        if (empty($productData['categoryIds'])) {
-            $productData['categoryIds'] = [];
-        }
         if (empty($productData['imagePath'])) {
             $productData['imagePath'] = null;
         }

@@ -12,11 +12,6 @@ window.onload = () => {
     generateProductList();
     generateBrandList();
     generateCategoryList();
-
-    /** @const disco */
-    if (typeof disco !== 'undefined' && disco === 1) {
-        discoBaby();
-    }
 }
 
 /** ======== Onload functions ======== */
@@ -58,9 +53,11 @@ function showNotification() {
         </div>
     `);
 
-    //TODO fix closing 
     setTimeout(() => {
-        document.getElementById('notification').classList.toggle('show');
+        const notification = document.getElementById('notification');
+        if (notification.classList.contains('show')) {
+            document.getElementById('notification').classList.remove('show');
+        }
         }, 2500);
 }
 
@@ -221,7 +218,6 @@ function generateProductList() {
         });
         brandListEL.insertAdjacentHTML('afterbegin', brandOptions);
 
-
         const categoryListEL = document.getElementById(`category-list-${product.id}`);
 
         /** @const categories */
@@ -231,12 +227,17 @@ function generateProductList() {
         } else {
             let categoryOptions = '';
             categories.forEach((category) => {
-                categoryOptions += `
-                <form class='update-category-form  d-flex p-2 text-truncate form-check' action='' method='post'>
-                    <input id='category-checkbox-${category.id}' class="form-check-input" type="checkbox" name='productManagementUpdate[categoryIds][${category.name}]' value="${category.id}">
-                    <label class="form-check-label text-truncate" for="category-checkbox-${category.id}" style='cursor:pointer;' >${category.name}</label>
-                </form>
-            `;
+                product.categoryIds.includes(category.id)
+                    ? categoryOptions += `
+                        <div class='update-category-form p-2'>
+                            <input id='category-checkbox-${category.id}' class="form-check-input" type="checkbox" name='productManagementUpdate[categoryIds][${category.name}]' value="${category.id}" checked>
+                            <label class="form-check-label" for="category-checkbox-${category.id}">${category.name}</label>
+                        </div>`
+                    : categoryOptions += `
+                        <div class='update-category-form p-2'>
+                            <input id='category-checkbox-${category.id}' class="form-check-input" type="checkbox" name='productManagementUpdate[categoryIds][${category.name}]' value="${category.id}">
+                            <label class="form-check-label" for="category-checkbox-${category.id}">${category.name}</label>
+                        </div>`;
             })
             categoryListEL.insertAdjacentHTML('afterbegin', categoryOptions);
         }
@@ -298,49 +299,12 @@ function generateCategoryList() {
     categoryListEL.insertAdjacentHTML('beforeend', categoryList);
 }
 
-function discoBaby() {
-    // TODO make this work
-    let r = 0;
-    let g = 0;
-    let b = 0;
-    if (r <= 255 && g === 0 && b === 0) {
-        r++;
-    }
-    if (r === 255 && b === 0 && g <= 255) {
-        g++;
-    }
-    if (r === 255 && g === 255 && b <= 255) {
-        b++;
-    }
-    if (b === 255 && g === 255 && r > 0) {
-        r--;
-    }
-    if (r === 0 && b === 255 && g > 0) {
-        g--;
-    }
-    if (r === 0 && g === 0 && b > 0) {
-        b--;
-    }
-    document.getElementById('top-section').style.background = 'rgb('+r+','+g+','+b+')';
-    document.getElementsByTagName('body')[0].style.background = 'rgb('+r+','+g+','+b+')';
-}
-
 /** ======== Misc functions ======== */
 
 function openAddProductForm() {
     let brandOptions = '';
     brands.forEach((brand) => {
         brandOptions += `<option value='${brand.id}'>${brand.name}</option>`;
-    })
-
-    let categoryOptions = "";
-    categories.forEach((category) => {
-        categoryOptions += `
-            <div class="form-check">
-                <input id='category-checkbox-${category.id}' class="form-check-input" style='cursor:pointer;' type="checkbox" name='categoryIds[categoryId]' value="${category.id}">
-                <label class="form-check-label" for="category-checkbox-${category.id}" style='cursor:pointer;' >${category.name}</label>
-            </div>
-        `;
     })
 
     document.getElementById('add-product-modal-form').innerHTML = `
@@ -380,8 +344,8 @@ function openAddProductForm() {
                             </div>
                         </div>
                         <div class='col-6 '>
-                            <div class='input form-control' style='height:11.15rem; overflow: hidden; overflow-y: auto;'>
-                                ${categoryOptions}
+                            <div id='add-product-category-input' class='form-control' style='height:11.15rem; overflow:auto;'>
+                                <!-- Generater by Javascript -->
                             </div>
                             <label class="form-label" for="category-input">
                                 Categorie
@@ -425,6 +389,23 @@ function openAddProductForm() {
             </div>
         </form>
     `;
+
+
+    if (categories.length === 0) {
+        document.getElementById('add-product-category-input').classList.add('d-flex', 'justify-content-center', 'align-items-center');
+        document.getElementById('add-product-category-input').insertAdjacentHTML('afterbegin', '<span>Niks gevonden... 😢</span>');
+    } else {
+        let categoryOptions = "";
+        categories.forEach((category) => {
+            categoryOptions += `
+                <div class="form-check text-truncate">
+                    <input id='category-checkbox-${category.id}' class="form-check-input " style='cursor:pointer;' type="checkbox" name='productManagementAdd[categoryIds][]' value="${category.id}">
+                    <label class="form-check-label" for="category-checkbox-${category.id}" style='cursor:pointer;' >${category.name}</label>
+                </div>
+            `;
+        });
+        document.getElementById('add-product-category-input').insertAdjacentHTML('afterbegin', categoryOptions);
+    }
 }
 
 function closeModal(modal) {

@@ -33,36 +33,65 @@ class Product
      */
     public function findAll(?string $searchString = null): array
     {
-        $sql = '
-            SELECT 
-                p.id AS id, 
-                p.product_name AS name,
-                b.id AS brandId,
-                p.price,
-                p.quantity,
-                p.description,
-                p.video_url AS videoUrl,
-                p.img_path AS imagePath
-            FROM product AS p 
-            LEFT JOIN brand AS b ON b.id  = p.brand_id
-        ';
-        if ($searchString) {
-            $sql .= '
-                WHERE p.product_name LIKE :search
-                OR b.brand_name LIKE :search
-                OR p.description LIKE :search
-            ';
-            $params = ['search' => "%$searchString%"];
-        }
         try {
+            $sql = '
+                SELECT 
+                    p.id AS id, 
+                    p.product_name AS name,
+                    p.brand_id AS brandId,
+                    p.price,
+                    p.quantity,
+                    p.description,
+                    p.video_url AS videoUrl,
+                    p.img_path AS imagePath
+                FROM product AS p
+            ';
+
+            if ($searchString) {
+                $params = ['search' => "%$searchString%"];
+                $sql .= '
+                    INNER JOIN brand AS b ON b.id = p.brand_id
+                    LEFT JOIN product_category AS pc ON pc.product_id = p.id
+                    INNER JOIN category AS c ON c.id = pc.category_id
+                    WHERE p.product_name LIKE :search
+                        OR b.brand_name LIKE :search
+                        OR p.description LIKE :search
+                        OR c.category_name LIKE :search
+                ';
+            }
+
             $conn = getDbConnection();
+
             $stmt = $conn->prepare($sql);
             $stmt->execute($params ?? null);
             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $conn = null;
+
+            if (!empty($products)) {
+                foreach ($products as $key => $product) {
+                    $sql = '
+                        SELECT pc.category_id AS categoryId
+                        FROM product_category AS pc
+                        WHERE pc.product_id = :productId
+                    ';
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute(['productId' => $product['id']]);
+                    $categoryIds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    $products[$key]['categoryIds'] = [];
+                    if (!empty($categoryIds)) {
+                        foreach ($categoryIds as $categoryId) {
+                            $products[$key]['categoryIds'][] = $categoryId['categoryId'];
+                        }
+                    }
+                }
+            }
         } catch (Exception) {
+            $conn = null;
             return [];
         }
+
+        $conn = null;
         return $products;
     }
 
@@ -101,7 +130,20 @@ class Product
                 'videoUrl' => $product['videoUrl'],
                 'imagePath' => $imagePath ?? null,
             ]);
-            /** TODO update product_category table */
+            $productId = $conn->lastInsertId();
+
+            if (!empty($product['categoryIds'])) {
+                foreach ($product['categoryIds'] as $categoryId) {
+                    $stmt = $conn->prepare('
+                        INSERT INTO product_category 
+                        VALUES (:productId, :categoryId)
+                    ');
+                    $stmt->execute([
+                        'productId' => $productId,
+                        'categoryId' => $categoryId,
+                    ]);
+                }
+            }
         } catch (Exception) {
             $conn = null;
             return false;
@@ -131,7 +173,7 @@ class Product
         try {
             $conn = getDbConnection();
 
-            if (empty($product['imagePath'])) {
+            if (empty($product['imagePath']) || !empty($image['name']['image'])) {
                 $stmt = $conn->prepare('SELECT img_path AS imagePath FROM product WHERE id = :id AND img_path IS NOT NULL');
                 $stmt->execute(['id' => $product['id']]);
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -142,8 +184,9 @@ class Product
                 }
             }
 
+            $imagePath = null;
             if (!empty($image['name']['image'])) {
-                $newImagePath = $this->saveImageFile($image, $product['name']);
+                $imagePath = $this->saveImageFile($image, $product['name']);
             }
 
             $stmt = $conn->prepare('
@@ -165,18 +208,28 @@ class Product
                 'quantity' => $product['quantity'],
                 'description' => $product['description'],
                 'videoUrl' => $product['videoUrl'],
-                'imagePath' => $product['imagePath'] ?? $newImagePath ?? null,
+                'imagePath' => $imagePath,
             ]);
 
-            foreach ($product['categoryIds'] as $categoryId) {
-                $stmt = $conn->prepare('
-                    INSERT INTO product_category 
-                    VALUES (:productId, :categoryId)
+            $stmt = $conn->prepare('
+                    DELETE FROM product_category 
+                    WHERE product_id = :productId
                 ');
-                $stmt->execute([
-                    'productId' => $product['id'],
-                    'categoryId' => $categoryId,
-                ]);
+            $stmt->execute([
+                'productId' => $product['id'],
+            ]);
+
+            if (!empty($product['categoryIds'])) {
+                foreach ($product['categoryIds'] as $categoryId) {
+                    $stmt = $conn->prepare('
+                        INSERT INTO product_category 
+                        VALUES (:productId, :categoryId)
+                    ');
+                    $stmt->execute([
+                        'productId' => $product['id'],
+                        'categoryId' => $categoryId,
+                    ]);
+                }
             }
         } catch(Exception) {
             $conn = null;
@@ -196,10 +249,10 @@ class Product
         try {
             $conn = getDbConnection();
 
-            $stmt = $conn->prepare('DELETE FROM product WHERE id = :productId');
+            $stmt = $conn->prepare('DELETE FROM product_category WHERE product_id = :productId');
             $stmt->execute(['productId' => $productId]);
 
-            $stmt = $conn->prepare('DELETE FROM product_category WHERE product_id = :productId');
+            $stmt = $conn->prepare('DELETE FROM product WHERE id = :productId');
             $stmt->execute(['productId' => $productId]);
         } catch (Exception) {
             $conn = null;
@@ -280,7 +333,7 @@ class Product
     private function removeImageFile(string $imagePath): bool
     {
         try {
-            unlink($imagePath);
+            unlink("../$imagePath");
         } catch (Exception) {
             return false;
         }
