@@ -4,10 +4,9 @@
     </div>
     <div class="card-body">
         <h5 class="card-title">Conversie ratio</h5>
-        <p class="card-text"><?php echo($ratio[0]["ratio"]) ?>%</p>
+        <p class="card-text"><?= number_format($ratio,3, ",",".") ?>%</p>
     </div>
     <div class="card-footer text-muted">
-        Laatst bijgewerkt: <?php echo($ratio[0]["update_date"]) ?>
     </div>
 </div>
 
