@@ -1,4 +1,8 @@
-<?php include_once '../config/config.php'; ?>
+<?php include_once '../config/config.php';
+include_once '../helpers/validate.php';
+session_start();
+
+check_expire_time(); ?>
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -15,6 +19,12 @@
     <script src="./public/js/popper/popper.min.js"></script>
     <script src="./public/js/bootstrap/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
+
+    <?php
+    if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/checkout') {
+        ?> <link href="./public/css/checkout.css" rel="stylesheet"> <?php
+    }
+    ?>
 
     <title><?= SITE_NAME ?></title>
 </head>

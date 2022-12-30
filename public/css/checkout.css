@@ -1,0 +1,58 @@
+/**::selection {*/
+/*    background: rgba(40, 167, 69, .25);*/
+/*    color: black;*/
+/*}*/
+
+/* Checkout page */
+.checkout-container {
+    margin-top: 4rem;
+}
+
+.payment-details-container,
+.order-overview-container {
+    height: 43rem;
+}
+
+/* Payment details */
+.payment-details-container::selection {
+    background: rgba(40, 167, 69, .25);
+    color: black;
+}
+.order-overview-container::selection {
+    background: rgba(40, 167, 69, .25);
+    color: white;
+}
+.input:hover {
+    border-color: #198754;
+}
+.input:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25);
+}
+.bank-account-input {
+    height: 2rem;
+    width: 1.55rem;
+}
+
+/* Product list */
+.product-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 37.9rem;
+}
+.product-list-header,
+.product-list-footer {
+    background-color: rgb(233, 236, 239);
+}
+.product-list-name {
+    width: 55%;
+}
+.product-list-price {
+    width: 30%;
+}
+.product-list-amount {
+    width: 15%;
+}
+.product-list-body {
+    height: 30.6rem;
+}
