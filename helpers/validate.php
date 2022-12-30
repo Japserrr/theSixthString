@@ -28,19 +28,9 @@ function check_expire_time()
             // remove all session variables
             session_unset();
             //destroy session
-            session_destroy();
+            session_reset();
             header('Location: ' . URL_ROOT . '/login');
             exit();
         }
     }
-}
-function counter()
-{
-    if (isset($_SESSION['counter'])) {
-        $_SESSION['counter'] += 1;
-    } else {
-        $_SESSION['counter'] = 1;
-    }
-
-    return $_SESSION['counter'];
 }

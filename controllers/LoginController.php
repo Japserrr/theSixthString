@@ -4,7 +4,7 @@ function login($error = null)
 {
 
     if (session_status() == 2 && empty($_SESSION)) {
-        session_destroy();
+        session_reset();
     }
 
     //check if already logged in with validate.php helper function
@@ -16,6 +16,8 @@ function login($error = null)
 
     require_once '../views/login/login.phtml';
 }
+
+
 function login_account()
 {
     //get email and password from $_POST
@@ -34,13 +36,11 @@ function login_account()
     $_SESSION['admin'] = false;
     $_SESSION['expire'] = time() + 3600;
 
-    $_POST = [];
-
-    // header('Location: ' . URL_ROOT . '/home');
-    var_dump($_SESSION);
-    //header('Location: ' . URL_ROOT . '/home');
+    header('Location: ' . URL_ROOT . '/home');
     exit();
 }
+
+
 function check_hash($password, $hash)
 {
     return password_verify($password, $hash);
