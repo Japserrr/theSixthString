@@ -4,7 +4,7 @@ function convertionRatio(): void
     $conn = getDbConnection();
     $registered_users = registeredusers($conn);
     $total_orders = totalorders($conn);
-    $ratio = 100/intval(($registered_users)["user_count"])*intval(($total_orders)["order_count"]);
+    $ratio = ($registered_users)["user_count"] > 1 ? 100/intval(($registered_users)["user_count"])*intval(($total_orders)["order_count"]) : 0;
     $conn = null;
     require_once('../views/statistics.phtml');
 }

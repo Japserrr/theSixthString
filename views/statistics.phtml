@@ -7,6 +7,7 @@
         <p class="card-text"><?= number_format($ratio,3, ",",".") ?>%</p>
     </div>
     <div class="card-footer text-muted">
+        <?php echo ($ratio == 0 ? "Er is nog geen ratio bekend." : "Berekening uitgevoerd.");?>
     </div>
 </div>
 
