@@ -2,17 +2,10 @@
 function convertionRatio(): void
 {
     $conn = getDbConnection();
-    $sql = "SELECT ratio,update_date FROM convertionratio ORDER BY update_date DESC LIMIT 1";
-    $r = $conn->prepare($sql);
-    $r->execute();
-    $ratio = $r->fetchAll();
     $registered_users = registeredusers($conn);
     $total_orders = totalorders($conn);
+    $ratio = 100/intval(($registered_users)["user_count"])*intval(($total_orders)["order_count"]);
     $conn = null;
-    if (count($ratio) !== 1) {
-        header("Location: " . URL_ROOT . "/404");
-        exit();
-    }
     require_once('../views/convertionRatio.phtml');
 }
 
