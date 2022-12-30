@@ -29,8 +29,8 @@
                             </div>
                             <div class="carousel-item h-100 text-center">
                                 <div class="container-iframe">
-                                    <iframe class="responsive-iframe" type="text/html" src="<?= $product['video_url'] ?? 'https://www.youtube.com/embed/dQw4w9WgXcQ' ?>" frameborder="0" allowfullscreen>
-                                    </iframe>
+                                    <!-- <iframe class="responsive-iframe" type="text/html" src="<?= $product['video_url'] ?? 'https://www.youtube.com/embed/dQw4w9WgXcQ' ?>" frameborder="0" allowfullscreen>
+                                    </iframe> -->
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                                     <div class="input-group">
                                         <span role="button" class="input-group-text" onclick="inputMinus(this)">-</span>
 
-                                        <input type="number" class="form-control text-center" value="1" required>
+                                        <input id="product-amount" type="number" class="form-control text-center" value="1" required>
 
                                         <span role="button" class="input-group-text" onclick="inputAdd(this)">+</span>
                                     </div>
@@ -108,7 +108,7 @@
                                     <?php if ($product['quantity'] === 0) { ?>
                                         <button class="btn btn-outline-secondary" disabled>In winkelwagen</button>
                                     <?php } else { ?>
-                                        <button class="btn btn-success">In winkelwagen</button>
+                                        <button class="btn btn-success" id="cart-button" type="button" onclick="addToCart()">In winkelwagen</button>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -119,3 +119,10 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function addToCart() {
+        const id = <?= $product['id'] ?>;
+        const amount = parseInt($('#product-amount').val());
+        addToShoppingCart(id, amount, <?= $product['price'] ?>, "<?= $product['product_name'] ?>", "<?= $product['img_path'] ?? 'https://placehold.co/50x50?text=Geen%20product%20foto' ?>");
+    }
+</script>

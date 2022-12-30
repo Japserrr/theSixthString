@@ -11,7 +11,7 @@ class Product
         if (!isset($id) && !is_numeric($_GET['product_id'])) {
             header("Location: " . URL_ROOT . "/404");
         }
-        $sql = 'SELECT `product_name`, `description`, `price`, `video_url`, `img_path`, `quantity`, `brand_name` FROM ' . $this->table . ' INNER JOIN `brand` ON `brand`.`id` = `product`.`brand_id` WHERE `product`.`id` LIKE :id LIMIT 1';
+        $sql = 'SELECT `product`.`id`, `product_name`, `description`, `price`, `video_url`, `img_path`, `quantity`, `brand_name` FROM ' . $this->table . ' INNER JOIN `brand` ON `brand`.`id` = `product`.`brand_id` WHERE `product`.`id` LIKE :id LIMIT 1';
 
         $conn = getDbConnection();
 

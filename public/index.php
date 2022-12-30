@@ -31,10 +31,12 @@ check_expire_time(); ?>
 
 <body>
     <?php include_once '../views/navbar.phtml'; ?>
+    <?php include_once '../views/shoppingcart.phtml'; ?>
 
     <?php include_once '../controllers/RouteController.php'; ?>
 
     <script src="./public/js/main.js"></script>
+    <script src="./public/js/shoppingcart.js"></script>
 </body>
 
 </html>
