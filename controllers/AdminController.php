@@ -6,7 +6,7 @@ function convertionRatio(): void
     $total_orders = totalorders($conn);
     $ratio = 100/intval(($registered_users)["user_count"])*intval(($total_orders)["order_count"]);
     $conn = null;
-    require_once('../views/convertionRatio.phtml');
+    require_once('../views/statistics.phtml');
 }
 
 function registeredusers($conn)
