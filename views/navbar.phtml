@@ -1,16 +1,23 @@
-<header class="sticky-top bg-white shadow w-100 d-flex align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+<header class="sticky-top bg-white shadow w-100 d-flex align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
     <a href="/" class="px-3 d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
         <h1 class="title">The Sixth String</h1>
     </a>
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5">
         <li><a href="./" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="./product-overview" class="nav-link px-2 link-dark">Product beheer</a></li>
+
+        <li><a href="./product-management" class="nav-link px-2 link-dark  <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Product beheer</a></li>
     </ul>
 
-    <div class="col-md-3 text-end px-3">
+    <div class=" col-md-3 text-end px-3">
+        <button type="button" class="btn btn-outline-secondary position-relative mx-5" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+            <img src="./public/img/cart.svg" alt="">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="shopping-cart-amount">
+                0
+            </span>
+        </button>
         <button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success me-2 <?= empty($_SESSION)  ? "" : "d-none"; ?>">inloggen</button>
         <button onclick="window.location.href='./register'" type="button" class="btn btn-success <?= empty($_SESSION) ?  "" : "d-none"; ?>">Registreren</button>
-        <button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) == true ?  "" : "d-none"; ?>">Uitloggen</button>
+        <button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Uitloggen</button>
     </div>
 </header>

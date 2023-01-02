@@ -6,7 +6,9 @@ require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
 require_once '../controllers/LogoutController.php';
 require_once '../controllers/AdminPagecontroller.php';
-
+require_once '../controllers/AdminController.php';
+require_once '../controllers/CheckoutController.php';
+require_once '../controllers/ProductManagementController.php';
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
@@ -15,6 +17,9 @@ switch ($request) {
     case URL_ROOT . '':
     case URL_ROOT . '/home':
         homepage();
+        break;
+    case URL_ROOT . '/statistieken':
+        convertionRatio();
         break;
     case URL_ROOT . '/login':
         login();
@@ -41,6 +46,14 @@ switch ($request) {
             break;
         }
         selectEmployee();
+    case URL_ROOT . '/checkout':
+        checkout();
+        break;
+    case URL_ROOT . '/confirm-payment':
+        confirmPayment();
+        break;
+    case URL_ROOT . '/product-management':
+        (new ProductManagementController)->productManagement();
         break;
     default:
         http_response_code(404);

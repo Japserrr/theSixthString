@@ -1,8 +1,4 @@
-
 <?php
-
-
-
 
 function send_mail($adress)
 {
@@ -52,15 +48,10 @@ function create_account()
         register($errors,  $_POST);
         exit();
     }
-
     $conn = getDbConnection();
-
-
     if (check_email($conn, $_POST['form_email'])) {
         return [
-
             "email" =>  "Email is al in gebruik"
-
         ];
     }
 
@@ -93,14 +84,11 @@ function creation_succesful($auth_id)
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth_id;
     $_SESSION['admin'] = false;
-
-    //set session duration to 1 hour
     $_SESSION['expire'] = time() + 3600;
-    var_dump($_SESSION);
+    //set session duration to 1 hour
     //navitage to homepage
     //todo make session last longer if user is active on website
-
-
+    
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }

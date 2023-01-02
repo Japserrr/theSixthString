@@ -1,0 +1,110 @@
+/* Product management page */
+.product-management-page {
+    max-height: 50rem;
+}
+
+/* Add product, add brand and add category modals */
+.modal-header{
+    background-color: rgba(0,0,0,0.03);
+}
+.btn-close:focus {
+    box-shadow: none;
+}
+.modal-close-btn {
+    opacity: .8;
+}
+.modal-close-btn:hover {
+    opacity: 1;
+}
+
+/* Product header */
+.product-edit-button {
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+.product-delete-button {
+    border-radius: 0 0.375rem 0.375rem 0;
+}
+
+
+
+.product-image {
+    max-height: 5rem;
+}
+.input:hover {
+    border-color: #198754;
+    background-color: rgb(248, 249, 250);
+}
+.input:focus,
+.btn:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.image-input-container:hover {
+    border-color: #198754;
+    background-color: rgb(248, 249, 250);
+}
+.image-input-container:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+.image-input {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0 0 0.375rem 0.375rem;
+}
+.image-input::-webkit-file-upload-button {
+    display: none;
+}
+.remove-image-btn {
+    top: .5rem;
+    left: 1.2rem;
+}
+
+/* Brand list and category list. */
+.brand-list,
+.category-list {
+    height: 10.2rem;
+    overflow-y: auto;
+}
+.brand-list:hover,
+.category-list:hover {
+    border-color: #198754;
+}
+.delete-brand-form:hover,
+.delete-category-form:hover,
+.update-category-form:hover {
+    background-color: #ddede6;
+}
+.delete-button {
+    color: #6f6f6f;
+    background-color: unset;
+}
+.delete-button:hover {
+    color: #1c1c1c;
+}
+
+
+/*.image-input::-webkit-file-upload-button {*/
+/*    color: #fff;*/
+/*    background-color: #198754;*/
+/*    border-color: #198754;*/
+/*}*/
+/*.image-input::-webkit-file-upload-button:hover {*/
+/*    background-color: #157347;*/
+/*    border-color: #146c43;*/
+/*}*/
+/*.image-input::-webkit-file-upload-button:active {*/
+/*    background-color: #146c43;*/
+/*    border-color: #13653f;*/
+/*}*/
+.description-input {
+    resize: vertical;
+    height: 3.2rem;
+    max-height: 14rem;
+}
+.description-add-input {
+    resize: none;
+    height: 7.95rem;
+}

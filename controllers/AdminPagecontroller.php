@@ -11,7 +11,6 @@ function adminPage()
 function getAllEmployee()
 {
     $conn = getDbConnection();
-
     $r = $conn->prepare("
     SELECT u.*, 
     a.email
@@ -21,7 +20,6 @@ function getAllEmployee()
     $r->execute();
     $users = $r->fetchAll();
     $conn = null;
-    return $users;
 }
 
 function selectEmployee()
@@ -49,7 +47,6 @@ function updateEmployee()
     // validation toevoegenb
     $id = $_POST['id'];
     $employee = intval($_POST['employee']);
-
     $conn = getDbConnection();
 
     $r = $conn->prepare("UPDATE user SET employee = :employee WHERE auth_id = :id")->execute(['employee' => $employee, 'id' => $id]);
