@@ -34,7 +34,7 @@ $users = $stmt->fetchAll(PDO::FETCH_OBJ);
 <?php
 // update 2
 $auth_id    = 1;
-$sql        = 'select * from `auth` where id = :id';
+$sql        = 'select * from `auth` where id = :auth_id';
 //$sql        = 'select * from address where id = :id';
 //$sql        = 'select * from auth where id = :id';
 $stmt       =   $conn->prepare($sql);
