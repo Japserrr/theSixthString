@@ -9,6 +9,12 @@
     </ul>
 
     <div class="col-md-3 text-end px-3">
+        <button type="button" class="btn btn-outline-secondary position-relative mx-5" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+            <img src="./public/img/cart.svg" alt="">
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="shopping-cart-amount">
+                0
+            </span>
+        </button>
         <button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success me-2 <?= empty($_SESSION)  ? "" : "d-none"; ?>">inloggen</button>
         <button onclick="window.location.href='./register'" type="button" class="btn btn-success <?= empty($_SESSION) ?  "" : "d-none"; ?>">Registreren</button>
         <button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Uitloggen</button>
