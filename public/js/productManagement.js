@@ -78,8 +78,7 @@ function generateProductList() {
     products.forEach((product) => {
         productList += `
             <div class='row mb-3'>
-                <div class='col-10 p-0'>
-                    <div id='accordion-${product.id}' class="accordion overflow-hidden border rounded shadow-sm">
+                    <div id='accordion-${product.id}' class="accordion overflow-hidden border rounded shadow-sm p-0">
                         <div class="accordion-item border-0">
                             
                             <!-- Edit product header. -->
@@ -198,7 +197,6 @@ function generateProductList() {
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         `;
     });

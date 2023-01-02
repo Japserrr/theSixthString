@@ -1,6 +1,6 @@
 /* Product management page */
 .product-management-page {
-    margin-top: -1.8rem;
+    max-height: 50rem;
 }
 
 /* Add product, add brand and add category modals */
@@ -15,17 +15,6 @@
 }
 .modal-close-btn:hover {
     opacity: 1;
-}
-
-/* Top section */
-.top-section {
-    height: fit-content;
-    width: 82rem;
-    background-color: rgb(233, 236, 239);
-    z-index: 2;
-}
-.search-field {
-    width: 50%;
 }
 
 /* Product header */
@@ -73,21 +62,10 @@
     left: 1.2rem;
 }
 
-/* Product list. */
-.product-list {
-    margin-top: 10rem;
-
-}
-
 /* Brand list and category list. */
-.brand-and-category-list {
-    margin-top: 10rem;
-    left: 80.5rem;
-    width: 18.5rem;
-}
 .brand-list,
 .category-list {
-    height: 11.1rem;
+    height: 10.2rem;
     overflow-y: auto;
 }
 .brand-list:hover,
