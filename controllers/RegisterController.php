@@ -1,4 +1,5 @@
 <?php
+
 function send_mail($adress)
 {
     $to = $adress;
@@ -87,9 +88,13 @@ function creation_succesful($auth_id)
     //set session duration to 1 hour
     //navitage to homepage
     //todo make session last longer if user is active on website
+    
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
+
+
+
 
 function insert_uha($conn, $auth_id, $address_id)
 {

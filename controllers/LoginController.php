@@ -4,6 +4,7 @@ function login($error = null)
 {
 
     if (session_status() == 2 && empty($_SESSION)) {
+
         session_reset();
     }
 
@@ -35,11 +36,9 @@ function login_account()
     $_SESSION['auth_id'] = $auth['id'];
     $_SESSION['admin'] = false;
     $_SESSION['expire'] = time() + 3600;
-
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
-
 
 function check_hash($password, $hash)
 {

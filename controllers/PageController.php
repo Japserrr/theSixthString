@@ -5,8 +5,6 @@ include_once '../helpers/validate.php';
 function homepage(): void
 {
 
-    var_dump($_SESSION);
-
     $conn = getDbConnection();
     $sql = "SELECT id,product_name,img_path FROM product";
     if (isset($_GET["search"])) {
@@ -20,3 +18,5 @@ function homepage(): void
 
     require_once('../views/home.phtml');
 }
+
+

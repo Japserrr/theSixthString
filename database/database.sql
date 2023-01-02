@@ -43,6 +43,7 @@ CREATE TABLE auth (
     active tinyint(1) NOT NULL,
     created_at datetime NOT NULL,
     PRIMARY KEY (id)
+    
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `user` (
@@ -63,11 +64,10 @@ CREATE TABLE employee (
 CREATE TABLE address (
     id INT NOT NULL AUTO_INCREMENT,
     street_name VARCHAR(50) NOT NULL,
-    zipcode VARCHAR(6) NOT NULL,
+    zipcode VARCHAR(7) NOT NULL,
     house_number VARCHAR(45) NOT NULL,
     city VARCHAR(45) NULL DEFAULT NULL,
     country VARCHAR(45) NULL DEFAULT NULL,
-    address_type VARCHAR(45) NULL DEFAULT NULL,
     PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
@@ -82,12 +82,10 @@ CREATE TABLE user_has_address (
 
 CREATE TABLE IF NOT EXISTS the_sixth_string.payment (
     id INT NOT NULL AUTO_INCREMENT,
-    auth_id INT NOT NULL,
-    payment_method VARCHAR(45) NOT NULL,
-    payment_status TINYINT NOT NULL,
-    amount INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (auth_id) REFERENCES auth(id)
+    bank_name ENUM('ABN-Amro', 'ASN Bank', 'Bunq','ING', 'knab', 'Rabobank', 'SNS Bank') NOT NULL,
+    bank_account varchar(18) NOT NULL,
+    amount FLOAT NOT NULL,
+    PRIMARY KEY (id)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS the_sixth_string.order (
@@ -96,7 +94,6 @@ CREATE TABLE IF NOT EXISTS the_sixth_string.order (
     payment_id INT NOT NULL,
     shipping_address_id INT NOT NULL,
     order_date DATETIME NOT NULL,
-    status VARCHAR(100) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (customer_id) REFERENCES the_sixth_string.auth(id),
     FOREIGN KEY (shipping_address_id) REFERENCES the_sixth_string.address (id),
@@ -104,10 +101,8 @@ CREATE TABLE IF NOT EXISTS the_sixth_string.order (
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS the_sixth_string.order_has_products(
-    id INT NOT NULL,
     product_id INT NOT NULL,
     order_id INT NOT NULL,
-    PRIMARY KEY (id),
     FOREIGN KEY (order_id) REFERENCES the_sixth_string.order(id),
     FOREIGN KEY (product_id) REFERENCES the_sixth_string.product(id)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;

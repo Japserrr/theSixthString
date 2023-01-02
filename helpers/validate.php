@@ -21,6 +21,8 @@ function isLoggedIn()
 }
 
 
+ 
+
 /**
  * @return bool
  */
@@ -32,6 +34,11 @@ function isAdmin(): bool
     return true;
 }
 
+/** @return int|null */
+function userId(): ?int
+{
+    return empty($_SESSION['auth_id']) ? null : (int)$_SESSION['auth_id'];
+}
 function check_expire_time()
 {
     if (session_status() == 2 && !empty($_SESSION)) {
@@ -41,6 +48,7 @@ function check_expire_time()
             // remove all session variables
             session_unset();
             //destroy session
+
             session_reset();
             header('Location: ' . URL_ROOT . '/login');
             exit();

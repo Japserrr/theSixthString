@@ -4,12 +4,9 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
-require_once '../controllers/ProductManagementController.php';
-
 require_once '../controllers/LogoutController.php';
 require_once '../controllers/AdminController.php';
-
-
+require_once '../controllers/CheckoutController.php';
 
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -35,14 +32,15 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
-
-    case URL_ROOT . '/product-management':
-        (new ProductManagementController())->productManagement();
+    case URL_ROOT . '/checkout':
+        checkout();
         break;
-
-        case URL_ROOT . '/adminPortal':
-            AdminPage();
-            break;
+    case URL_ROOT . '/confirm-payment':
+        confirmPayment();
+        break;
+    case URL_ROOT . '/adminPortal':
+        AdminPage();
+        break;
 
     default:
         http_response_code(404);

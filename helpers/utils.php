@@ -9,6 +9,7 @@ function getAuthId()
     return false;
 }
 
+
 //return session
 function getSession()
 {

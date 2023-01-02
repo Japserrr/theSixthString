@@ -1,10 +1,7 @@
 <?php include_once '../config/config.php';
 include_once '../helpers/validate.php';
 session_start();
-
-
 check_expire_time(); ?>
-
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -23,6 +20,9 @@ check_expire_time(); ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
 
     <?php
+    if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/checkout') {
+        ?> <link href="./public/css/checkout.css" rel="stylesheet"> <?php
+
     if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/product-management') {
         ?> <link href="./public/css/productManagement.css" rel="stylesheet"> <?php
     }

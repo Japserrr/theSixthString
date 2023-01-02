@@ -1,0 +1,61 @@
+<?php /** @var $order */ ?>
+
+<div class="d-flex justify-content-center">
+
+    <div style="width:620px;">
+        <h1 style="background-color:#198754;color:white;padding:1rem;margin:0;text-align:center;">Order bevestiging</h1>
+        <div style="background-color:white;padding:1rem;">
+
+            <!-- Order info -->
+            <div style="margin-top:1rem;margin-bottom:2rem;">
+                <h5 style="font-weight:bold;">Ordernummer: #<?= $order['orderNumber']; ?></h5>
+                <div style="display:flex;justify-content: space-between;margin-bottom:1.5rem;margin-top:1.5rem;">
+                    <div>
+                        <p style="margin:0;font-weight:bold;">Verzendadres:</p>
+                        <p style="margin:0;">E-mailadres: <?= $order['email']; ?></p>
+                        <p style="margin:0;">Telefoon: <?= $order['phoneNumber'] ?? '-'; ?></p>
+                        <p style="margin:0;">Bankrekening: <?= $order['bankAccount']; ?></p>
+                    </div>
+                    <div>
+                        <p style="margin:0;font-weight:bold;">Verzendadres:</p>
+                        <p style="margin:0;"><?= $order['streetName'] . ' ' . $order['houseNumber']; ?></p>
+                        <p style="margin:0;"><?= $order['zipCode'] . ', ' . $order['city']; ?></p>
+                        <p style="margin:0;"><?= $order['country']; ?></p>
+                    </div>
+                </div>
+            </div>
+            <p>Beste <?= $order['fullName']; ?>, bedankt voor je bestelling bij <a href="./home" style="color:#198754;">The Sixth String</a>! Wij hopen dat u tevreden bent met uw bestelling. Hieronder vindt u een samenvatting van uw bestelling.</p>
+
+            <!-- Order summary -->
+            <table style="width:100%;border-radius:.375rem;overflow:hidden;">
+                <thead style="background-color:#198754;color:white;border: 1px solid #198754;">
+                    <tr>
+                        <th style="padding:.6rem;">Product</th>
+                        <th style="padding:.6rem;">Prijs (per stuk)</th>
+                        <th style="padding:.6rem;">Aantal</th>
+                    </tr>
+                </thead>
+                <tbody style="min-height:10rem;border: 1px solid #c7c8c9">
+                <?php
+                foreach ($order['products'] as $product) {
+                    echo '
+                        <tr style="border-bottom:1px solid rgb(33, 37, 41, .25);">
+                            <td style="padding:.6rem;">'. $product['name'] . '</td>
+                            <td style="padding:.6rem;">€'. $product['price'] . '</td>
+                            <td style="padding:.6rem;">'. $product['amount'] . '</td>
+                        </tr>';
+                }
+                ?>
+                </tbody>
+                <tfoot style="background-color:#198754;color:white;border: 1px solid #198754;font-weight:bold;">
+                <tr>
+                    <td style="padding:.6rem;">Totaalprijs:</td>
+                    <td style="padding:.6rem;" colspan="2">€<?= $order['totalPrice']; ?></td>
+                </tr>'
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+
+</div>
