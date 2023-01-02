@@ -5,6 +5,7 @@ require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
 require_once '../controllers/LogoutController.php';
+require_once '../controllers/AdminPagecontroller.php';
 
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -27,11 +28,22 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
-        case URL_ROOT . '/adminPortal':
+    case URL_ROOT . '/medewerkers':
+        if (isset($_POST['id']) && isset($_POST['employee'])) {
+            updateEmployee();
+            break;
+        }
+        AdminPage();
+        break;
+    case URL_ROOT . '/medewerkers/zoeken':
+        if (empty($_POST['searchField'])) {
             AdminPage();
             break;
+        }
+        selectEmployee();
+        break;
     default:
         http_response_code(404);
         require '../views/errors/404.html';
-        break; 
+        break;
 }

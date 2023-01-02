@@ -184,8 +184,8 @@ function generateUsers(int $amount): bool
         ]);
 
         $authId = $conn->lastInsertId();
-
-        $sql = "INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?, ?, ?, ?, ?)";
+        $rand = rand(0,1);
+        $sql = "INSERT INTO user (auth_id, first_name, infix, last_name, phone_number, employee) VALUES (?, ?, ?, ?, ?, $rand)";
         $conn->prepare($sql)->execute([$authId, $name, $infix, $surname, $phone]);
     }
 
