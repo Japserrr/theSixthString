@@ -2,31 +2,56 @@
 
 include_once '../helpers/database.php';
 
-function AdminPage()
+function adminPage()
 {
+    $employees = getAllEmployee();
+    require_once('../views/admin.phtml');
+}
+
+function getAllEmployee()
+{
+    $conn = getDbConnection();
+    $r = $conn->prepare("
+    SELECT u.*, 
+    a.email
+    FROM user AS u
+    INNER JOIN auth AS a ON a.id = u.auth_id  
+    WHERE u.employee = 1");
+    $r->execute();
+    $users = $r->fetchAll();
+    $conn = null;
+}
+
+function selectEmployee()
+{
+    $email = $_POST['searchField'];
+
+    $conn = getDbConnection();
+    $r = $conn->prepare("
+        SELECT 
+        u.*,
+        a.email
+        FROM user AS u 
+        INNER JOIN auth AS a ON a.id = u.auth_id 
+        WHERE a.email LIKE ?
+    ");
+    $r->execute(["%$email%"]);
+    $employees = $r->fetchAll();
+    $conn = null;
 
     require_once('../views/admin.phtml');
 }
 
-function SelectEmployee()
+function updateEmployee()
 {
+    // validation toevoegenb
+    $id = $_POST['id'];
+    $employee = intval($_POST['employee']);
     $conn = getDbConnection();
 
-    $r = $conn->prepare("SELECT auth_id FROM employee WHERE auth_id = ?");
-    $r->execute();
-    $product = $r->fetchAll();
+    $r = $conn->prepare("UPDATE user SET employee = :employee WHERE auth_id = :id")->execute(['employee' => $employee, 'id' => $id]);
+
     $conn = null;
-    return $product;
-}
-
-function UpdateEmployee()
-{
-
-    $conn = getDbConnection();
-    $r = $conn->prepare("UPDATE employee SET auth_id WHERE ? ", [PDO::ATTR_CURSOR, PDO::CURSOR_FWDONLY]);
-
-    $r->execute([
-        /**hier komt je auth_id variable */
-    ]);
-    return $r;
+    header('Location: ' . URL_MAIN . URL_ROOT . '/medewerkers');
+    exit;
 }

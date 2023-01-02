@@ -2,6 +2,7 @@
 
 include_once '../helpers/database.php';
 include_once '../helpers/validate.php';
+
 function homepage(): void
 {
     $values = [];
@@ -16,5 +17,5 @@ function homepage(): void
     $products = $r->fetchAll();
     $conn = null;
 
-    require_once('../views/home.phtml');
+    require_once('../views/productlist.phtml');
 }

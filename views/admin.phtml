@@ -1,29 +1,44 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container mt-2">
+    <form action="<?= URL_MAIN . URL_ROOT?>/medewerkers/zoeken" method="post">
+        <div class="input-group">
+            <input type="search" class="form-control rounded" placeholder="Zoek op e-mailadres" aria-label="Search" aria-describedby="search-addon" name="searchField" value="<?= $email ?? '' ?>" />
+            <button type="submit" class="btn btn-outline-primary">search</button>
+        </div>
+    </form>
+
+    <p class="text-center w-100">
+        <?php echo (count($employees) == 0 ? "Geen gebruikers gevonden." : sprintf("%s resultaten gevonden", count($employees))) ?>
+    </p>
+    <?php
+    foreach ($employees as $employee) {
+    ?>
+        <div class="row">
+            <div class="card p-0 mb-1">
+                <div class="card-body">
+                    <?php
+                    echo '<h5>#' . $employee['auth_id']  . ' ' . $employee["first_name"] . ' ' . $employee['infix'] . ' ' . $employee['last_name'] . '</h5>';
+                    echo "<p class='m-0'>" . $employee['email'] . '</p>';
+                    ?>
+                </div>
+                <div class="card-footer">
+
+                <?php if ($employee['employee'] === 1) { ?>
+                    <form method="POST" action="<?= URL_MAIN . URL_ROOT?>/medewerkers">
+                        <input hidden type="text" name="id" value="<?= $employee['auth_id'] ?>">
+                        <input hidden type="text" name="employee" value="0">
+                        <button type='submit' class='btn btn-danger'>Medewerker inactief stellen</button>
+                    </form>
+                    <?php } else { ?>
+                    <form method="POST" action="<?= URL_MAIN . URL_ROOT?>/medewerkers">
+                        <input hidden type="text" name="id" value="<?= $employee['auth_id'] ?>">
+                        <input hidden type="text" name="employee" value="1">
+                        <button type='submit' class='btn btn-success'>Medewerker maken</button>
+                    </form>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
+</div>

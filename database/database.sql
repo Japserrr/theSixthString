@@ -52,14 +52,11 @@ CREATE TABLE `user` (
     infix varchar(20) NULL,
     last_name varchar(50) NOT NULL,
     phone_number varchar(20) NULL,
+    employee tinyint(1) NOT NULL,
     FOREIGN KEY (auth_id) REFERENCES auth(id),
     PRIMARY KEY (auth_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE employee (
-    auth_id int(11) NOT NULL,
-    FOREIGN KEY (auth_id) REFERENCES auth(id)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE address (
     id INT NOT NULL AUTO_INCREMENT,
