@@ -32,7 +32,10 @@ function checkout(): void
             AND au.active = 1
     ');
     $stmt->execute(['userId' => $userId]);
-    $user += $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!empty($result)) {
+        $user += $result;
+    }
     $conn = null;
 
     require_once '../views/checkout/checkout.phtml';

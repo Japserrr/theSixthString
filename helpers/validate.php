@@ -1,7 +1,6 @@
 <?php
 function isLoggedIn()
 {
-
     if (session_status() == 1 || empty($_SESSION)) {
         return false;
     }
@@ -15,9 +14,30 @@ function isLoggedIn()
         session_unset();
         //destroy session
         // session_destroy();
-        return login();
+        header('Location: ' . URL_ROOT . '/login');
+        exit();
     }
     return true;
+}
+
+
+ 
+
+/**
+ * @return bool
+ */
+function isAdmin(): bool
+{
+    if (!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
+        return false;
+    }
+    return true;
+}
+
+/** @return int|null */
+function userId(): ?int
+{
+    return empty($_SESSION['auth_id']) ? null : (int)$_SESSION['auth_id'];
 }
 function check_expire_time()
 {
@@ -28,14 +48,10 @@ function check_expire_time()
             // remove all session variables
             session_unset();
             //destroy session
-            session_destroy();
-            return login();
+
+            session_reset();
+            header('Location: ' . URL_ROOT . '/login');
+            exit();
         }
     }
-}
-
-/** @return int|null */
-function userId(): ?int
-{
-    return empty($_SESSION['auth_id']) ? null : (int)$_SESSION['auth_id'];
 }

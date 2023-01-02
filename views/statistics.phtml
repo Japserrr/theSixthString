@@ -1,0 +1,38 @@
+<!--THIS IS THE CONVERTIONRATIO-->
+<div class="card text-center">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Conversie ratio</h5>
+        <p class="card-text"><?= number_format($ratio,3, ",",".") ?>%</p>
+    </div>
+    <div class="card-footer text-muted">
+        <?php echo ($ratio == 0 ? "Er is nog geen ratio bekend." : "Berekening uitgevoerd.");?>
+    </div>
+</div>
+
+<!--THIS IS THE TOTAL USER COUNT-->
+<div class="card text-center">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Totaal geregistreerde gebruikers</h5>
+        <p class="card-text"><?php echo ($registered_users)["user_count"] ?></p>
+    </div>
+    <div class="card-footer text-muted">
+        <?php echo($registered_users["latest_created_at"] == 0 ? "Er zijn nog geen klanten geregistreerd." : sprintf("Laatst bijgewerkt: %s", $registered_users["latest_created_at"])) ?>
+    </div>
+</div>
+
+<!--THIS IS THE TOTAL ORDER COUNT-->
+<div class="card text-center">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">totaal geplaatste bestellingen</h5>
+        <p class="card-text"><?php echo ($total_orders)["order_count"] ?></p>
+    </div>
+    <div class="card-footer text-muted">
+        <?php echo($total_orders["last_order"] == 0 ? "Er zijn geen bestellingen geplaatst." : sprintf("Laatst bijgewerkt: %s", $total_orders["last_order"])) ?>
+    </div>
+</div>

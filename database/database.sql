@@ -64,7 +64,7 @@ CREATE TABLE employee (
 CREATE TABLE address (
     id INT NOT NULL AUTO_INCREMENT,
     street_name VARCHAR(50) NOT NULL,
-    zipcode VARCHAR(6) NOT NULL,
+    zipcode VARCHAR(7) NOT NULL,
     house_number VARCHAR(45) NOT NULL,
     city VARCHAR(45) NULL DEFAULT NULL,
     country VARCHAR(45) NULL DEFAULT NULL,
