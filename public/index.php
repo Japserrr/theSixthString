@@ -22,21 +22,25 @@ check_expire_time(); ?>
     <?php
     if (str_replace(URL_ROOT, '', $_SERVER['REQUEST_URI']) === '/checkout') {
     ?>
-        <link href="./public/css/checkout.css" rel="stylesheet"> <?php
-                                                                }
-                                                                if (str_replace(URL_ROOT, '', $_SERVER['REQUEST_URI']) === '/product-management') {
-                                                                    ?>
-        <link href="./public/css/productManagement.css" rel="stylesheet"> <?php
-                                                                        }
-                                                                            ?>
+        <link href="./public/css/checkout.css" rel="stylesheet">
+    <?php
+    }
+
+    if (str_replace(URL_ROOT, '', $_SERVER['REQUEST_URI']) === '/product-management') {
+    ?>
+        <link href="./public/css/productManagement.css" rel="stylesheet">
+    <?php
+    }
+    ?>
+
 
     <title><?= SITE_NAME ?></title>
 </head>
 
-<body>
+<body class=" bg-image" style="background-image:url('./public/img/stock_foto_guitars.jpeg');  height: 100vh; background-repeat: no-repeat; background-size: cover;    ">
     <?php include_once '../views/navbar.phtml'; ?>
 
-    <main class=" bg-image" style="background-image:url('./public/img/stock_foto_guitars.jpeg');  height: calc();">
+    <main>
         <?php include_once '../controllers/RouteController.php'; ?>
         <?php include_once '../views/shoppingcart.phtml'; ?>
 
