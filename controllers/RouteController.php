@@ -4,6 +4,8 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
+require_once '../controllers/ProductManagementController.php';
+
 require_once '../controllers/LogoutController.php';
 require_once '../controllers/AdminController.php';
 
@@ -33,9 +35,15 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
+
+    case URL_ROOT . '/product-management':
+        (new ProductManagementController())->productManagement();
+        break;
+
         case URL_ROOT . '/adminPortal':
             AdminPage();
             break;
+
     default:
         http_response_code(404);
         require '../views/errors/404.html';

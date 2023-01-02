@@ -22,6 +22,12 @@ check_expire_time(); ?>
     <script src="./public/js/bootstrap/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
 
+    <?php
+    if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/product-management') {
+        ?> <link href="./public/css/productManagement.css" rel="stylesheet"> <?php
+    }
+    ?>
+
     <title><?= SITE_NAME ?></title>
 </head>
 

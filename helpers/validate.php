@@ -19,6 +19,19 @@ function isLoggedIn()
     }
     return true;
 }
+
+
+/**
+ * @return bool
+ */
+function isAdmin(): bool
+{
+    if (!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
+        return false;
+    }
+    return true;
+}
+
 function check_expire_time()
 {
     if (session_status() == 2 && !empty($_SESSION)) {
