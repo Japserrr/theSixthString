@@ -5,6 +5,7 @@ define('SITE_NAME', 'The sixth string');
 
 //App Root
 define('APP_ROOT', dirname(dirname(__FILE__)));
+define('URL_MAIN', 'http://localhost');
 define('URL_ROOT', '/theSixthString');
 define('URL_SUBFOLDER', '');
 
