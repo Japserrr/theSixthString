@@ -106,3 +106,4 @@ CREATE TABLE IF NOT EXISTS the_sixth_string.order_has_products(
     FOREIGN KEY (order_id) REFERENCES the_sixth_string.order(id),
     FOREIGN KEY (product_id) REFERENCES the_sixth_string.product(id)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+-- 
