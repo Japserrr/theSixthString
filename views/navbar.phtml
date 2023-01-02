@@ -5,12 +5,12 @@
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5">
         <li><a href="./" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="./product-overview" class="nav-link px-2 link-dark">Product beheer</a></li>
+        <li><a href="./product-management" class="nav-link px-2 link-dark">Product beheer</a></li>
     </ul>
 
     <div class="col-md-3 text-end px-3">
         <button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success me-2 <?= empty($_SESSION)  ? "" : "d-none"; ?>">inloggen</button>
         <button onclick="window.location.href='./register'" type="button" class="btn btn-success <?= empty($_SESSION) ?  "" : "d-none"; ?>">Registreren</button>
-        <button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) == true ?  "" : "d-none"; ?>">Uitloggen</button>
+        <button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Uitloggen</button>
     </div>
 </header>

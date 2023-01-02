@@ -8,3 +8,13 @@ function getAuthId()
     }
     return false;
 }
+
+
+//return session
+function getSession()
+{
+    if (isset($_SESSION)) {
+        return $_SESSION;
+    }
+    return false;
+}

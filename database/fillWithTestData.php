@@ -234,7 +234,7 @@ function generateProduct($amountProduct, $amountBrand): bool
             rand(0, 100000) / 100,
             rand(0, 20),
             'Beschrijving van het product ' . $productName,
-            'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+            'https://www.youtube.com/embed/dQw4w9WgXcQ'
         ]);
     }
     $conn = null;
