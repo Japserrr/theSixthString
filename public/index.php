@@ -22,6 +22,7 @@ check_expire_time(); ?>
     <?php
     if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/checkout') {
         ?> <link href="./public/css/checkout.css" rel="stylesheet"> <?php
+    }
 
     if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/product-management') {
         ?> <link href="./public/css/productManagement.css" rel="stylesheet"> <?php

@@ -137,6 +137,7 @@ class ProductManagementController {
      */
     public function findProducts(): void
     {
+
         $searchString = null;
         if (!empty($_POST[self::FIND_PRODUCT_POST_REQUEST]['search'])) {
             if (!is_string($_POST[self::FIND_PRODUCT_POST_REQUEST]['search'])) {
@@ -148,7 +149,6 @@ class ProductManagementController {
             }
         }
         /** TODO add better data validation */
-
         require_once '../models/Product.php';
 
         if ($searchString) {

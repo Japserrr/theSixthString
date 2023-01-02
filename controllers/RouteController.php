@@ -7,6 +7,7 @@ require_once '../controllers/LoginController.php';
 require_once '../controllers/LogoutController.php';
 require_once '../controllers/AdminController.php';
 require_once '../controllers/CheckoutController.php';
+require_once '../controllers/ProductManagementController.php';
 
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -41,7 +42,9 @@ switch ($request) {
     case URL_ROOT . '/adminPortal':
         AdminPage();
         break;
-
+    case URL_ROOT . '/product-management':
+        (new ProductManagementController)->productManagement();
+        break;
     default:
         http_response_code(404);
         require '../views/errors/404.html';
