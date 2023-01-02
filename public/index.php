@@ -20,26 +20,33 @@ check_expire_time(); ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
 
     <?php
-    if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/checkout') {
-        ?> <link href="./public/css/checkout.css" rel="stylesheet"> <?php
-
-    if (str_replace(URL_ROOT,'', $_SERVER['REQUEST_URI']) === '/product-management') {
-        ?> <link href="./public/css/productManagement.css" rel="stylesheet"> <?php
-    }
+    if (str_replace(URL_ROOT, '', $_SERVER['REQUEST_URI']) === '/checkout') {
     ?>
+        <link href="./public/css/checkout.css" rel="stylesheet"> <?php
+                                                                }
+                                                                if (str_replace(URL_ROOT, '', $_SERVER['REQUEST_URI']) === '/product-management') {
+                                                                    ?>
+        <link href="./public/css/productManagement.css" rel="stylesheet"> <?php
+                                                                        }
+                                                                            ?>
 
     <title><?= SITE_NAME ?></title>
 </head>
 
 <body>
     <?php include_once '../views/navbar.phtml'; ?>
-    <?php include_once '../views/shoppingcart.phtml'; ?>
 
-    <?php include_once '../controllers/RouteController.php'; ?>
+    <main class=" bg-image" style="background-image:url('./public/img/stock_foto_guitars.jpeg');  height: calc();">
+        <?php include_once '../controllers/RouteController.php'; ?>
+        <?php include_once '../views/shoppingcart.phtml'; ?>
+
+    </main>
+
 
 
     <script src="./public/js/main.js"></script>
     <script src="./public/js/shoppingcart.js"></script>
 
 </body>
+
 </html>

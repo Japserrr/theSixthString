@@ -4,7 +4,7 @@ include_once '../helpers/database.php';
 include_once '../helpers/validate.php';
 function homepage(): void
 {
-
+    $values = [];
     $conn = getDbConnection();
     $sql = "SELECT id,product_name,img_path FROM product";
     if (isset($_GET["search"])) {
@@ -18,5 +18,3 @@ function homepage(): void
 
     require_once('../views/home.phtml');
 }
-
-
