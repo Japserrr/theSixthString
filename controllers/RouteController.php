@@ -22,6 +22,18 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
+    case URL_ROOT . '/edit-info':
+        require_once '../views/partials/member-gegevens.php';
+        break;
+    case URL_ROOT . '/privacy':
+        require_once '../views/partials/privacy.php';
+        break;
+    case URL_ROOT . '/edit-login':
+        require_once '../views/partials/member-login.php';
+        break;
+    case URL_ROOT . '/edit-address':
+        require_once '../views/partials/member-address.php';
+        break;
     default:
         http_response_code(404);
         require '../views/errors/404.html';
