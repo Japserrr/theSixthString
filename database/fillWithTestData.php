@@ -225,7 +225,7 @@ function generateProduct($amountProduct, $amountBrand): bool
     $conn = getDbConnection();
 
     for ($i = 1; $i <= $amountProduct; $i++) {
-        $sql = "INSERT INTO product (`product_name`, `brand_id`, `price`, `quantity`, `description`, `video_url`) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO product (`product_name`, `brand_id`, `price`, `quantity`, `description`, `video_url`, `img_path`) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $productName = 'Gitaar #' . $i;
 
         $conn->prepare($sql)->execute([
@@ -234,7 +234,8 @@ function generateProduct($amountProduct, $amountBrand): bool
             rand(0, 100000) / 100,
             rand(0, 20),
             'Beschrijving van het product ' . $productName,
-            'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+            'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            './public/img/Gitaar01.jpg'
         ]);
     }
     $conn = null;
