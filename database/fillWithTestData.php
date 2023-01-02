@@ -176,7 +176,7 @@ function generateUsers(int $amount): bool
         $surname = $lastNameArray[rand(0, count($lastNameArray) - 1)];
         $phone = intval(316 . rand(10000, 99999));
 
-        $sqlAuth = "INSERT INTO auth (`password`, `email`, `active`) VALUES (?, ?, ?)";
+        $sqlAuth = "INSERT INTO auth (`password`, `email`, `active`, `created_at`) VALUES (?, ?, ?, NOW())";
         $conn->prepare($sqlAuth)->execute([
             'geheim',
             $name . $infix . $surname . '@email.com',
@@ -187,7 +187,6 @@ function generateUsers(int $amount): bool
 
         $sql = "INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?, ?, ?, ?, ?)";
         $conn->prepare($sql)->execute([$authId, $name, $infix, $surname, $phone]);
-
     }
 
     $conn = null;
@@ -235,7 +234,7 @@ function generateProduct($amountProduct, $amountBrand): bool
             rand(0, 100000) / 100,
             rand(0, 20),
             'Beschrijving van het product ' . $productName,
-            'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+            'https://www.youtube.com/embed/dQw4w9WgXcQ'
         ]);
     }
     $conn = null;

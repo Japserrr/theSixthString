@@ -2,8 +2,22 @@
 
 function login($error = null)
 {
+
+    if (session_status() == 2 && empty($_SESSION)) {
+        session_reset();
+    }
+
+    //check if already logged in with validate.php helper function
+    if (isLoggedIn()) {
+
+        header('Location: ' . URL_ROOT . '/home');
+        exit();
+    }
+
     require_once '../views/login/login.phtml';
 }
+
+
 function login_account()
 {
     //get email and password from $_POST
@@ -17,30 +31,37 @@ function login_account()
         ];
     }
     //create session 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth['id'];
     $_SESSION['admin'] = false;
-    $_POST = [];
+    $_SESSION['expire'] = time() + 3600;
+
     header('Location: ' . URL_ROOT . '/home');
+    exit();
+}
+
+
+function check_hash($password, $hash)
+{
+    return password_verify($password, $hash);
 }
 
 function get_account_status($email, $password)
 {
     $conn = getDbConnection();
-    $sql = 'SELECT * FROM auth WHERE email = ? AND password = SHA2(?, 256)';
+    $sql = 'SELECT * FROM auth WHERE email = ?';
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-    $sth->execute([$email, $password]);
+    $sth->execute([$email]);
     //check if record exists
     if ($sth->rowCount() > 0) {
         $auth = $sth->fetch(PDO::FETCH_ASSOC);
+        //check if password is correct
+        if (!check_hash($password, $auth['password'])) {
+            //password is incorrect
+            return false;
+        }
         if ($auth['active'] == 1) {
             //account is active
-
-
             return $auth;
         } else {
             //account is not active

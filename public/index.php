@@ -1,4 +1,10 @@
-<?php include_once '../config/config.php'; ?>
+<?php include_once '../config/config.php';
+include_once '../helpers/validate.php';
+session_start();
+
+
+check_expire_time(); ?>
+
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -30,7 +36,7 @@
 
     <?php include_once '../controllers/RouteController.php'; ?>
 
-    <script src="./public/js/main.js"></script>
 </body>
+<script src="./public/js/main.js"></script>
 
 </html>
