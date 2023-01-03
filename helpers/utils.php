@@ -75,9 +75,24 @@ function removeSession()
  */
 function isAdmin(): bool
 {
-    if (!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
+    if (!isset($_SESSION['auth_id'])) {
         return false;
     }
+
+    require_once '../helpers/database.php';
+
+    $conn = getDbConnection();
+    $stmt = $conn->prepare('SELECT employee FROM user WHERE auth_id = :auth_id');
+    $stmt->execute(['auth_id' => $_SESSION['auth_id']]);
+    $isEmployee = $stmt->fetch();
+    $conn = null;
+
+    var_dump('test');
+
+    if (!$isEmployee['employee']) {
+        return false;
+    }
+
     return true;
 }
 
