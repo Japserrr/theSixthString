@@ -3,14 +3,12 @@
 function login($error = null)
 {
 
-    if (session_status() == 2 && empty($_SESSION)) {
-
+    //check if session is active and empty if so reset session
+    if (session_status() == 2 && empty($_SESSION))
         session_reset();
-    }
 
     //check if already logged in with validate.php helper function
     if (isLoggedIn()) {
-
         header('Location: ' . URL_ROOT . '/home');
         exit();
     }
@@ -42,14 +40,20 @@ function login_account()
 
 function check_hash($password, $hash)
 {
+
     return password_verify($password, $hash);
 }
-
+//check if account exists and if password is correct 
 function get_account_status($email, $password)
 {
+
+    //get database connection
     $conn = getDbConnection();
+    //build query
     $sql = 'SELECT * FROM auth WHERE email = ?';
+    //prepare statement
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
     $sth->execute([$email]);
     //check if record exists
     if ($sth->rowCount() > 0) {
