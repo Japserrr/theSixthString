@@ -101,8 +101,6 @@ class ProductManagementController
      */
     public function productManagement(): void
     {
-
-
         $this->isAuthorized();
 
         require_once '../views/management/productManagement.phtml';

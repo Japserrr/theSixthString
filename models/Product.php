@@ -190,6 +190,9 @@ class Product
             }
 
             $imagePath = null;
+            if (!empty($product['imagePath'])) {
+                $imagePath = $product['imagePath'];
+            }
             if (!empty($image['name']['image'])) {
                 $imagePath = $this->saveImageFile($image, $product['name']);
             }
