@@ -1,4 +1,6 @@
 <?php
+require_once '../helpers/database.php';
+
 function isLoggedIn()
 {
     if (session_status() == 1 || empty($_SESSION)) {
@@ -28,9 +30,20 @@ function isLoggedIn()
  */
 function isAdmin(): bool
 {
-    if (!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
+    if (!isset($_SESSION['auth_id'])) {
         return false;
     }
+
+    $conn = getDbConnection();
+    $stmt = $conn->prepare('SELECT employee FROM user WHERE auth_id = :auth_id');
+    $stmt->execute(['auth_id' => $_SESSION['auth_id']]);
+    $isEmployee = $stmt->fetch();
+    $conn = null;
+
+    if (!$isEmployee['employee']) {
+        return false;
+    }
+
     return true;
 }
 

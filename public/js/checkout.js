@@ -1,4 +1,32 @@
-window.onload = () => {
+window.onload =() => {
+    getShoppingCartProducts();
+};
+
+function getShoppingCartProducts() {
+    const cart = getShoppingCart();
+    let totalPrice = 0;
+    let productList = "";
+    let products = [];
+    cart.items.forEach((product) => {
+        totalPrice += product.price * product.amount;
+        productList += ` 
+            <div class='row p-3 border-bottom'>
+                <div class='col-6 text-truncate'>${product.title}</div>
+                <div class='col-3 text-center'>€${product.price}</div>
+                <div class='col-3 text-center'>${product.amount}</div>
+            </div>`;
+        products.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            amount: product.amount,
+        });
+    });
+
+    document.getElementById('product-list-body').innerHTML = productList;
+    document.getElementById('total-price').innerHTML = `€${totalPrice}`;
+    document.getElementById('products-input').value = JSON.stringify(products);
+    document.getElementById('total-price-input').value = totalPrice;
 }
 
 function preFillBankAccountCodes(bank) {
@@ -36,8 +64,11 @@ function preFillBankAccountCodes(bank) {
 }
 
 function nextBankAccountInputField(inputField) {
-    //TODO fix e + and - input
     if (inputField.srcElement.value.length === 0) {
+        return;
+    }
+    if (!inputField.srcElement.value.toUpperCase().match(RegExp(/^[A-Z]|[0-9]$/))) {
+        inputField.srcElement.value = '';
         return;
     }
 
@@ -125,12 +156,11 @@ function validateForm() {
         let throwError = false;
         const inputFieldEl = document.getElementById(`${inputField.name}-input`);
 
-        // TODO ADD zipcode check
         if (
             (inputField.required && inputFieldEl.value.length === 0)
             || (inputField.type === 'string' && typeof inputFieldEl.value !== inputField.type)
-            || (inputField.name === 'phone-number' && (typeof Number(inputFieldEl.value) !== inputField.type || inputFieldEl.value.length !== 10))
-            || (inputField.name === 'zip-code' && inputFieldEl.value.match(RegExp(/[0-9]{4}[A-Z]{2}/)))
+            || (inputField.name === 'phone-number' && (inputFieldEl.value.length !== 0 && !inputFieldEl.value.match(RegExp(/^[0-9]{10}$/))))
+            || (inputField.name === 'zip-code' && !inputFieldEl.value.match(RegExp(/^[0-9]{4}(\s([a-z]{2}|[A-Z]{2})|[a-z]{2}|[A-Z]{2})$/)))
             || (inputField.name === 'country' && inputFieldEl.value === 'Kies een land')
             || (inputField.name === 'bank-name' && inputFieldEl.value === 'Kies een bank')
         ) {
@@ -155,7 +185,6 @@ function validateForm() {
     document.getElementById("payment-details-form").requestSubmit();
 }
 
-/** @return Boolean */
 function validateBankAccount() {
     let isValid = true;
 
@@ -166,12 +195,12 @@ function validateBankAccount() {
 
         let regex;
         if (stringInputFields.includes(i)) {
-            regex = /[A-Z]/;
+            regex = /^[A-Z]$/;
         } else {
-            regex = /[0-9]/;
+            regex = /^[0-9]$/;
         }
 
-        if (!inputFieldEl.value.match(RegExp(regex)) || inputFieldEl.value.length === 0) {
+        if (!inputFieldEl.value.toUpperCase().match(RegExp(regex)) || inputFieldEl.value.length === 0) {
             inputFieldEl.classList.remove('border-success');
             inputFieldEl.classList.add('border-danger');
             isValid = false;

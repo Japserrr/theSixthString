@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <p>Beste <?= $order['fullName']; ?>, bedankt voor je bestelling bij <a href="./home" style="color:#198754;">The Sixth String</a>! Wij hopen dat u tevreden bent met uw bestelling. Hieronder vindt u een samenvatting van uw bestelling.</p>
+            <p>Beste <?= $order['fullName']; ?>, bedankt voor je bestelling bij <a href="<?= URL_MAIN ?>" style="color:#198754;">The Sixth String</a>! Wij hopen dat u tevreden bent met uw bestelling. Hieronder vindt u een samenvatting van uw bestelling.</p>
 
             <!-- Order summary -->
             <table style="width:100%;border-radius:.375rem;overflow:hidden;">
@@ -51,7 +51,7 @@
                 <tr>
                     <td style="padding:.6rem;">Totaalprijs:</td>
                     <td style="padding:.6rem;" colspan="2">€<?= $order['totalPrice']; ?></td>
-                </tr>'
+                </tr>
                 </tfoot>
             </table>
 

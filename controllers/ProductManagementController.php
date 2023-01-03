@@ -18,71 +18,48 @@ class ProductManagementController {
     public const ADD_CATEGORY_POST_REQUEST = 'categoryManagementAdd';
     public const DELETE_CATEGORY_POST_REQUEST = 'categoryManagementDelete';
 
-//    /**
-//     * Validate the post request data based on the given fields and type.
-//     * @param string $request
-//     * @param string[] $fields
-//     * @param string $message
-//     * @return array
-//     */
-//    private function validatePostRequest(string $request, array $fields, string $message): array
-//    {
-//        $notification = [
-//            'type' => 'danger',
-//            'message' => $message,
-//        ];
-//
-//        if (empty($_POST[$request])) {
-//            $this->printJson('notification', $notification);
-//            $this->findProducts();
-//            return [];
-//        }
-//
-//        $validatedData = [];
-//        foreach ($fields as $field => $type) {
-//            if (empty($_POST[$request][$field])) {
-//                $this->printJson('notification', $notification);
-//                $this->findProducts();
-//                return [];
-//            }
-//
-//            $value = $_POST[$request][$field];
-//            switch (true) {
-//                case $type === 'string':
-//                    if (!is_string($field)) {
-//                        $this->printJson('notification', $notification);
-//                        $this->findProducts();
-//                        return [];
-//                    }
-//                    $_POST[$request][$field] = trim($value);
-//                    if (empty($_POST[$request[$field]])) {
-//
-//                    }
-//                    break;
-//                case $type ==='numeric':
-//                    if (!is_numeric($field)) {
-//                        $this->printJson('notification', $notification);
-//                        $this->findProducts();
-//                        return [];
-//                    }
-//                    break;
-//                    //TODO make intArray
-//                case $type ==='array':
-//                    if (!is_array($field)) {
-//                        $this->printJson('notification', $notification);
-//                        $this->findProducts();
-//                        return [];
-//                    }
-//                    break;
-//            }
-//
-//            $validatedData += [$field => $_POST[$request][$field]];
-//        }
-//
-//        unset($_POST);
-//
-//        return $validatedData;
-//    }
+    /** @return void */
+    function isAuthorized(): void
+    {
+        if (!isLoggedIn() || !isAdmin()) {
+            header('Location: '.URL_ROOT.'/home');
+        }
+    }
+
+    /**
+     * @param array{
+     *     key: string,
+     *     required: bool,
+     *     type: string,
+     *     request: mixed
+     * } $data
+     * @return string|int
+     */
+    private function serializeData(array $data): string|int
+    {
+        $key = $data['request'][$data['key']];
+
+        if ($data['required'] && empty($key)) {
+            header('Location: ./product-management');
+        }
+
+        switch ($data['type']) {
+            case 'string':
+                if (!is_string($key)) {
+                    header('Location: ./product-management');
+                }
+                $value = trim($key);
+                break;
+            case 'numeric':
+                if (!is_numeric($key)) {
+                    header('Location: ./product-management');
+                }
+                $value = (int) trim($key);
+                break;
+        }
+
+        return $value;
+    }
 
     /**
      * @param string $variableName
@@ -123,11 +100,9 @@ class ProductManagementController {
      */
     public function productManagement(): void
     {
-//        require_once '../helpers/validate.php';
+        require_once '../helpers/validate.php';
 
-//        if (!isLoggedIn() || !isAdmin()) {
-//            header('Location: ' . URL_ROOT . '/home');
-//        }
+        $this->isAuthorized();
 
         require_once '../views/management/productManagement.phtml';
     }
@@ -137,18 +112,12 @@ class ProductManagementController {
      */
     public function findProducts(): void
     {
-
         $searchString = null;
         if (!empty($_POST[self::FIND_PRODUCT_POST_REQUEST]['search'])) {
-            if (!is_string($_POST[self::FIND_PRODUCT_POST_REQUEST]['search'])) {
-                return;
-            }
-            if ($_POST[self::FIND_PRODUCT_POST_REQUEST]['search']) {
-                $searchString = $_POST[self::FIND_PRODUCT_POST_REQUEST]['search'];
-                unset($_POST);
-            }
+            $searchString = $_POST[self::FIND_PRODUCT_POST_REQUEST]['search'];
+            unset($_POST);
         }
-        /** TODO add better data validation */
+
         require_once '../models/Product.php';
 
         if ($searchString) {
@@ -164,25 +133,39 @@ class ProductManagementController {
      */
     public function addProduct(): void
     {
-        $productData = $_POST[self::ADD_PRODUCT_POST_REQUEST];
-
-        $categoryIds = [];
-        if (!empty($productData['categoryIds'])) {
-            $categoryIds = $productData['categoryIds'];
-
+        if (empty($_POST[self::ADD_PRODUCT_POST_REQUEST])
+            || empty($_FILES[self::ADD_PRODUCT_POST_REQUEST])
+        ) {
+            header('Location: ./product-management');
         }
-        $productData['categoryIds'] = [];
-        foreach ($categoryIds as $categoryId) {
-            $productData['categoryIds'][] += (int)$categoryId;
+
+        if (empty($_POST[self::ADD_PRODUCT_POST_REQUEST]['categoryIds'])) {
+            $categoryIds = [];
+        } else {
+            foreach ($_POST[self::ADD_PRODUCT_POST_REQUEST]['categoryIds'] as $categoryId) {
+                if (!is_numeric($categoryId)) {
+                    header('Location: ./product-management');
+                }
+            }
+            $categoryIds = $_POST[self::ADD_PRODUCT_POST_REQUEST]['categoryIds'];
         }
+
+        $productData = [
+            'name' => $this->serializeData(['key' => 'name', 'required' => true, 'type' => 'string', 'request' => $_POST[self::ADD_PRODUCT_POST_REQUEST]]),
+            'brandId' => $this->serializeData(['key' => 'brandId', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::ADD_PRODUCT_POST_REQUEST]]),
+            'quantity' => $this->serializeData(['key' => 'quantity', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::ADD_PRODUCT_POST_REQUEST]]),
+            'price' => $this->serializeData(['key' => 'price', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::ADD_PRODUCT_POST_REQUEST]]),
+            'categoryIds' => $categoryIds,
+            'description' => $this->serializeData(['key' => 'description', 'required' => false, 'type' => 'string', 'request' => $_POST[self::ADD_PRODUCT_POST_REQUEST]]),
+            'videoUrl' => $this->serializeData(['key' => 'videoUrl', 'required' => false, 'type' => 'string', 'request' => $_POST[self::ADD_PRODUCT_POST_REQUEST]]),
+        ];
 
         $imageData = $_FILES[self::ADD_PRODUCT_POST_REQUEST];
-        $name = $_POST[self::ADD_PRODUCT_POST_REQUEST]['name'];
-        /** TODO add better data validation */
 
         require_once '../models/Product.php';
         $product = new Product();
 
+        $name = $productData['name'];
         if ($product->nameExists($name)) {
             $this->printJavascript('notification', ['type' => 'danger', 'message' => "Merknaam bestaat al."]);
             return;
@@ -199,28 +182,46 @@ class ProductManagementController {
      */
     public function updateProduct(): void
     {
-        $productData = $_POST[self::UPDATE_PRODUCT_POST_REQUEST];
-        $categoryIds = [];
-        if (!empty($productData['categoryIds'])) {
-            $categoryIds = $productData['categoryIds'];
+        if (empty($_POST[self::UPDATE_PRODUCT_POST_REQUEST])
+            || empty($_FILES[self::UPDATE_PRODUCT_POST_REQUEST])
+        ) {
+            header('Location: ./product-management');
+        }
 
+        $imagePath = $this->serializeData(['key' => 'imagePath', 'required' => false, 'type' => 'string', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]);
+        if (empty($imagePath)) {
+            $imagePath = null;
         }
-        $productData['categoryIds'] = [];
-        foreach ($categoryIds as $categoryId) {
-            $productData['categoryIds'][] += (int)$categoryId;
+
+        if (empty($_POST[self::UPDATE_PRODUCT_POST_REQUEST]['categoryIds'])) {
+            $categoryIds = [];
+        } else {
+            foreach ($_POST[self::UPDATE_PRODUCT_POST_REQUEST]['categoryIds'] as $categoryId) {
+                if (!is_numeric($categoryId)) {
+                    header('Location: ./product-management');
+                }
+            }
+            $categoryIds = $_POST[self::UPDATE_PRODUCT_POST_REQUEST]['categoryIds'];
         }
+
+        $productData = [
+            'id' => $this->serializeData(['key' => 'id', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'name' => $this->serializeData(['key' => 'name', 'required' => true, 'type' => 'string', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'brandId' => $this->serializeData(['key' => 'brandId', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'quantity' => $this->serializeData(['key' => 'quantity', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'price' => $this->serializeData(['key' => 'price', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'categoryIds' => $categoryIds,
+            'description' => $this->serializeData(['key' => 'description', 'required' => false, 'type' => 'string', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'videoUrl' => $this->serializeData(['key' => 'videoUrl', 'required' => false, 'type' => 'string', 'request' => $_POST[self::UPDATE_PRODUCT_POST_REQUEST]]),
+            'imagePath' => $imagePath,
+        ];
 
         $imageData = $_FILES[self::UPDATE_PRODUCT_POST_REQUEST];
-        $name = $_POST[self::UPDATE_PRODUCT_POST_REQUEST]['name'];
-        if (empty($productData['imagePath'])) {
-            $productData['imagePath'] = null;
-        }
-
-        /** TODO add better data validation */
 
         require_once '../models/Product.php';
         $product = new Product();
 
+        $name = $productData['name'];
         if (!$product->update($productData, $imageData)) {
             $this->printJavascript('notification', ['type' => 'danger', 'message' => "Er is een fout opgetreden tijdens het wijzigen van <strong>$name</strong>."]);
             return;
@@ -233,8 +234,11 @@ class ProductManagementController {
      */
     public function deleteProduct(): void
     {
-        $id = $_POST[self::DELETE_PRODUCT_POST_REQUEST]['id'];
-        /** TODO add better data validation */
+        if (empty($_POST[self::DELETE_PRODUCT_POST_REQUEST])) {
+            header('Location: ./product-management');
+        }
+
+        $id = $this->serializeData(['key' => 'id', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::DELETE_PRODUCT_POST_REQUEST]]);
 
         require_once '../models/Product.php';
         $product = new Product();
@@ -268,15 +272,11 @@ class ProductManagementController {
      */
     public function addBrand(): void
     {
-        if (empty($_POST[self::ADD_BRAND_POST_REQUEST]['name'])
-            || !is_string($_POST[self::ADD_BRAND_POST_REQUEST]['name']))
-        {
-            $this->printJavascript('notification', ['type' => 'danger', 'message' => 'Er is een fout opgetreden tijdens het toevoegen.']);
-            return;
+        if (empty($_POST[self::ADD_BRAND_POST_REQUEST])) {
+            header('Location: ./product-management');
         }
-        $name = trim($_POST[self::ADD_BRAND_POST_REQUEST]['name']);
-        unset($_POST);
-        /** TODO add better data validation */
+
+        $name = $this->serializeData(['key' => 'name', 'required' => true, 'type' => 'string', 'request' => $_POST[self::ADD_BRAND_POST_REQUEST]]);
 
         require_once '../models/Brand.php';
         $brand = new Brand();
@@ -297,15 +297,11 @@ class ProductManagementController {
      */
     public function deleteBrand(): void
     {
-        if (empty($_POST[self::DELETE_BRAND_POST_REQUEST]['id'])
-            || !is_int((int)$_POST[self::DELETE_BRAND_POST_REQUEST]['id']))
-        {
-            $this->printJavascript('notification', ['type' => 'danger', 'message' => "Er is een fout opgetreden tijdens het verwijderen."]);
-            return;
+        if (empty($_POST[self::DELETE_BRAND_POST_REQUEST])) {
+            header('Location: ./product-management');
         }
-        $id = (int)$_POST[self::DELETE_BRAND_POST_REQUEST]['id'];
-        unset($_POST);
-        /** TODO add better data validation */
+
+        $id = $this->serializeData(['key' => 'id', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::DELETE_BRAND_POST_REQUEST]]);
 
         require_once '../models/Brand.php';
         $brand = new Brand();
@@ -339,15 +335,11 @@ class ProductManagementController {
      */
     public function addCategory(): void
     {
-        if (empty($_POST[self::ADD_CATEGORY_POST_REQUEST]['name'])
-            || !is_string($_POST[self::ADD_CATEGORY_POST_REQUEST]['name']))
-        {
-            $this->printJavascript('notification', ['type' => 'danger', 'message' => 'Er is een fout opgetreden tijdens het toevoegen.']);
-            return;
+        if (empty($_POST[self::ADD_CATEGORY_POST_REQUEST])) {
+            header('Location: ./product-management');
         }
-        $name = trim($_POST[self::ADD_CATEGORY_POST_REQUEST]['name']);
-        unset($_POST);
-        /** TODO add better data validation */
+
+        $name = $this->serializeData(['key' => 'name', 'required' => true, 'type' => 'string', 'request' => $_POST[self::ADD_CATEGORY_POST_REQUEST]]);
 
         require_once '../models/Category.php';
         $category = new Category();
@@ -368,15 +360,11 @@ class ProductManagementController {
      */
     public function deleteCategory(): void
     {
-        if (empty($_POST[self::DELETE_CATEGORY_POST_REQUEST]['id'])
-            || !is_int((int)$_POST[self::DELETE_CATEGORY_POST_REQUEST]['id']))
-        {
-            $this->printJavascript('notification', ['type' => 'danger', 'message' => 'Er is een fout opgetreden tijdens het verwijderen.']);
-            return;
+        if (empty($_POST[self::DELETE_CATEGORY_POST_REQUEST])) {
+            header('Location: ./product-management');
         }
-        $id = (int)$_POST[self::DELETE_CATEGORY_POST_REQUEST]['id'];
-        unset($_POST);
-        /** TODO add better data validation */
+
+        $id = $this->serializeData(['key' => 'id', 'required' => true, 'type' => 'numeric', 'request' => $_POST[self::DELETE_CATEGORY_POST_REQUEST]]);
 
         require_once '../models/Category.php';
         $category = new Category();
