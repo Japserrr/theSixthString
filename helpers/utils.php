@@ -18,3 +18,12 @@ function getSession()
     }
     return false;
 }
+//extend session time if user is active
+function extendSession()
+{
+    if (isset($_SESSION['expire'])) {
+        if ($_SESSION['expire'] < time()) {
+            $_SESSION['expire'] = time() + 3600;
+        }
+    }
+}
