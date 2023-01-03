@@ -27,12 +27,27 @@ function login_account()
         ];
     }
     //create session 
-    create_session($auth['id']);
+    create_session($auth['id'], get_user($auth['id']));
 
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
+function get_user($auth_id)
+{
+    $conn = getDbConnection();
 
+    //prepare statement
+    $sth = $conn->prepare('SELECT * FROM user WHERE auth_id = ?', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
+    $sth->execute([$auth_id]);
+    //check if record exists
+    if ($sth->rowCount() > 0) {
+        $user = $sth->fetch(PDO::FETCH_ASSOC);
+        return $user;
+    } else {
+        return false;
+    }
+}
 function check_hash($password, $hash)
 {
 

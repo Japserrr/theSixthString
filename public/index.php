@@ -5,7 +5,7 @@ session_start();
 
 //check if user is logged in, if not redirect to login page 
 //todo add pages that are allowed to be visited without login
-if (!isLoggedIn() && $_SERVER['REQUEST_URI'] != URL_ROOT . '/login' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/register') {
+if (!isLoggedIn() && $_SERVER['REQUEST_URI'] != URL_ROOT . '/login' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/register' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/home' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/') {
     header('Location: ' . URL_ROOT . '/login');
     exit();
 }
@@ -59,6 +59,7 @@ if (isLoggedIn() && !check_expire_time()) {
 
     <title><?= SITE_NAME ?></title>
 </head>
+<?php var_dump($_SESSION); ?>
 
 <body class=" bg-image" style="background-image:url('./public/img/stock_foto_guitars.jpeg');  height: 100vh; background-repeat: no-repeat; background-size: cover;    ">
     <?php include_once '../views/navbar.phtml'; ?>

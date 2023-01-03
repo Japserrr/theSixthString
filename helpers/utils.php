@@ -28,12 +28,14 @@ function extendSession()
         }
     }
 }
-function create_session($auth)
+function create_session($auth, $user = null)
 {
     //create session 
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth;
-    $_SESSION['admin'] = false;
+    $_SESSION['admin'] = empty($user) ? false : $user['admin'];
+
+
     $_SESSION['expire'] = time() + 3600;
 }
 
