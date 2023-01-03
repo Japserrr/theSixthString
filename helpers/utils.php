@@ -87,8 +87,6 @@ function isAdmin(): bool
     $isEmployee = $stmt->fetch();
     $conn = null;
 
-    var_dump('test');
-
     if (!$isEmployee['employee']) {
         return false;
     }
