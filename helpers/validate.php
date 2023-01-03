@@ -12,8 +12,8 @@ function isLoggedIn()
         $_SESSION = [];
         // remove all session variables
         session_unset();
-        //destroy session
-        // session_destroy();
+        //reset session
+        session_reset();
         header('Location: ' . URL_ROOT . '/login');
         exit();
     }
@@ -21,7 +21,7 @@ function isLoggedIn()
 }
 
 
- 
+
 
 /**
  * @return bool
@@ -47,7 +47,7 @@ function check_expire_time()
             $_SESSION = [];
             // remove all session variables
             session_unset();
-            //destroy session
+            //reset session
 
             session_reset();
             header('Location: ' . URL_ROOT . '/login');
