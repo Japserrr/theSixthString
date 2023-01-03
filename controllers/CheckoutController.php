@@ -1,12 +1,11 @@
 <?php
 require_once '../helpers/database.php';
-require_once '../helpers/validate.php';
 
 /** @return void */
 function checkout(): void
 {
-//    $userId = isAuthorized();
-//    $userId = userId();
+    //    $userId = isAuthorized();
+    //    $userId = userId();
     $userId = 1;
 
     $user['products'] = $_POST['items'] ?? [];
@@ -43,7 +42,7 @@ function checkout(): void
 
 function confirmPayment(): void
 {
-//    $userId = isAuthorized();
+    //    $userId = isAuthorized();
 
     $sanitizedData = sanitizeData();
 
@@ -77,7 +76,7 @@ function isAuthorized(): int
 {
     $userId = userId();
     if (!isLoggedIn() || !$userId) {
-        header('Location: '.URL_ROOT.'/home');
+        header('Location: ' . URL_ROOT . '/home');
     }
     return $userId;
 }
@@ -88,12 +87,13 @@ function isAuthorized(): int
 function sanitizeData(): array
 {
     if (empty($_POST)) {
-        header('Location: '.URL_ROOT.'/checkout');
+        header('Location: ' . URL_ROOT . '/checkout');
     }
     $request = $_POST;
     unset($_POST);
 
-    if (empty($request['userId'])
+    if (
+        empty($request['userId'])
         || empty($request['firstName'])
         || empty($request['lastName'])
         || empty($request['email'])
@@ -105,10 +105,11 @@ function sanitizeData(): array
         || empty($request['bankName'])
         || empty($request['products'])
     ) {
-        header('Location: '.URL_ROOT.'/checkout');
+        header('Location: ' . URL_ROOT . '/checkout');
     }
 
-    if (!is_numeric($request['userId'])
+    if (
+        !is_numeric($request['userId'])
         || !is_string($request['firstName'])
         || (!is_string($request['infix']))
         || !is_string($request['lastName'])
@@ -121,14 +122,14 @@ function sanitizeData(): array
         || !is_string($request['country'])
         || !is_string($request['bankName'])
     ) {
-        header('Location: '.URL_ROOT.'/checkout');
+        header('Location: ' . URL_ROOT . '/checkout');
     }
 
     $i = 1;
     $request['bankAccount'] = '';
     while ($i < 19) {
         if (empty($request["bankAccount$i"])) {
-            header('Location: '.URL_ROOT.'/checkout');
+            header('Location: ' . URL_ROOT . '/checkout');
         }
         $request['bankAccount'] .= $request["bankAccount$i"];
         unset($request["bankAccount$i"]);
@@ -137,10 +138,11 @@ function sanitizeData(): array
 
     $request['totalPrice'] = 0;
     foreach ($request['products'] as $product) {
-        if (!is_numeric($product['id'])
+        if (
+            !is_numeric($product['id'])
             || !is_numeric($product['price'])
         ) {
-            header('Location: '.URL_ROOT.'/checkout');
+            header('Location: ' . URL_ROOT . '/checkout');
         }
         $request['totalPrice'] += $product['price'];
     }
@@ -221,13 +223,13 @@ function registerOrder(array $order): int
             INSERT INTO address 
             VALUES (null, :streetName, :zipcode, :houseNumber, :city, :country)
         ');
-            $stmt->execute([
-                'streetName' => $order['streetName'],
-                'zipcode' => $order['zipcode'],
-                'houseNumber' => $order['houseNumber'],
-                'city' => $order['city'],
-                'country' => $order['country'],
-            ]);
+        $stmt->execute([
+            'streetName' => $order['streetName'],
+            'zipcode' => $order['zipcode'],
+            'houseNumber' => $order['houseNumber'],
+            'city' => $order['city'],
+            'country' => $order['country'],
+        ]);
         $shippingAddressId = $conn->lastInsertId();
     }
 

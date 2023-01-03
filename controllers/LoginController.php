@@ -4,14 +4,11 @@ function login($error = null)
 {
 
     //check if session is active and empty if so reset session
-    if (session_status() == 2 && empty($_SESSION))
-        session_reset();
+    // if (session_status() == 2 && empty($_SESSION)) {
+    //     session_reset();
+    // }
 
-    //check if already logged in with validate.php helper function
-    if (isLoggedIn()) {
-        header('Location: ' . URL_ROOT . '/home');
-        exit();
-    }
+
 
     require_once '../views/login/login.phtml';
 }
@@ -30,10 +27,8 @@ function login_account()
         ];
     }
     //create session 
-    $_SESSION['logged_in'] = true;
-    $_SESSION['auth_id'] = $auth['id'];
-    $_SESSION['admin'] = false;
-    $_SESSION['expire'] = time() + 3600;
+    create_session($auth['id']);
+
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }

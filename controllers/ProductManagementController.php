@@ -1,6 +1,7 @@
 <?php
 
-class ProductManagementController {
+class ProductManagementController
+{
 
     /** Product request keys */
     public const FIND_PRODUCT_POST_REQUEST = 'productManagementFind';
@@ -18,71 +19,71 @@ class ProductManagementController {
     public const ADD_CATEGORY_POST_REQUEST = 'categoryManagementAdd';
     public const DELETE_CATEGORY_POST_REQUEST = 'categoryManagementDelete';
 
-//    /**
-//     * Validate the post request data based on the given fields and type.
-//     * @param string $request
-//     * @param string[] $fields
-//     * @param string $message
-//     * @return array
-//     */
-//    private function validatePostRequest(string $request, array $fields, string $message): array
-//    {
-//        $notification = [
-//            'type' => 'danger',
-//            'message' => $message,
-//        ];
-//
-//        if (empty($_POST[$request])) {
-//            $this->printJson('notification', $notification);
-//            $this->findProducts();
-//            return [];
-//        }
-//
-//        $validatedData = [];
-//        foreach ($fields as $field => $type) {
-//            if (empty($_POST[$request][$field])) {
-//                $this->printJson('notification', $notification);
-//                $this->findProducts();
-//                return [];
-//            }
-//
-//            $value = $_POST[$request][$field];
-//            switch (true) {
-//                case $type === 'string':
-//                    if (!is_string($field)) {
-//                        $this->printJson('notification', $notification);
-//                        $this->findProducts();
-//                        return [];
-//                    }
-//                    $_POST[$request][$field] = trim($value);
-//                    if (empty($_POST[$request[$field]])) {
-//
-//                    }
-//                    break;
-//                case $type ==='numeric':
-//                    if (!is_numeric($field)) {
-//                        $this->printJson('notification', $notification);
-//                        $this->findProducts();
-//                        return [];
-//                    }
-//                    break;
-//                    //TODO make intArray
-//                case $type ==='array':
-//                    if (!is_array($field)) {
-//                        $this->printJson('notification', $notification);
-//                        $this->findProducts();
-//                        return [];
-//                    }
-//                    break;
-//            }
-//
-//            $validatedData += [$field => $_POST[$request][$field]];
-//        }
-//
-//        unset($_POST);
-//
-//        return $validatedData;
-//    }
+    //    /**
+    //     * Validate the post request data based on the given fields and type.
+    //     * @param string $request
+    //     * @param string[] $fields
+    //     * @param string $message
+    //     * @return array
+    //     */
+    //    private function validatePostRequest(string $request, array $fields, string $message): array
+    //    {
+    //        $notification = [
+    //            'type' => 'danger',
+    //            'message' => $message,
+    //        ];
+    //
+    //        if (empty($_POST[$request])) {
+    //            $this->printJson('notification', $notification);
+    //            $this->findProducts();
+    //            return [];
+    //        }
+    //
+    //        $validatedData = [];
+    //        foreach ($fields as $field => $type) {
+    //            if (empty($_POST[$request][$field])) {
+    //                $this->printJson('notification', $notification);
+    //                $this->findProducts();
+    //                return [];
+    //            }
+    //
+    //            $value = $_POST[$request][$field];
+    //            switch (true) {
+    //                case $type === 'string':
+    //                    if (!is_string($field)) {
+    //                        $this->printJson('notification', $notification);
+    //                        $this->findProducts();
+    //                        return [];
+    //                    }
+    //                    $_POST[$request][$field] = trim($value);
+    //                    if (empty($_POST[$request[$field]])) {
+    //
+    //                    }
+    //                    break;
+    //                case $type ==='numeric':
+    //                    if (!is_numeric($field)) {
+    //                        $this->printJson('notification', $notification);
+    //                        $this->findProducts();
+    //                        return [];
+    //                    }
+    //                    break;
+    //                    //TODO make intArray
+    //                case $type ==='array':
+    //                    if (!is_array($field)) {
+    //                        $this->printJson('notification', $notification);
+    //                        $this->findProducts();
+    //                        return [];
+    //                    }
+    //                    break;
+    //            }
+    //
+    //            $validatedData += [$field => $_POST[$request][$field]];
+    //        }
+    //
+    //        unset($_POST);
+    //
+    //        return $validatedData;
+    //    }
 
     /**
      * @param string $variableName
@@ -93,25 +94,25 @@ class ProductManagementController {
     {
         switch (true) {
             case is_array($data):
-                ?>
+?>
                 <script type="text/javascript">
                     const <?= $variableName; ?> = <?= json_encode($data); ?>;
                 </script>
-                <?php
+            <?php
                 break;
             case is_string($data):
-                ?>
+            ?>
                 <script type="text/javascript">
                     const <?= $variableName; ?> = '<?= $data; ?>';
                 </script>
-                <?php
+            <?php
                 break;
             default:
-                ?>
+            ?>
                 <script type="text/javascript">
                     const <?= $variableName; ?> = <?= $data; ?>;
                 </script>
-                <?php
+<?php
                 break;
         }
     }
@@ -123,11 +124,10 @@ class ProductManagementController {
      */
     public function productManagement(): void
     {
-//        require_once '../helpers/validate.php';
 
-//        if (!isLoggedIn() || !isAdmin()) {
-//            header('Location: ' . URL_ROOT . '/home');
-//        }
+        //        if (!isLoggedIn() || !isAdmin()) {
+        //            header('Location: ' . URL_ROOT . '/home');
+        //        }
 
         require_once '../views/management/productManagement.phtml';
     }
@@ -169,7 +169,6 @@ class ProductManagementController {
         $categoryIds = [];
         if (!empty($productData['categoryIds'])) {
             $categoryIds = $productData['categoryIds'];
-
         }
         $productData['categoryIds'] = [];
         foreach ($categoryIds as $categoryId) {
@@ -203,7 +202,6 @@ class ProductManagementController {
         $categoryIds = [];
         if (!empty($productData['categoryIds'])) {
             $categoryIds = $productData['categoryIds'];
-
         }
         $productData['categoryIds'] = [];
         foreach ($categoryIds as $categoryId) {
@@ -268,9 +266,10 @@ class ProductManagementController {
      */
     public function addBrand(): void
     {
-        if (empty($_POST[self::ADD_BRAND_POST_REQUEST]['name'])
-            || !is_string($_POST[self::ADD_BRAND_POST_REQUEST]['name']))
-        {
+        if (
+            empty($_POST[self::ADD_BRAND_POST_REQUEST]['name'])
+            || !is_string($_POST[self::ADD_BRAND_POST_REQUEST]['name'])
+        ) {
             $this->printJavascript('notification', ['type' => 'danger', 'message' => 'Er is een fout opgetreden tijdens het toevoegen.']);
             return;
         }
@@ -297,9 +296,10 @@ class ProductManagementController {
      */
     public function deleteBrand(): void
     {
-        if (empty($_POST[self::DELETE_BRAND_POST_REQUEST]['id'])
-            || !is_int((int)$_POST[self::DELETE_BRAND_POST_REQUEST]['id']))
-        {
+        if (
+            empty($_POST[self::DELETE_BRAND_POST_REQUEST]['id'])
+            || !is_int((int)$_POST[self::DELETE_BRAND_POST_REQUEST]['id'])
+        ) {
             $this->printJavascript('notification', ['type' => 'danger', 'message' => "Er is een fout opgetreden tijdens het verwijderen."]);
             return;
         }
@@ -339,9 +339,10 @@ class ProductManagementController {
      */
     public function addCategory(): void
     {
-        if (empty($_POST[self::ADD_CATEGORY_POST_REQUEST]['name'])
-            || !is_string($_POST[self::ADD_CATEGORY_POST_REQUEST]['name']))
-        {
+        if (
+            empty($_POST[self::ADD_CATEGORY_POST_REQUEST]['name'])
+            || !is_string($_POST[self::ADD_CATEGORY_POST_REQUEST]['name'])
+        ) {
             $this->printJavascript('notification', ['type' => 'danger', 'message' => 'Er is een fout opgetreden tijdens het toevoegen.']);
             return;
         }
@@ -368,9 +369,10 @@ class ProductManagementController {
      */
     public function deleteCategory(): void
     {
-        if (empty($_POST[self::DELETE_CATEGORY_POST_REQUEST]['id'])
-            || !is_int((int)$_POST[self::DELETE_CATEGORY_POST_REQUEST]['id']))
-        {
+        if (
+            empty($_POST[self::DELETE_CATEGORY_POST_REQUEST]['id'])
+            || !is_int((int)$_POST[self::DELETE_CATEGORY_POST_REQUEST]['id'])
+        ) {
             $this->printJavascript('notification', ['type' => 'danger', 'message' => 'Er is een fout opgetreden tijdens het verwijderen.']);
             return;
         }

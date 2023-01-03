@@ -22,8 +22,65 @@ function getSession()
 function extendSession()
 {
     if (isset($_SESSION['expire'])) {
-        if ($_SESSION['expire'] < time()) {
+        //check if session['expire'] is more than current time, if so extend session time with 1 hour 
+        if ($_SESSION['expire'] > time()) {
             $_SESSION['expire'] = time() + 3600;
         }
     }
+}
+function create_session($auth)
+{
+    //create session 
+    $_SESSION['logged_in'] = true;
+    $_SESSION['auth_id'] = $auth;
+    $_SESSION['admin'] = false;
+    $_SESSION['expire'] = time() + 3600;
+}
+
+//check if user is logged in with session
+function isLoggedIn()
+{
+    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+        return true;
+    }
+    return false;
+}
+//check if session is expired
+function check_expire_time()
+{
+    if (isset($_SESSION['expire'])) {
+        if ($_SESSION['expire'] < time()) {
+            return true;
+        }
+        // session is still valid
+        return false;
+    }
+}
+
+function removeSession()
+{
+    // remove all session variables
+    session_unset();
+    //reset session
+    session_destroy();
+    session_start();
+    session_regenerate_id();
+}
+
+
+/**
+ * @return bool
+ */
+function isAdmin(): bool
+{
+    if (!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
+        return false;
+    }
+    return true;
+}
+
+/** @return int|null */
+function userId(): ?int
+{
+    return empty($_SESSION['auth_id']) ? null : (int)$_SESSION['auth_id'];
 }

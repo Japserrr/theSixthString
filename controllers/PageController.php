@@ -1,7 +1,6 @@
 <?php
 
 include_once '../helpers/database.php';
-include_once '../helpers/validate.php';
 
 function homepage(): void
 {

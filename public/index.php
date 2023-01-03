@@ -1,10 +1,24 @@
-<?php include_once '../config/config.php';
-include_once '../helpers/validate.php';
+<?php
+include_once '../config/config.php';
+include_once '../helpers/utils.php';
 session_start();
-check_expire_time();
 
-//check if user is logged in, if so then extend session time when this page gets loaded
-if (isLoggedIn()) {
+//check if user is logged in, if not redirect to login page 
+//todo add pages that are allowed to be visited without login
+if (!isLoggedIn() && $_SERVER['REQUEST_URI'] != URL_ROOT . '/login' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/register') {
+    header('Location: ' . URL_ROOT . '/login');
+    exit();
+}
+
+//check if user is logged in and the session is expired, if so then redirect to login page
+if (isLoggedIn() && check_expire_time()) {
+    removeSession();
+    header('Location: ' . URL_ROOT . '/login');
+    exit();
+}
+
+//if user is logged in and session isnt expired extend session time
+if (isLoggedIn() && !check_expire_time()) {
     extendSession();
 }
 

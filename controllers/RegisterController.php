@@ -83,23 +83,13 @@ function create_account()
         }
     }
     //send_mail($_POST['form_email']);
-    creation_succesful($auth_id);
-}
-
-function creation_succesful($auth_id)
-{
-    //check if session exists 
-    $_SESSION['logged_in'] = true;
-    $_SESSION['auth_id'] = $auth_id;
-    $_SESSION['admin'] = false;
-
-    //set session duration to 1 hour
-    $_SESSION['expire'] = time() + 3600;
-
+    create_session($auth_id);
     //navitage to homepage
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
+
+
 
 
 
