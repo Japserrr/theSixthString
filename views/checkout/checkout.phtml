@@ -102,7 +102,7 @@
                                 <select id="bank-name-input" class="input form-select form-control" onchange="preFillBankAccountCodes(event)" name="bankName">
                                     <option disabled selected>Kies een bank</option>
                                     <option value="ABN-Amro">ABN-Amro</option>
-                                    <option value="ASN Bank">ASN Bank</option>
+                                    <option value="ASN Bank">ASN Bank</option>$request['bankAccount']
                                     <option value="Bunq">Bunq</option>
                                     <option value="ING">ING</option>
                                     <option value="Knab">Knab</option>
@@ -117,25 +117,29 @@
                             <div id="bank-account-input" class="d-flex mb-3">
                                 <input id="bank-account-input-1" class="bank-account-input input form-control p-1 me-1 text-center" type="text" maxlength="1" oninput="nextBankAccountInputField(event)" name="bankAccount1">
                                 <input id="bank-account-input-2" class="bank-account-input input form-control p-1 me-1 text-center" type="text" maxlength="1" oninput="nextBankAccountInputField(event)" name="bankAccount2">
-                                <input id="bank-account-input-3" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount3">
-                                <input id="bank-account-input-4" class="bank-account-input input form-control p-1 me-3 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount4">
+                                <input id="bank-account-input-3" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount3">
+                                <input id="bank-account-input-4" class="bank-account-input input form-control p-1 me-3 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount4">
                                 <input id="bank-account-input-5" class="bank-account-input input form-control p-1 me-1 text-center" type="text" maxlength="1" oninput="nextBankAccountInputField(event)" name="bankAccount5">
                                 <input id="bank-account-input-6" class="bank-account-input input form-control p-1 me-1 text-center" type="text" maxlength="1" oninput="nextBankAccountInputField(event)" name="bankAccount6">
                                 <input id="bank-account-input-7" class="bank-account-input input form-control p-1 me-1 text-center" type="text" maxlength="1" oninput="nextBankAccountInputField(event)" name="bankAccount7">
                                 <input id="bank-account-input-8" class="bank-account-input input form-control p-1 me-3 text-center" type="text" maxlength="1" oninput="nextBankAccountInputField(event)" name="bankAccount8">
-                                <input id="bank-account-input-9" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount9">
-                                <input id="bank-account-input-10" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount10">
-                                <input id="bank-account-input-11" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount11">
-                                <input id="bank-account-input-12" class="bank-account-input input form-control p-1 me-3 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount12">
-                                <input id="bank-account-input-13" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount13">
-                                <input id="bank-account-input-14" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount14">
-                                <input id="bank-account-input-15" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount15">
-                                <input id="bank-account-input-16" class="bank-account-input input form-control p-1 me-3 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount16">
-                                <input id="bank-account-input-17" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length==1) return false;" name="bankAccount17">
+                                <input id="bank-account-input-9" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount9">
+                                <input id="bank-account-input-10" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount10">
+                                <input id="bank-account-input-11" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount11">
+                                <input id="bank-account-input-12" class="bank-account-input input form-control p-1 me-3 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount12">
+                                <input id="bank-account-input-13" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount13">
+                                <input id="bank-account-input-14" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount14">
+                                <input id="bank-account-input-15" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount15">
+                                <input id="bank-account-input-16" class="bank-account-input input form-control p-1 me-3 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount16">
+                                <input id="bank-account-input-17" class="bank-account-input input form-control p-1 me-1 text-center" type="number" oninput="nextBankAccountInputField(event)" onKeyPress="if(this.value.length === 1) return false;" name="bankAccount17">
                                 <input id="bank-account-input-18" class="bank-account-input input form-control p-1 me-1 text-center" type="number" onKeyPress="if(this.value.length==1) return false;" name="bankAccount18">
                             </div>
                         </div>
                     </div>
+
+                    <!-- Products -->
+                    <input id="products-input" class="d-none" name="products">
+                    <input id="total-price-input" class="d-none" name="totalPrice">
 
                     <div class=" d-flex justify-content-between mt-2">
                         <span class="text-danger">* Verplicht</span>
@@ -148,41 +152,23 @@
 
         <!-- Order overview -->
         <div class="col-4">
-            <div class="order-overview-container rounded border-success bg-success shadow p-3">
+            <div class="order-overview-container rounded border-success bg-success shadow p-3 overflow-hidden">
                 <h3 class="text-center text-white mb-3">Uw bestelling</h3>
 
                 <!-- Product list -->
-                <div class="product-list bg-light rounded border-danger">
-                    <table class="w-100">
-                        <thead class="product-list-header sticky-top shadow-sm border-bottom">
-                            <tr>
-                                <th class="product-list-name p-2"><h5 class="m-0">Product</h5></th>
-                                <th class="product-list-price p-2 text-center"><h5 class="m-0">Prijs</h5><h6 class="m-0">(per stuk)</h6></th>
-                                <th class="product-list-amount p-2 text-center"><h5 class="m-0">Aantal</h5></th>
-                            </tr>
-                        </thead>
-                        <tbody class="product-list-body">
-                            <?php
-                            $totalPrice = 0;
-                            foreach ($user['products'] as $product) {
-                                $totalPrice += $product['price'];
-                                echo "
-                                    <tr class='border-bottom'>
-                                        <td class='p-2'>" . $product['name'] . "</td>
-                                        <td class='p-2 text-center'>€" . $product['price'] . "</td>
-                                        <td class='p-2 text-center'>" . $product['amount'] . "</td>
-                                    </tr>
-                                ";
-                            }
-                            ?>
-                        </tbody>
-                        <tfoot class="product-list-footer text-black border-top w-100 sticky-bottom">
-                            <tr>
-                                <td class="py-3 px-2"><h5 class="m-0">Totaalprijs:</h5></td>
-                                <td class="py-3 px-2" colspan="2"><h5 class="m-0">€<?= $totalPrice; ?></h5></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="rounded overflow-hidden">
+                    <div class="row bg-light p-3 border-bottom ">
+                        <div class="col-6 d-flex align-items-center"><h5 class="m-0">Product</h5></div>
+                        <div class="col-3 text-center"><h5 class="m-0">Prijs</h5><h6 class="m-0">(per stuk)</h6></div>
+                        <div class="col-3 d-flex align-items-center text-center"><h5 class="m-0">Aantal</h5></div>
+                    </div>
+                    <div id="product-list-body" class="product-list-body bg-white">
+                    <!-- Generated by javascript -->
+                    </div>
+                    <div class="product-list-footer d-flex justify-content-between text-black border-top p-3">
+                        <h5 class="m-0">Totaalprijs:</h5>
+                        <h5 id="total-price" class="m-0"></h5>
+                    </div>
                 </div>
 
             </div>

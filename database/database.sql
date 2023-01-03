@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS the_sixth_string.payment (
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS the_sixth_string.order (
-    id INT NOT NULL,
+    id varchar(20) NOT NULL,
     customer_id INT NOT NULL,
     payment_id INT NOT NULL,
     shipping_address_id INT NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS the_sixth_string.order (
 
 CREATE TABLE IF NOT EXISTS the_sixth_string.order_has_products(
     product_id INT NOT NULL,
-    order_id INT NOT NULL,
+    order_id varchar(20) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES the_sixth_string.order(id),
     FOREIGN KEY (product_id) REFERENCES the_sixth_string.product(id)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;

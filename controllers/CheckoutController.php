@@ -1,16 +1,15 @@
 <?php
+
+use JetBrains\PhpStorm\NoReturn;
+
 require_once '../helpers/database.php';
 
 /** @return void */
 function checkout(): void
 {
-    //    $userId = isAuthorized();
-    //    $userId = userId();
-    $userId = 1;
+    $userId = isAuthorized();
 
-    $user['products'] = $_POST['items'] ?? [];
-    unset($_POST);
-
+    $user = [];
     $conn = getDbConnection();
     $stmt = $conn->prepare('
         SELECT 
@@ -26,7 +25,8 @@ function checkout(): void
             ad.country
         FROM auth AS au
         INNER JOIN user AS u ON u.auth_id = au.id 
-        LEFT JOIN address AS ad ON ad.id = au.id
+        LEFT JOIN user_has_address AS uha ON uha.auth_id = au.id
+        INNER JOIN address AS ad ON ad.id = uha.address_id
         WHERE au.id = :userId
             AND au.active = 1
     ');
@@ -42,9 +42,9 @@ function checkout(): void
 
 function confirmPayment(): void
 {
-    //    $userId = isAuthorized();
+    $userId = isAuthorized();
 
-    $sanitizedData = sanitizeData();
+    $sanitizedData = sanitizeData($userId);
 
     $orderNumber = registerOrder([
         'userId' => $sanitizedData['userId'],
@@ -82,19 +82,20 @@ function isAuthorized(): int
 }
 
 /**
+ * @param int $userId
  * @return array
  */
-function sanitizeData(): array
+function sanitizeData(int $userId): array
 {
     if (empty($_POST)) {
         header('Location: ' . URL_ROOT . '/checkout');
     }
-    $request = $_POST;
+    $request['userId'] = $userId;
+    $request += $_POST;
     unset($_POST);
 
     if (
-        empty($request['userId'])
-        || empty($request['firstName'])
+        empty($request['firstName'])
         || empty($request['lastName'])
         || empty($request['email'])
         || empty($request['zipCode'])
@@ -104,23 +105,24 @@ function sanitizeData(): array
         || empty($request['country'])
         || empty($request['bankName'])
         || empty($request['products'])
+        || empty($request['totalPrice'])
     ) {
         header('Location: ' . URL_ROOT . '/checkout');
     }
 
     if (
-        !is_numeric($request['userId'])
-        || !is_string($request['firstName'])
-        || (!is_string($request['infix']))
+        !is_string($request['firstName'])
+        || (!is_string($request['infix']) && !empty($request['infix']))
         || !is_string($request['lastName'])
         || !is_string($request['email'])
-        || !is_numeric($request['phoneNumber'])
+        || (!is_numeric($request['phoneNumber']) && !empty($request['phoneNumber']))
         || !is_string($request['zipCode'])
         || !is_string($request['streetName'])
         || !is_string($request['houseNumber'])
         || !is_string($request['city'])
         || !is_string($request['country'])
         || !is_string($request['bankName'])
+        || !is_numeric($request['totalPrice'])
     ) {
         header('Location: ' . URL_ROOT . '/checkout');
     }
@@ -135,17 +137,9 @@ function sanitizeData(): array
         unset($request["bankAccount$i"]);
         $i++;
     }
+    $request['bankAccount'] = strtoupper($request['bankAccount']);
 
-    $request['totalPrice'] = 0;
-    foreach ($request['products'] as $product) {
-        if (
-            !is_numeric($product['id'])
-            || !is_numeric($product['price'])
-        ) {
-            header('Location: ' . URL_ROOT . '/checkout');
-        }
-        $request['totalPrice'] += $product['price'];
-    }
+    $request['products'] = json_decode($request['products'], true);
 
     return $request;
 }
@@ -166,18 +160,20 @@ function sanitizeData(): array
  *     bankName: string,
  *     bankAccount: string,
  *     totalPrice: float,
- *     products: array{id: int, price: float},
+ *     products: array{id: int, name: string, price: float, amount: int},
  * } $order
- * @return int
+ * @return string
  */
-function registerOrder(array $order): int
+function registerOrder(array $order): string
 {
     $conn = getDbConnection();
     $lastOrderNumber = $conn->query('
-        SELECT id
+        SELECT
+            LENGTH(id) AS length,
+            id
         FROM `order`
-        ORDER BY id DESC
-    ')->fetchColumn();
+        ORDER BY length, id DESC
+    ')->fetch(PDO::FETCH_ASSOC);
 
     /**
      * Order format is day + month + year + number of the order.
@@ -186,8 +182,8 @@ function registerOrder(array $order): int
     if (!$lastOrderNumber) {
         $orderNumber = (date('dmy') . 1);
     } else {
-        $latestOrderId = substr((int)$lastOrderNumber, 6);
-        $orderNumber = (date('dmy') . $latestOrderId + 1);
+        $latestOrderId = substr($lastOrderNumber['id'], 6);
+        $orderNumber = (date('dmy') . (int)$latestOrderId + 1);
     }
 
     $stmt = $conn->prepare('
@@ -202,36 +198,53 @@ function registerOrder(array $order): int
     $paymentId = $conn->lastInsertId();
 
     $stmt = $conn->prepare('
-        SELECT id 
-        FROM address
-        WHERE street_name = :streetName
-            AND zipcode = :zipcode,
-            AND house_number = :houseNumber,
-            AND city = :city,
-            AND country = :country,
+        SELECT a.id 
+        FROM address AS a
+        LEFT JOIN user_has_address AS uha ON uha.address_id = a.id
+        WHERE uha.auth_id = :userId
+    ');
+    $stmt->execute([
+        'userId' => $order['userId'],
+    ]);
+    $shippingAddressId = $stmt->fetchColumn();
+
+    if (!empty($shippingAddressId)) {
+        $stmt = $conn->prepare('
+            DELETE FROM user_has_address 
+            WHERE address_id = :shippingAddressId
+        ');
+        $stmt->execute([
+            'shippingAddressId' => $shippingAddressId,
+        ]);
+        $stmt = $conn->prepare('
+            DELETE FROM address 
+            WHERE id = :shippingAddressId
+        ');
+        $stmt->execute([
+            'shippingAddressId' => $shippingAddressId,
+        ]);
+    }
+    $stmt = $conn->prepare('
+        INSERT INTO address 
+        VALUES (null, :streetName, :zipCode, :houseNumber, :city, :country)
     ');
     $stmt->execute([
         'streetName' => $order['streetName'],
-        'zipcode' => $order['zipcode'],
+        'zipCode' => $order['zipCode'],
         'houseNumber' => $order['houseNumber'],
         'city' => $order['city'],
         'country' => $order['country'],
     ]);
-    $shippingAddressId = $stmt->fetchColumn();
-    if (empty($shippingAddressId)) {
-        $stmt = $conn->prepare('
-            INSERT INTO address 
-            VALUES (null, :streetName, :zipcode, :houseNumber, :city, :country)
-        ');
-        $stmt->execute([
-            'streetName' => $order['streetName'],
-            'zipcode' => $order['zipcode'],
-            'houseNumber' => $order['houseNumber'],
-            'city' => $order['city'],
-            'country' => $order['country'],
-        ]);
-        $shippingAddressId = $conn->lastInsertId();
-    }
+    $shippingAddressId = $conn->lastInsertId();
+
+    $stmt = $conn->prepare('
+        INSERT INTO user_has_address 
+        VALUES (null, :addressId, :userId)
+    ');
+    $stmt->execute([
+        'addressId' => $shippingAddressId,
+        'userId' => $order['userId'],
+    ]);
 
     $stmt = $conn->prepare('
         INSERT INTO `order`
@@ -245,14 +258,14 @@ function registerOrder(array $order): int
         'orderDateTime' => date('Y-m-d H:i:s'),
     ]);
 
-    foreach ($order['productIds'] as $productId) {
+    foreach ($order['products'] as $product) {
         $stmt = $conn->prepare('
             INSERT INTO order_has_products 
-            VALUES (:orderNumber, :productId)
+            VALUES (:productId, :orderNumber)
         ');
         $stmt->execute([
+            'productId' => $product['id'],
             'orderNumber' => $orderNumber,
-            'productId' => $productId
         ]);
     }
     $conn = null;
@@ -261,10 +274,10 @@ function registerOrder(array $order): int
 }
 
 /**
- * @param int $orderNumber
+ * @param string $orderNumber
  * @return array
  */
-function getOrder(int $orderNumber): array
+function getOrder(string $orderNumber): array
 {
     $conn = getDbConnection();
     $stmt = $conn->prepare("
@@ -282,7 +295,7 @@ function getOrder(int $orderNumber): array
             p.amount AS totalPrice,
             o.id AS orderNumber,
             o.order_date AS orderDateTime
-        FROM `order` AS o 
+        FROM `order` AS o
         INNER JOIN user AS u ON u.auth_id = o.customer_id
         INNER JOIN auth AS au ON au.id = u.auth_id
         INNER JOIN address AS ad ON ad.id = o.shipping_address_id

@@ -35,24 +35,12 @@
 }
 
 /* Product list */
-.product-list {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 37.9rem;
-}
 .product-list-header,
 .product-list-footer {
     background-color: rgb(233, 236, 239);
 }
-.product-list-name {
-    width: 55%;
-}
-.product-list-price {
-    width: 30%;
-}
-.product-list-amount {
-    width: 15%;
-}
 .product-list-body {
-    height: 30.6rem;
+    height: 29.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
