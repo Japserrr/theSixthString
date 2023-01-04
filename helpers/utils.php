@@ -37,11 +37,11 @@ function required_login_pages()
         case '/register':
             return false;
         case '/home':
-            return true;
+            return false;
         case '/logout':
             return true;
         case '/':
-            return true;
+            return false;
         default:
             return false;
     }
@@ -53,8 +53,6 @@ function create_session($auth, $admin)
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth;
     $_SESSION['admin'] =  $admin;
-
-
     $_SESSION['expire'] = time() + 3600;
 }
 

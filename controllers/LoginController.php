@@ -27,15 +27,13 @@ function login_account()
         ];
     }
 
-
-
     //create session 
-    create_session($auth['id'], get_user($auth['id']));
+    create_session($auth['id'], get_employee($auth['id']));
 
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
-function get_user($auth_id)
+function get_employee($auth_id)
 {
     $conn = getDbConnection();
 
