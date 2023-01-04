@@ -21,7 +21,6 @@ if (isLoggedIn() && check_expire_time()) {
 if (isLoggedIn() && !check_expire_time()) {
     extendSession();
 }
-var_dump($_SESSION);
 ?>
 
 
@@ -59,7 +58,6 @@ var_dump($_SESSION);
 
     <title><?= SITE_NAME ?></title>
 </head>
-<?php var_dump($_SESSION); ?>
 
 <body class=" bg-image" style="background-image:url('./public/img/stock_foto_guitars.jpeg');  height: 100vh; background-repeat: no-repeat; background-size: cover;    ">
     <?php include_once '../views/navbar.phtml'; ?>

@@ -39,6 +39,10 @@ function register($error = null)
 }
 function create_account()
 {
+    //check all values for html entities
+    foreach ($_POST as $key => $value) {
+        $_POST[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
+    }
     //check if all fields are filled in
     if (empty($_POST['form_email']) || empty($_POST['form_password']) || empty($_POST['form_firstname']) || empty($_POST['form_lastname'])) {
         $errors = [];
@@ -52,6 +56,8 @@ function create_account()
     }
     //get connection
     $conn = getDbConnection();
+
+
 
     //check if email is already in use
     if (check_email($conn, $_POST['form_email'])) {

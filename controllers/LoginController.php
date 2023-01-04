@@ -17,8 +17,9 @@ function login($error = null)
 function login_account()
 {
     //get email and password from $_POST
-    $email = $_POST['form_email'];
-    $password = $_POST['form_password'];
+    $email =  htmlentities($_POST['form_email'], ENT_QUOTES, "UTF-8");
+    $password = htmlentities($_POST['form_password'], ENT_QUOTES, "UTF-8");
+
     //check if record exists in database
     $auth = get_account_status($email, $password);
     if (!$auth) {
