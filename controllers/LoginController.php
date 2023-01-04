@@ -33,7 +33,7 @@ function login_account()
     header('Location: ' . URL_ROOT . '/home');
     exit();
 }
-function get_employee($auth_id)
+function get_employee($auth_id): bool
 {
     $conn = getDbConnection();
 
@@ -49,13 +49,13 @@ function get_employee($auth_id)
         return false;
     }
 }
-function check_hash($password, $hash)
+function check_hash($password, $hash): bool
 {
 
     return password_verify($password, $hash);
 }
 //check if account exists and if password is correct 
-function get_account_status($email, $password)
+function get_account_status($email, $password): bool|array
 {
 
     //get database connection

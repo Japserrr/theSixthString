@@ -1,7 +1,7 @@
 <?php
 
 //return auth_id from session
-function getAuthId()
+function getAuthId(): bool|int
 {
     if (isset($_SESSION['auth_id'])) {
         return $_SESSION['auth_id'];
@@ -11,7 +11,7 @@ function getAuthId()
 
 
 //return session
-function getSession()
+function getSession(): array|bool
 {
     if (isset($_SESSION)) {
         return $_SESSION;
@@ -28,7 +28,7 @@ function extendSession()
         }
     }
 }
-function required_login_pages()
+function required_login_pages(): bool
 {
     //have a list of all the pages that require login
     switch ($_SERVER['REQUEST_URI']) {
@@ -57,7 +57,7 @@ function create_session($auth, $admin)
 }
 
 //check if user is logged in with session
-function isLoggedIn()
+function isLoggedIn(): bool
 {
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         return true;
@@ -65,7 +65,7 @@ function isLoggedIn()
     return false;
 }
 //check if session is expired
-function check_expire_time()
+function check_expire_time(): bool
 {
     if (isset($_SESSION['expire'])) {
         if ($_SESSION['expire'] < time()) {
