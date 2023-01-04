@@ -1,7 +1,6 @@
 <?php
 function convertionRatio(): void
 {
-    if (!isAdmin() && !isLoggedIn()) {header('Location: ./home');}
     $conn = getDbConnection();
 
     $registered_users = registeredusers($conn);
