@@ -1,3 +1,13 @@
+<?php
+
+
+$values = getvalues();
+var_dump(getvalues());
+//show email from values
+?>
+
+
+
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col border-right">
@@ -6,7 +16,7 @@
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Email</label><input type="text" class="form-control" placeholder="email" value=""></div>
+                    <div class="col-md-6"><label class="labels">Email</label><input type="text" class="form-control" placeholder="email" value="<?php $values['auth']['email'] ?>" /></div>
                     <div class="col-md-6">
                         <label class="labels required" for="form_password">Wachtwoord</label>
                         <div class="d-flex justify-content-between ">
@@ -17,17 +27,25 @@
                     </div>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-5"><label class="labels">Voornaam</label><input type="text" class="form-control" placeholder="Voornaam" value=""></div>
-                    <div class="col-md-2"><label class="labels">Tussenvoegsel</label><input type="text" class="form-control" value="" placeholder="Tussenvoegsel"></div>
+                    <div class="col-md-5"><label class="labels">Voornaam</label><input type="text" class="form-control" placeholder="Voornaam" value="<?php $values['user']['first_name'] ?>" /></div>
+                    <div class="col-md-2"><label class="labels">Tussenvoegsel</label><input type="text" class="form-control" value="<?php $values['user']['infix'] ?>" placeholder="Tussenvoegsel" /></div>
 
-                    <div class="col-md-5"><label class="labels">Achternaam</label><input type="text" class="form-control" value="" placeholder="Achternaam"></div>
+                    <div class="col-md-5"><label class="labels">Achternaam</label><input type="text" class="form-control" value="<?php $values['user']['last_name'] ?>" placeholder="Achternaam" /></div>
                 </div>
+
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Telefoonnummer</label><input type="text" class="form-control" placeholder="Telefoonnummer" value=""></div>
-                    <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="Address" value=""></div>
-                    <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="Postcode" value=""></div>
-                    <div class="col-md-12"><label class="labels">Stad</label><input type="text" class="form-control" placeholder="Stad" value=""></div>
-                    <div class="col-md-12"><label class="labels">Land</label><input type="text" class="form-control" placeholder="Land" value=""></div>
+                    <div class="col-md-12"><label class="labels">Telefoonnummer</label><input type="text" class="form-control" placeholder="Telefoonnummer" value="<?php $values['user']['phone_number'] ?>" /></div>
+                    <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="Address" value="" /></div>
+                    <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="Postcode" value="" /></div>
+                    <div class="col-md-12"><label class="labels">Stad</label><input type="text" class="form-control" placeholder="Stad" value="" /></div>
+                    <div class="col-md-12"><label class="labels" for="form_country">Land</label><select class="form-control form-select form-control-lg" name="form_country" id="form_country">
+                            <option value="none" selected hidden disabled>Kies je land</option>
+                            <option value="Nederland">Nederland</option>
+                            <option value="Belgie">België</option>
+                            <option value="Luxemburg">Luxemburg</option>
+                        </select>
+
+                    </div>
                 </div>
 
                 <div class="mt-5 text-center"><button class="btn btn-success profile-button" type="button">Save Profile</button></div>
