@@ -4,6 +4,7 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
+require_once '../controllers/AccountController.php';
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
@@ -21,6 +22,9 @@ switch ($request) {
         break;
     case URL_ROOT . '/product':
         productShow();
+        break;
+    case URL_ROOT . '/profile':
+        profile();
         break;
     case URL_ROOT . '/edit-info':
         require_once '../views/partials/member-gegevens.php';
