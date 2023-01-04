@@ -58,7 +58,6 @@ function create_account()
     $conn = getDbConnection();
 
 
-
     //check if email is already in use
     if (check_email($conn, $_POST['form_email'])) {
         return [
@@ -96,7 +95,7 @@ function create_account()
 function insert_uha($conn, $auth_id, $address_id)
 {
     //build query and prepare statement
-    $sth = $conn->prepare('INSERT INTO user_has_address (auth_id, address_id, address_type) VALUES (?,?, 1)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    $sth = $conn->prepare('INSERT INTO user_has_address (auth_id, address_id) VALUES (?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     //execute statement
     $sth->execute([$auth_id, $address_id]);
 }

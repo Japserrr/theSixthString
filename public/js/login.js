@@ -8,6 +8,7 @@ togglePassword.addEventListener("click", function (e) {
   password.setAttribute("type", type);
   this.classList.toggle("fa-eye-slash");
 });
+
 document
   .getElementById("submit-btn")
   ?.addEventListener("click", function (event) {

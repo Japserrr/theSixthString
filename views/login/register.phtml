@@ -68,16 +68,20 @@ if (!empty($_POST)) {
                           <input type="email" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
 
                           <label class="form-label required <?= empty($error["email"]) ? "" : "invalid-feedback" ?> " for="form_email">
-                            <?= empty($error["email"]) ? "Uw Emailadres" : $error["email"] ?>
+                            <?= empty($error["email"]) ? "Emailadres" : $error["email"] ?>
                           </label>
                         </div>
                       </div>
                       <div class="mb-4 pb-2">
+
+
                         <div class="d-flex justify-content-between ">
                           <input type="password" name="form_password" id="form_password" class="form-control  form-control-lg <?= empty($error["password"]) ? "" : "is-invalid" ?>" name="form_password" required />
                           <em class="far fa-eye d-flex  justify-content-center align-self-center rounded-right" id="togglePassword" style=" line-height: 0;margin-left: -50px; cursor: pointer; background-color: gray; width:50px;"></em>
                         </div>
-                        <label class="form-label required" for="form_password">Wachtwoord</label>
+                        <label class="form-label required" for="form_password">Wachtwoord
+
+                        </label>
                       </div>
 
 
