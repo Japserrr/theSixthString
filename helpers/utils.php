@@ -30,18 +30,17 @@ function extendSession()
 }
 function required_login_pages(): bool
 {
+
     //have a list of all the pages that require login
     switch ($_SERVER['REQUEST_URI']) {
-        case '/login':
-            return false;
-        case '/register':
-            return false;
-        case '/home':
-            return false;
         case '/logout':
+        case '/statistieken':
+        case '/product-management':
+        case '/checkout':
+        case '/confirm-payment':
+        case '/medewerkers/zoeken':
+        case '/medewerkers':
             return true;
-        case '/':
-            return false;
         default:
             return false;
     }
