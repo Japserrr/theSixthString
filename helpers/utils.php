@@ -46,14 +46,13 @@ function required_login_pages()
             return false;
     }
 }
-function create_session($auth, $user)
+function create_session($auth, $admin)
 {
     //create session 
+
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth;
-
-    var_dump($user);
-    $_SESSION['admin'] = $user ?  $user['admin'] : false;
+    $_SESSION['admin'] =  $admin;
 
 
     $_SESSION['expire'] = time() + 3600;

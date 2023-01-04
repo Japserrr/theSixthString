@@ -21,7 +21,7 @@ if (isLoggedIn() && check_expire_time()) {
 if (isLoggedIn() && !check_expire_time()) {
     extendSession();
 }
-
+var_dump($_SESSION);
 ?>
 
 
