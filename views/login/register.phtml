@@ -64,7 +64,9 @@ if (!empty($_POST)) {
                     <div class="row">
                       <div class="mb-4  pb-2 ">
                         <div class="form-outline form-white">
-                          <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
+                          <!--- make input check if its a valid email --->
+                          <input type="email" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
+
                           <label class="form-label required <?= empty($error["email"]) ? "" : "invalid-feedback" ?> " for="form_email">
                             <?= empty($error["email"]) ? "Uw Emailadres" : $error["email"] ?>
                           </label>

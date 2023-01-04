@@ -20,7 +20,7 @@ if (!empty($_POST)) {
                     <label class="form-label required  <?= empty($error["email"]) ? "" : "invalid-feedback" ?> " style="display: block !important;" for="form_email">
                       <?= empty($error["email"]) ? "Emailadres" : $error["email"] ?>
                     </label>
-                    <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" />
+                    <input type="text" name="form_email" id="form_email" class="form-control  form-control-lg <?= empty($error["email"]) ? "" : "is-invalid" ?>" required />
 
                   </div>
 
