@@ -27,10 +27,9 @@ function login_account()
         ];
     }
 
-    $user = get_user($auth['id']);
-    die(var_dump($user));
+
     //create session 
-    create_session($auth['id'], $user);
+    create_session($auth['id'], get_user($auth['id']));
 
     header('Location: ' . URL_ROOT . '/home');
     exit();
