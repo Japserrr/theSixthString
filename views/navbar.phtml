@@ -1,25 +1,33 @@
-<header class="sticky-top bg-white shadow w-100 d-flex align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
-    <a href="./" class="px-3 d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <h1 class="title">The Sixth String</h1>
-    </a>
-
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5">
-        <li><a href="./" class="nav-link px-2 link-secondary">Home</a></li>
-
-        <li><a href="./product-management" class="nav-link px-2 link-dark  <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>">Product beheer</a></li>
-        <li><a href="./statistieken" class="nav-link px-2 link-dark  <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>">Statistieken</a></li>
-
-    </ul>
-
-    <div class=" col-md-3 text-end px-3">
-        <button type="button" class="btn btn-outline-secondary position-relative mx-5" data-bs-toggle="modal" data-bs-target="#shoppingCart">
-            <img src="./public/img/cart.svg" alt="">
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="shopping-cart-amount">
-                0
-            </span>
+<nav class="navbar sticky-top shadow navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="./">The Sixth String</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success me-2 <?= empty($_SESSION)  ? "" : "d-none"; ?>">inloggen</button>
-        <button onclick="window.location.href='./register'" type="button" class="btn btn-success <?= empty($_SESSION) ?  "" : "d-none"; ?>">Registreren</button>
-        <button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Uitloggen</button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="./">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./product-management" >Product beheer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./statistieken" >Statistieken</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mb-lg-0 justify-content-end my-1">
+                <li class="nav-item"><button type="button" class="btn mb-1 me-3 btn-outline-secondary position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+                    <img src="./public/img/cart.svg" alt="">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="shopping-cart-amount">
+                0
+                    </span>
+                </button></li>
+                <li class="nav-item"><button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success mb-1 me-3 <?= empty($_SESSION)  ? "" : "d-none"; ?>">inloggen</button></li>
+                <li class="nav-item"><button onclick="window.location.href='./register'" type="button" class="btn btn-success <?= empty($_SESSION) ?  "" : "d-none"; ?>">Registreren</button></li>
+                <li class="nav-item"><button onclick="window.location.href='./logout'" type="button" class="btn btn-success <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Uitloggen</button></li>
+            </ul>
+        </div>
     </div>
-</header>
+</nav>
