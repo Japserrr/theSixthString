@@ -4,6 +4,7 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
+require_once '../controllers/AccountController.php';
 require_once '../controllers/LogoutController.php';
 require_once '../controllers/AdminPagecontroller.php';
 require_once '../controllers/AdminController.php';
@@ -33,6 +34,20 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
+    case URL_ROOT . '/profile':
+        profile();
+        break;
+    case URL_ROOT . '/edit-info':
+        require_once '../views/partials/member-gegevens.php';
+        break;
+    case URL_ROOT . '/privacy':
+        require_once '../views/partials/privacy.php';
+        break;
+    case URL_ROOT . '/edit-login':
+        require_once '../views/partials/member-login.php';
+        break;
+    case URL_ROOT . '/edit-address':
+        require_once '../views/partials/member-address.php';
     case URL_ROOT . '/medewerkers':
         if (isset($_POST['id']) && isset($_POST['employee'])) {
             updateEmployee();
