@@ -83,7 +83,7 @@ function create_account()
         }
     }
     //send_mail($_POST['form_email']);
-    create_session($auth_id);
+    create_session($auth_id, false);
     //navitage to homepage
     header('Location: ' . URL_ROOT . '/home');
     exit();

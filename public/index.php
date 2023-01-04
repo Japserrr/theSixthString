@@ -5,7 +5,7 @@ session_start();
 
 //check if user is logged in, if not redirect to login page 
 //todo add pages that are allowed to be visited without login
-if (!isLoggedIn() && $_SERVER['REQUEST_URI'] != URL_ROOT . '/login' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/register' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/home' && $_SERVER['REQUEST_URI'] != URL_ROOT . '/') {
+if (!isLoggedIn() && required_login_pages()) {
     header('Location: ' . URL_ROOT . '/login');
     exit();
 }

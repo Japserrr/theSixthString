@@ -26,8 +26,11 @@ function login_account()
             "email" => "Email of wachtwoord is onjuist"
         ];
     }
+
+    $user = get_user($auth['id']);
+    die(var_dump($user));
     //create session 
-    create_session($auth['id'], get_user($auth['id']));
+    create_session($auth['id'], $user);
 
     header('Location: ' . URL_ROOT . '/home');
     exit();
@@ -43,7 +46,7 @@ function get_user($auth_id)
     //check if record exists
     if ($sth->rowCount() > 0) {
         $user = $sth->fetch(PDO::FETCH_ASSOC);
-        return $user;
+        return $user['employee'];
     } else {
         return false;
     }

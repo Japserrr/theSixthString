@@ -28,12 +28,32 @@ function extendSession()
         }
     }
 }
-function create_session($auth, $user = null)
+function required_login_pages()
+{
+    //have a list of all the pages that require login
+    switch ($_SERVER['REQUEST_URI']) {
+        case '/login':
+            return false;
+        case '/register':
+            return false;
+        case '/home':
+            return true;
+        case '/logout':
+            return true;
+        case '/':
+            return true;
+        default:
+            return false;
+    }
+}
+function create_session($auth, $user)
 {
     //create session 
     $_SESSION['logged_in'] = true;
     $_SESSION['auth_id'] = $auth;
-    $_SESSION['admin'] = empty($user) ? false : $user['admin'];
+
+    var_dump($user);
+    $_SESSION['admin'] = $user ?  $user['admin'] : false;
 
 
     $_SESSION['expire'] = time() + 3600;
@@ -75,23 +95,7 @@ function removeSession()
  */
 function isAdmin(): bool
 {
-    if (!isset($_SESSION['auth_id'])) {
-        return false;
-    }
-
-    require_once '../helpers/database.php';
-
-    $conn = getDbConnection();
-    $stmt = $conn->prepare('SELECT employee FROM user WHERE auth_id = :auth_id');
-    $stmt->execute(['auth_id' => $_SESSION['auth_id']]);
-    $isEmployee = $stmt->fetch();
-    $conn = null;
-
-    if (!$isEmployee['employee']) {
-        return false;
-    }
-
-    return true;
+    return !empty($_SESSION['admin']);
 }
 
 /** @return int|null */
