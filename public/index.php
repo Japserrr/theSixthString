@@ -77,7 +77,7 @@ if (isLoggedIn() && !check_expire_time()) {
         window.cookieconsent.initialise({
             "palette": {
                 "popup": {
-                    "background": "#383b75"
+                    "background": "#28a745"
                 },
                 "button": {
                     "background": "#f1d600"
