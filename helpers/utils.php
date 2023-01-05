@@ -33,14 +33,20 @@ function required_login_pages(): bool
 
     //have a list of all the pages that require login
     switch ($_SERVER['REQUEST_URI']) {
-        case '/logout':
-        case '/statistieken':
-        case '/product-management':
-        case '/checkout':
-        case '/confirm-payment':
-        case '/medewerkers/zoeken':
-        case '/medewerkers':
+        case URL_ROOT . '/logout':
+        case URL_ROOT . '/statistieken':
+        case URL_ROOT . '/product-management':
+        case URL_ROOT . '/checkout':
+        case URL_ROOT . '/confirm-payment':
+        case URL_ROOT . '/medewerkers/zoeken':
+        case URL_ROOT . '/medewerkers':
             return true;
+
+        case URL_ROOT . '/':
+        case URL_ROOT . '/home':
+        case URL_ROOT . '/login':
+        case URL_ROOT . '/register':
+        case URL_ROOT . '/product':
         default:
             return false;
     }
