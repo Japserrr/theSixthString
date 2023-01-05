@@ -38,16 +38,16 @@ switch ($request) {
         profile();
         break;
     case URL_ROOT . '/edit-info':
-        require_once '../views/partials/member-gegevens.php';
+        require_once '../views/partials/member-gegevens.phtml';
         break;
     case URL_ROOT . '/privacy':
-        require_once '../views/partials/privacy.php';
+        require_once '../views/partials/privacy.phtml';
         break;
     case URL_ROOT . '/edit-login':
-        require_once '../views/partials/member-login.php';
+        require_once '../views/partials/member-login.phtml';
         break;
     case URL_ROOT . '/edit-address':
-        require_once '../views/partials/member-address.php';
+        require_once '../views/partials/member-address.phtml';
     case URL_ROOT . '/medewerkers':
         if (isset($_POST['id']) && isset($_POST['employee'])) {
             updateEmployee();
