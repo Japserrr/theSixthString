@@ -19,11 +19,11 @@ function getvalues()
 }
 
 
-//check which inputs are changed and call the according update function
+//check which inputs are changed from &_POST and call the according update function
 //todo make this working.
 function update_profile()
 {
-    $values = getvalues();
+    $values = $_POST;
     $user = $values['user'];
     $address = $values['address'];
     $auth = $values['auth'];
