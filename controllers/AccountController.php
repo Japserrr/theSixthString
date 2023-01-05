@@ -7,13 +7,6 @@ function profile($errors = null, $values = null)
 {
 
 
-    //get data from all 3 functions and push it into $values array 
-    $values = [
-        'user' => get_user(),
-        'address' => get_address(),
-        'auth' => get_auth()
-    ];
-
     require_once '../views/profile/profile.phtml';
 }
 function getvalues()
