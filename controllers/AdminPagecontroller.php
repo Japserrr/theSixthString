@@ -20,6 +20,7 @@ function getAllEmployee()
     $r->execute();
     $users = $r->fetchAll();
     $conn = null;
+    return $users;
 }
 
 function selectEmployee()

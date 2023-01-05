@@ -58,9 +58,11 @@ function create_session($auth, $admin)
 //check if user is logged in with session
 function isLoggedIn(): bool
 {
+
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         return true;
     }
+
     return false;
 }
 //check if session is expired

@@ -6,6 +6,7 @@ session_start();
 //check if user is logged in, if not redirect to login page 
 //todo add pages that are allowed to be visited without login
 if (!isLoggedIn() && required_login_pages()) {
+    die("test");
     header('Location: ' . URL_ROOT . '/login');
     exit();
 }
