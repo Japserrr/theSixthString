@@ -11,7 +11,7 @@ function getAuthId(): bool|int
 
 
 //return session
-function getSession(): array|bool
+function getSession(): array | bool
 {
     if (isset($_SESSION)) {
         return $_SESSION;

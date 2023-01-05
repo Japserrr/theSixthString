@@ -52,7 +52,7 @@ function update_address()
             'city' => $_POST['city'],
             'state' => $_POST['state'],
             'zip' => $_POST['zip'],
-            'auth_id' => 1 //$_SESSION['auth_id']
+            'auth_id' => 2 //$_SESSION['auth_id']
         ]
     );
 }
@@ -77,8 +77,10 @@ function update_auth()
     if ($email) {
         if ($email['id'] != 1) {
             $_SESSION['errors'] = ['email' => 'Email is already in use'];
-            header('Location: /profile');
-            exit;
+            return [
+                'errors' => $_SESSION['errors'],
+                'values' => $_POST
+            ];
         }
     }
     $stmt = $conn->prepare("UPDATE auth SET email = :email, password = :password WHERE id = :auth_id", [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
@@ -86,7 +88,7 @@ function update_auth()
         [
             'email' => $_POST['email'],
             'password' => password_hash($_POST['form_password'], PASSWORD_BCRYPT),
-            'auth_id' => 1 //$_SESSION['auth_id']
+            'auth_id' => 2 //$_SESSION['auth_id']
         ]
     );
 }
@@ -100,7 +102,7 @@ function update_user()
             'infix' => $_POST['infix'] ?? '',
             'last_name' => $_POST['last_name'],
             'phone' => $_POST['phone'],
-            'auth_id' => 1 //$_SESSION['auth_id']
+            'auth_id' => 2 //$_SESSION['auth_id']
         ]
     );
 }
@@ -112,7 +114,7 @@ function get_address()
     $stmt = $conn->prepare("SELECT * FROM address WHERE id = (SELECT address_id FROM user_has_address WHERE auth_id = :auth_id)", [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $stmt->execute(
         [
-            'auth_id' =>  1 // $_SESSION['auth_id']
+            'auth_id' =>  2 // $_SESSION['auth_id']
         ]
     );
     $address = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -130,7 +132,7 @@ function get_user()
     $stmt = $conn->prepare("SELECT * FROM user WHERE auth_id = :auth_id", [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $stmt->execute(
         [
-            'auth_id' =>  1 //$_SESSION['auth_id']
+            'auth_id' =>  2 //$_SESSION['auth_id']
         ]
     );
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -144,7 +146,7 @@ function get_auth()
     $stmt = $conn->prepare("SELECT email FROM auth WHERE id = :auth_id", [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $stmt->execute(
         [
-            'auth_id' => 1 //  $_SESSION['auth_id']
+            'auth_id' => 2 //  $_SESSION['auth_id']
         ]
     );
     $auth = $stmt->fetch(PDO::FETCH_ASSOC);
