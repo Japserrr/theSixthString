@@ -16,7 +16,7 @@ function login($error = null)
 
 function login_account()
 {
-    ob_start();
+
     //get email and password from $_POST
     $email =  htmlentities($_POST['form_email'], ENT_QUOTES, "UTF-8");
     $password = htmlentities($_POST['form_password'], ENT_QUOTES, "UTF-8");
@@ -31,7 +31,6 @@ function login_account()
 
     //create session 
     create_session($auth['id'], get_employee($auth['id']));
-
     //refresh page with javascript because of Cannot modify header information - headers already sent by output" error
     echo '<script>window.location.href = "' . URL_ROOT . '/home";</script>';
     exit();
