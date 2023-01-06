@@ -53,6 +53,6 @@ function updateEmployee()
     $r = $conn->prepare("UPDATE user SET employee = :employee WHERE auth_id = :id")->execute(['employee' => $employee, 'id' => $id]);
 
     $conn = null;
-    header('Location: ' . URL_MAIN . URL_ROOT . '/medewerkers');
+    echo '<script>window.location.href = "' . URL_ROOT . '/medewerkers";</script>';
     exit;
 }
