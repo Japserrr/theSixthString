@@ -8,6 +8,7 @@ function logout()
         session_destroy();
     }
     //redirect to login
-    header('Location: ' . URL_ROOT . '/login');
+    echo '<script>window.location.href = "' . URL_ROOT . '/login";</script>';
+
     exit();
 }
