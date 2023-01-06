@@ -2,17 +2,6 @@
 <?php
 $conn = getDbConnection();
 
-// code that actually work...in a way.
-//update
-//     $sql = "update `user`
-// set first_name = 'neville',
-//     last_name = 'testing'
-//where auth_id = 3;";
-//
-//     $stmt = $conn->query($sql);
-//     $stmt->execute();
-
-
 
 // display user information
 $sql = "select * from auth";
@@ -34,7 +23,7 @@ $users = $stmt->fetchAll(PDO::FETCH_OBJ);
 <?php
 // update 2
 $auth_id    = 1;
-$sql        = 'select * from `auth` where id = : ';
+$sql        = 'select * from `auth` where id = :auth_id ';
 $stmt       =   $conn->prepare($sql);
 
 $stmt->execute(
@@ -46,8 +35,9 @@ $user       =   $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (isset($_POST)) {
     if (!empty($_POST['password'])
-        && !empty($_POST['email'])
-    ) {
+        && !empty($_POST['email']))
+    {
+        $auth_id  = $user['auth_id'];
         $password = $_POST['password'];
         $email = $_POST['email'];
 

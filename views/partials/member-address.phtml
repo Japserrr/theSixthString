@@ -2,18 +2,6 @@
 <?php
 $conn = getDbConnection();
 
-// code that actually work...in a way.
-//update
-//     $sql = "update `user`
-// set first_name = 'neville',
-//     last_name = 'testing'
-//where auth_id = 3;";
-//
-//     $stmt = $conn->query($sql);
-//     $stmt->execute();
-
-
-
 // display address information
 $sql = "select * from address";
 $stmt = $conn->prepare($sql);
