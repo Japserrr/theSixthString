@@ -1,3 +1,7 @@
+<?php
+if (isLoggedIn() && !check_expire_time()) {
+
+?>
 <?php require 'member-nav.php' ?>
 <?php
 $conn = getDbConnection();
@@ -66,4 +70,4 @@ $user       =   $stmt->fetch(PDO::FETCH_ASSOC);
 </div>
 
 
-
+<?php }
