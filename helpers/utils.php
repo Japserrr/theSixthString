@@ -30,7 +30,6 @@ function extendSession()
 }
 function required_login_pages(): bool
 {
-
     //have a list of all the pages that require login
     switch ($_SERVER['REQUEST_URI']) {
         case URL_ROOT . '/logout':
@@ -41,7 +40,6 @@ function required_login_pages(): bool
         case URL_ROOT . '/medewerkers/zoeken':
         case URL_ROOT . '/medewerkers':
             return true;
-
         case URL_ROOT . '/':
         case URL_ROOT . '/home':
         case URL_ROOT . '/login':
