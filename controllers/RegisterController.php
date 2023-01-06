@@ -103,9 +103,9 @@ function insert_uha($conn, $auth_id, $address_id)
 function insert_address($conn, $address): int
 {
     //build query and prepare statement
-    $sth = $conn->prepare('INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    $sth = $conn->prepare('INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     //execute statement
-    $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country'], 2]);
+    $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country']]);
     //return last inserted id
     return $conn->lastInsertId();
 }
@@ -124,7 +124,7 @@ function insert_auth($conn, $auth): int
 function insert_user($conn, $user)
 {
     //build query and prepare statement
-    $sth = $conn->prepare('INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?,?,?,?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    $sth = $conn->prepare('INSERT INTO user (auth_id, first_name, infix, last_name, phone_number, employee) VALUES (?,?,?,?,?,0)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     //execute statement
     $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'],  $user['phone_number']]);
 }
