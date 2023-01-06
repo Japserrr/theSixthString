@@ -124,7 +124,9 @@ function insert_auth($conn, $auth): int
 function insert_user($conn, $user)
 {
     //build query and prepare statement
+
     $sth = $conn->prepare('INSERT INTO user (auth_id, first_name, infix, last_name, phone_number, employee) VALUES (?,?,?,?,?,0)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+
     //execute statement
     $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'],  $user['phone_number']]);
 }

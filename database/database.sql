@@ -65,8 +65,7 @@
         house_number VARCHAR(45) NULL,
         city VARCHAR(45) NULL DEFAULT NULL,
         country VARCHAR(45) NULL DEFAULT NULL,
-        PRIMARY KEY (id),
-        UNIQUE(`zipcode`, `house_number`)
+        PRIMARY KEY (id)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
     CREATE TABLE user_has_address (
@@ -104,4 +103,4 @@
         FOREIGN KEY (order_id) REFERENCES the_sixth_string.order(id),
         FOREIGN KEY (product_id) REFERENCES the_sixth_string.product(id)
     ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
-    --
+    
