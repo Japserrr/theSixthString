@@ -1,24 +1,32 @@
 <nav class="navbar sticky-top shadow navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="./">The Sixth String</a>
+        <div style="display:flex">
+        <ul class="navbar-nav mb-lg-0 justify-content-end my-1 phone-visible" style="display: none">
+        <li class="nav-item <?= !empty($_SESSION) ?  "" : "d-none"; ?>"><button type="button" class="btn mb-1 me-3 btn-outline-secondary position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+                <img src="./public/img/cart.svg" alt="">
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger " id="shopping-cart-amount">0</span>
+            </button></li>
+        </ul>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active btn btn-link" aria-current="page" href="./">Home</a>
+                    <a class="nav-link active btn btn-link center-a" aria-current="page" href="./">Home</a>
+                </li>
+                <li class="nav-item responsive-nav-item">
+                    <a class="nav-link center-a <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./product-management">Product beheer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./product-management">Product beheer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./statistieken">Statistieken</a>
+                    <a class="nav-link center-a <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./statistieken">Statistieken</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav mb-lg-0 justify-content-end my-1 ">
-                <li class="nav-item <?= !empty($_SESSION) ?  "" : "d-none"; ?>"><button type="button" class="btn mb-1 me-3 btn-outline-secondary position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+                <li class="nav-item phone-invisble <?= !empty($_SESSION) ?  "" : "d-none"; ?>"><button type="button" class="btn mb-1 me-3 btn-outline-secondary position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
                         <img src="./public/img/cart.svg" alt="">
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger " id="shopping-cart-amount">0</span>
                     </button></li>
@@ -42,5 +50,15 @@
             width: 100%;
             margin-right: 0px !important;
         }
+        .center-a {
+            width: 100%;
+            margin-right: 0px !important;
+            text-align: center;
+        }
+        .phone-visible{
+            display:block !important;
+        }
+        .phone-invisble{
+            display: none;        }
     }
 </style>
