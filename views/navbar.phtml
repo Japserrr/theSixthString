@@ -1,15 +1,67 @@
-<header class="sticky-top bg-white shadow w-100 d-flex align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="px-3 d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <h1 class="title">The Sixth String</h1>
-        </a>
-
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5">
-            <li><a href="./" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="./product-overview" class="nav-link px-2 link-dark">Product beheer</a></li>
+<nav class="navbar sticky-top shadow navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="./">The Sixth String</a>
+        <div style="display:flex">
+        <ul class="navbar-nav mb-lg-0 justify-content-end my-1 phone-visible" style="display: none">
+        <li class="nav-item <?= !empty($_SESSION) ?  "" : "d-none"; ?>"><button type="button" class="btn mb-1 me-3 btn-outline-secondary position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+                <img src="./public/img/cart.svg" alt="">
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger " id="shopping-cart-amount">0</span>
+            </button></li>
         </ul>
-
-        <div class="col-md-3 text-end px-3">
-            <button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success me-2">inloggen</button>
-            <button onclick="window.location.href='./register'" type="button" class="btn btn-success">Registreren</button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         </div>
-    </header>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active btn btn-link center-a" aria-current="page" href="./">Home</a>
+                </li>
+                <li class="nav-item responsive-nav-item">
+                    <a class="nav-link center-a <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./product-management">Product beheer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link center-a <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./statistieken">Statistieken</a>
+                </li>
+                <li class="nav-item responsive-nav-item">
+                    <a class="nav-link center-a <?= isLoggedIn() && isAdmin() ?  "" : "d-none"; ?>" href="./medewerkers">Medewerkers</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mb-lg-0 justify-content-end my-1 ">
+                <li class="nav-item phone-invisble <?= !empty($_SESSION) ?  "" : "d-none"; ?>"><button type="button" class="btn mb-1 me-3 btn-outline-secondary position-relative" data-bs-toggle="modal" data-bs-target="#shoppingCart">
+                        <img src="./public/img/cart.svg" alt="">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger " id="shopping-cart-amount">0</span>
+                    </button></li>
+                <li class="nav-item responsive-nav-item" style=""><button onclick="window.location.href='./login'" type="button" class="btn btn-outline-success mb-1 me-3 long-button <?= empty($_SESSION)  ? "" : "d-none"; ?>">inloggen</button></li>
+                <li class="nav-item responsive-nav-item"><button onclick="window.location.href='./register'" type="button" class="btn btn-success long-button <?= empty($_SESSION) ?  "" : "d-none"; ?>">Registreren</button></li>
+                <li class="nav-item responsive-nav-item"><button onclick="window.location.href='./logout'" type="button" class="btn btn-success long-button <?= !empty($_SESSION) ?  "" : "d-none"; ?>">Uitloggen</button></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    @media (max-width: 991px) {
+        .responsive-nav-item {
+
+            display: flex;
+            justify-content: center;
+        }
+
+        .long-button {
+            width: 100%;
+            margin-right: 0px !important;
+        }
+        .center-a {
+            width: 100%;
+            margin-right: 0px !important;
+            text-align: center;
+        }
+        .phone-visible{
+            display:block !important;
+        }
+        .phone-invisble{
+            display: none;        }
+    }
+</style>

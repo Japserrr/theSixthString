@@ -17,5 +17,7 @@ function productShow(): void
 
     $product = (new Product)->get($id);
 
+    $productCategories = (new Product)->getCatagories($id);
+
     require_once('../views/product/show.phtml');
 }

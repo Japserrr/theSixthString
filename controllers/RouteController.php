@@ -4,6 +4,11 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/ProductController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/LoginController.php';
+require_once '../controllers/LogoutController.php';
+require_once '../controllers/AdminPagecontroller.php';
+require_once '../controllers/AdminController.php';
+require_once '../controllers/CheckoutController.php';
+require_once '../controllers/ProductManagementController.php';
 
 $request = explode('?', $_SERVER['REQUEST_URI'])[0];
 
@@ -13,14 +18,42 @@ switch ($request) {
     case URL_ROOT . '/home':
         homepage();
         break;
+    case URL_ROOT . '/statistieken':
+        convertionRatio();
+        break;
     case URL_ROOT . '/login':
         login();
+        break;
+    case URL_ROOT . '/logout':
+        logout();
         break;
     case URL_ROOT . '/register':
         register();
         break;
     case URL_ROOT . '/product':
         productShow();
+        break;
+    case URL_ROOT . '/medewerkers':
+        if (isset($_POST['id']) && isset($_POST['employee'])) {
+            updateEmployee();
+            break;
+        }
+        AdminPage();
+        break;
+    case URL_ROOT . '/medewerkers/zoeken':
+        if (empty($_POST['searchField'])) {
+            AdminPage();
+            break;
+        }
+        selectEmployee();
+    case URL_ROOT . '/checkout':
+        checkout();
+        break;
+    case URL_ROOT . '/confirm-payment':
+        confirmPayment();
+        break;
+    case URL_ROOT . '/product-management':
+        (new ProductManagementController)->productManagement();
         break;
     default:
         http_response_code(404);

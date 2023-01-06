@@ -1,5 +1,4 @@
 <?php
-
 function send_mail($adress)
 {
     $to = $adress;
@@ -13,30 +12,39 @@ function send_mail($adress)
 
     mail($to, $subject, $message);
 }
-
-function check_email($conn, $email)
+//check if email is already in use
+function check_email($conn, $email): bool
 {
+    //build query
     $sql = 'SELECT email FROM auth WHERE email = ?';
+    //prepare statement
     $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
     $sth->execute([$email]);
-    //check if email is already in use
+    //check if record exists
     if ($sth->rowCount() > 0) {
         return true;
     }
 
     return false;
 }
-
 function register($error = null)
 {
-
+    //check if logged in
+    if (isLoggedIn()) {
+        header('Location: ' . URL_ROOT . '/home');
+        exit();
+    }
     require_once '../views/login/register.phtml';
 }
-
 function create_account()
 {
+    //check all values for html entities
+    foreach ($_POST as $key => $value) {
+        $_POST[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
+    }
+    //check if all fields are filled in
     if (empty($_POST['form_email']) || empty($_POST['form_password']) || empty($_POST['form_firstname']) || empty($_POST['form_lastname'])) {
-        //"email" => "Email is verplicht", "password" => "Wachtwoord is verplicht", "firstname" => "Voornaam is verplicht", "lastname" => "Achternaam is verplicht"
         $errors = [];
         $email = empty($_POST['form_email']) ? "Email is verplicht" : "";
         $password = empty($_POST['form_password']) ? "Wachtwoord is verplicht" : "";
@@ -46,31 +54,29 @@ function create_account()
         register($errors,  $_POST);
         exit();
     }
-
+    //get connection
     $conn = getDbConnection();
 
 
+    //check if email is already in use
     if (check_email($conn, $_POST['form_email'])) {
         return [
-
             "email" =>  "Email is al in gebruik"
-
         ];
     }
 
-
-    $auth = ['email' => $_POST['form_email'], 'password' => hash('sha256', $_POST['form_password']), 'active' => 1];
-    $auth_id = insert_auth($conn, $auth);
-    $user = ['auth_id' => $auth_id, 'first_name' => $_POST['form_firstname'], 'infix' => $_POST['form_inifx'], 'last_name' => $_POST['form_lastname'], 'phone_number' => $_POST['form_phone']];
+    //insert auth record
+    $auth_id = insert_auth($conn, ['email' => $_POST['form_email'], 'password' => password_hash($_POST['form_password'], PASSWORD_BCRYPT), 'active' => 1]);
     //build object with data from the post
-    insert_user($conn, $user);
+    insert_user($conn, ['auth_id' => $auth_id, 'first_name' => $_POST['form_firstname'], 'infix' => $_POST['form_inifx'], 'last_name' => $_POST['form_lastname'], 'phone_number' => $_POST['form_phone']]);
 
-    $country = array_key_exists("form_country", $_POST) ? $_POST['form_country'] : "";
+    //build address object, and check if country is set
     $address = [
         'street_name' => $_POST['form_address'], 'house_number' => $_POST['form_house_number'],
-        'zipcode' => $_POST['form_zipcode'], 'city' => $_POST['form_city'], 'country' =>   $country
+        'zipcode' => $_POST['form_zipcode'], 'city' => $_POST['form_city'],
+        'country' =>  array_key_exists("form_country", $_POST) ? $_POST['form_country'] : ""
     ];
-
+    //check if any of the optional fields are filled in, if not then skip insertion of address and uha
     foreach ($address as $key => $value) {
         if (!empty($value)) {
             $address_id = insert_address($conn, $address);
@@ -79,52 +85,46 @@ function create_account()
         }
     }
     //send_mail($_POST['form_email']);
-    creation_succesful($auth_id);
-}
-
-function creation_succesful($auth_id)
-{
-    //check if session exists 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    $_SESSION['logged_in'] = true;
-    $_SESSION['auth_id'] = $auth_id;
-    $_SESSION['admin'] = false;
-
-    $_POST = [];
-    print_r($_SESSION);
-    homepage();
+    create_session($auth_id, false);
+    //navitage to homepage
+    echo '<script>window.location.href = "' . URL_ROOT . '/home";</script>';
     exit();
 }
 
+/// Inserts a new link between user and address into the database
 function insert_uha($conn, $auth_id, $address_id)
 {
-    $sql = 'INSERT INTO user_has_address (auth_id, address_id, address_type) VALUES (?,?, 1)';
-    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //build query and prepare statement
+    $sth = $conn->prepare('INSERT INTO user_has_address (auth_id, address_id) VALUES (?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
     $sth->execute([$auth_id, $address_id]);
 }
-function insert_address($conn, $address)
+/// Inserts a new address into the database
+function insert_address($conn, $address): int
 {
-    $sql = 'INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?,?)';
-    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //build query and prepare statement
+    $sth = $conn->prepare('INSERT INTO address (street_name, house_number, zipcode, city, country) VALUES (?,?,?,?,?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
     $sth->execute([$address['street_name'], $address['house_number'], $address['zipcode'], $address['city'], $address['country'], 2]);
+    //return last inserted id
     return $conn->lastInsertId();
 }
-function insert_auth($conn, $auth)
+/// Inserts new login credentials into the database
+function insert_auth($conn, $auth): int
 {
-
-    $sql = 'INSERT INTO auth (email, password, active) VALUES (?,?, 1)';
-    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //build query and prepare statement
+    $sth = $conn->prepare('INSERT INTO auth (email, password, active, created_at) VALUES (?,?, 1, NOW())', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
     $sth->execute([$auth['email'], $auth['password']]);
-
+    //return last inserted id
     return $conn->lastInsertId();
 }
+
+/// Inserts a new user into the database
 function insert_user($conn, $user)
 {
-    //strip + from phone number
-    $sql = 'INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?,?,?,?,?)';
-    $sth = $conn->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //build query and prepare statement
+    $sth = $conn->prepare('INSERT INTO user (auth_id, first_name, infix, last_name, phone_number) VALUES (?,?,?,?,?)', [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+    //execute statement
     $sth->execute([$user['auth_id'], $user['first_name'], $user['infix'], $user['last_name'],  $user['phone_number']]);
 }
