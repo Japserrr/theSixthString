@@ -13,6 +13,7 @@ document
   .getElementById("submit-btn")
   ?.addEventListener("click", function (event) {
     event.preventDefault();
+    checkEmail();
     checkZipCode();
     checkPhoneNumber();
 
@@ -25,6 +26,7 @@ document
   .getElementById("submit-btn-login")
   ?.addEventListener("click", function (event) {
     event.preventDefault();
+    checkEmail();
     document.getElementById("login_form").requestSubmit();
   });
 
@@ -43,6 +45,18 @@ function checkHouseNumber() {
   document.getElementById("form_house_number").classList.add("is-invalid");
   document.getElementById("label_house_number").innerHTML =
     "Ongeldig Huisnummer!";
+  return false;
+}
+function checkEmail()
+{
+  var form_email = document.getElementById("form_email").value;
+  if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(form_email) || form_email == "") {
+    document.getElementById("form_email").classList.replace("is-invalid", "is-valid");
+    document.getElementById("label_email").innerHTML = "Email";
+    return true;
+  }
+  document.getElementById("form_email").classList.add("is-invalid");
+  document.getElementById("label_email").innerHTML = "Ongeldig Email!";
   return false;
 }
 function checkPhoneNumber() {

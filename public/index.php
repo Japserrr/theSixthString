@@ -2,7 +2,6 @@
 include_once '../config/config.php';
 include_once '../helpers/utils.php';
 session_start();
-
 //check if user is logged in, if not redirect to login page 
 //todo add pages that are allowed to be visited without login
 if (!isLoggedIn() && required_login_pages()) {
@@ -16,15 +15,12 @@ if (isLoggedIn() && check_expire_time()) {
     header('Location: ' . URL_ROOT . '/login');
     exit();
 }
-
 //if user is logged in and session isnt expired extend session time
 if (isLoggedIn() && !check_expire_time()) {
     extendSession();
 }
+
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="nl">
 
