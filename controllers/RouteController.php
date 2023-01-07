@@ -46,6 +46,7 @@ switch ($request) {
             break;
         }
         selectEmployee();
+        break;
     case URL_ROOT . '/checkout':
         checkout();
         break;

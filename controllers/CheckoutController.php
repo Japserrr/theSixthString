@@ -250,17 +250,17 @@ function registerOrder(array $order): string
     ]);
 
     foreach ($order['products'] as $product) {
-	while ($product['amount'] != 0) {
-        $stmt = $conn->prepare('
+        while ($product['amount'] != 0) {
+            $stmt = $conn->prepare('
             INSERT INTO order_has_products 
             VALUES (:productId, :orderNumber)
         ');
-        $stmt->execute([
-            'productId' => $product['id'],
-            'orderNumber' => $orderNumber,
-        ]);
-	$product['amount']--;
-	}
+            $stmt->execute([
+                'productId' => $product['id'],
+                'orderNumber' => $orderNumber,
+            ]);
+            $product['amount']--;
+        }
     }
     $conn = null;
 

@@ -1,34 +1,35 @@
     <!--THIS IS THE CONVERTIONRATIO-->
-<div class="container pt-5">
-    <div class="card text-center mb-3 w-50 mx-auto shadow">
-        <div class="card-body">
-            <h5 class="card-title">Conversie ratio</h5>
-            <p class="card-text"><?= number_format($ratio,3, ",",".") ?>%</p>
+    <div class="container pt-5">
+        <div class="card text-center mb-3 w-50 mx-auto shadow">
+            <div class="card-body">
+                <h5 class="card-title">Conversie ratio</h5>
+                <p class="card-text"><?= number_format($ratio, 3, ",", ".") ?>%</p>
+            </div>
+            <div class="card-footer text-muted">
+                <?php echo ($ratio == 0 ? "Er is nog geen ratio bekend." : "Berekening uitgevoerd."); ?>
+            </div>
         </div>
-        <div class="card-footer text-muted">
-            <?php echo ($ratio == 0 ? "Er is nog geen ratio bekend." : "Berekening uitgevoerd.");?>
-        </div>
-    </div>
 
-    <!--THIS IS THE TOTAL USER COUNT-->
-    <div class="card text-center mb-3 w-50 mx-auto shadow">
-        <div class="card-body">
-            <h5 class="card-title">Totaal geregistreerde gebruikers</h5>
-            <p class="card-text"><?php echo ($registered_users)["user_count"] ?></p>
+        <!--THIS IS THE TOTAL USER COUNT-->
+        <div class="card text-center mb-3 w-50 mx-auto shadow">
+            <div class="card-body">
+                <h5 class="card-title">Totaal geregistreerde gebruikers</h5>
+                <p class="card-text"><?php echo  !isset(($registered_users)["user_count"]) ? 0 : ($registered_users)["user_count"]  ?></p>
+            </div>
+            <div class="card-footer text-muted">
+                <?php echo !isset(($registered_users["latest_created_at"])) ? "Er zijn nog geen klanten geregistreerd." : sprintf("Laatst bijgewerkt: %s", $registered_users["latest_created_at"]) ?>
+            </div>
         </div>
-        <div class="card-footer text-muted">
-            <?php echo($registered_users["latest_created_at"] == 0 ? "Er zijn nog geen klanten geregistreerd." : sprintf("Laatst bijgewerkt: %s", $registered_users["latest_created_at"])) ?>
-        </div>
-    </div>
 
-    <!--THIS IS THE TOTAL ORDER COUNT-->
-    <div class="card text-center w-50 mx-auto shadow">
-        <div class="card-body">
-            <h5 class="card-title">Totaal geplaatste bestellingen</h5>
-            <p class="card-text"><?php echo ($total_orders)["order_count"] ?></p>
-        </div>
-        <div class="card-footer text-muted">
-            <?php echo($total_orders["last_order"] == 0 ? "Er zijn geen bestellingen geplaatst." : sprintf("Laatst bijgewerkt: %s", $total_orders["last_order"])) ?>
+        <!--THIS IS THE TOTAL ORDER COUNT-->
+        <div class="card text-center w-50 mx-auto shadow">
+            <div class="card-body">
+                <h5 class="card-title">Totaal geplaatste bestellingen</h5>
+                <p class="card-text"><?php echo (!isset(($total_orders)["order_count"]) ? 0 : ($total_orders)["order_count"]) ?></p>
+            </div>
+            <div class="card-footer text-muted">
+                <?php echo (!isset($total_orders["last_order"]) ? "Er zijn geen bestellingen geplaatst." : sprintf("Laatst bijgewerkt: %s", $total_orders["last_order"]))  ?>
+            </div>
+            <?php var_dump(isset($total_orders["last_order"])) ?>
         </div>
     </div>
-</div>
