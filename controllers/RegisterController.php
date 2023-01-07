@@ -32,7 +32,7 @@ function register($error = null)
 {
     //check if logged in
     if (isLoggedIn()) {
-        header('Location: ' . URL_ROOT . '/home');
+        echo '<script>window.location.href = "'. URL_ROOT . '/home";</script>';
         exit();
     }
     require_once '../views/login/register.phtml';
