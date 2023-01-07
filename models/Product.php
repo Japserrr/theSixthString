@@ -321,11 +321,10 @@ class Product
     private function saveImageFile(array $image, string $productName): ?string
     {
         try {
-            $imageName = str_replace(' ', '-', $productName);
             $dateTimeString = str_replace(' ', '_', date('dmyHis'));
             $imageFileInfo = pathinfo($image['name']['image']);
 
-            $newImagePath = "./public/img/products/$imageName" . "_$dateTimeString." . $imageFileInfo['extension'];
+            $newImagePath = "./public/img/products/product_$dateTimeString." . $imageFileInfo['extension'];
             move_uploaded_file($image['tmp_name']['image'], ".$newImagePath");
         } catch (Exception) {
             return null;

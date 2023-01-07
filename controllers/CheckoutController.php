@@ -1,6 +1,5 @@
 <?php
 
-
 require_once '../helpers/database.php';
 
 /** @return void */
@@ -215,13 +214,6 @@ function registerOrder(array $order): string
         $stmt->execute([
             'shippingAddressId' => $shippingAddressId,
         ]);
-        $stmt = $conn->prepare('
-            DELETE FROM address 
-            WHERE id = :shippingAddressId
-        ');
-        $stmt->execute([
-            'shippingAddressId' => $shippingAddressId,
-        ]);
     }
     $stmt = $conn->prepare('
         INSERT INTO address 
@@ -258,6 +250,7 @@ function registerOrder(array $order): string
     ]);
 
     foreach ($order['products'] as $product) {
+	while ($product['amount'] != 0) {
         $stmt = $conn->prepare('
             INSERT INTO order_has_products 
             VALUES (:productId, :orderNumber)
@@ -266,6 +259,8 @@ function registerOrder(array $order): string
             'productId' => $product['id'],
             'orderNumber' => $orderNumber,
         ]);
+	$product['amount']--;
+	}
     }
     $conn = null;
 
