@@ -184,6 +184,36 @@ function registerOrder(array $order): string
         $orderNumber = (date('dmy') . (int)$latestOrderId + 1);
     }
 
+    /** Update profile */
+    $stmt = $conn->prepare('
+        UPDATE user
+        SET
+            first_name = :firstName, 
+            infix = :infix,
+            last_name = :lastName,
+            phone_number = :phoneNumber
+        WHERE auth_id = :userId
+    ');
+    $stmt->execute([
+        'firstName' => $order['firstName'],
+        'infix' => $order['infix'],
+        'lastName' => $order['lastName'],
+        'phoneNumber' => $order['phoneNumber'],
+        'userId' => $order['userId'],
+    ]);
+
+    /** Update e-mail */
+    $stmt = $conn->prepare('
+        UPDATE auth
+        SET email = :email
+        WHERE id = :userId
+    ');
+    $stmt->execute([
+        'email' => $order['email'],
+        'userId' => $order['userId'],
+    ]);
+
+    /** Add payment */
     $stmt = $conn->prepare('
         INSERT INTO payment
         VALUES (null, :bankName,:bankAccount, :price)
