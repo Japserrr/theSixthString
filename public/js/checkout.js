@@ -7,6 +7,11 @@ function getShoppingCartProducts() {
     let totalPrice = 0;
     let productList = "";
     let products = [];
+
+    if (Object.keys(cart.items).length === 0) {
+        window.location = './home';
+    }
+
     cart.items.forEach((product) => {
         totalPrice += product.price * product.amount;
         productList += ` 

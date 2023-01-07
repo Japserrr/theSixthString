@@ -71,7 +71,7 @@ class ProductManagementController
     {
         switch (true) {
             case is_array($data):
-?>
+            ?>
                 <script type="text/javascript">
                     const <?= $variableName; ?> = <?= json_encode($data); ?>;
                 </script>
@@ -89,7 +89,7 @@ class ProductManagementController
                 <script type="text/javascript">
                     const <?= $variableName; ?> = <?= $data; ?>;
                 </script>
-<?php
+            <?php
                 break;
         }
     }
