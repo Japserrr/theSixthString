@@ -24,7 +24,7 @@ function checkout(): void
         FROM auth AS au
         INNER JOIN user AS u ON u.auth_id = au.id 
         LEFT JOIN user_has_address AS uha ON uha.auth_id = au.id
-        INNER JOIN address AS ad ON ad.id = uha.address_id
+        LEFT JOIN address AS ad ON ad.id = uha.address_id
         WHERE au.id = :userId
             AND au.active = 1
     ');
