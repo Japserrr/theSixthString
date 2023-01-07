@@ -65,6 +65,8 @@ class Product
                 ';
             }
 
+            $sql .= 'GROUP BY p.id';
+
             $conn = getDbConnection();
 
             $stmt = $conn->prepare($sql);
