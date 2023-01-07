@@ -16,6 +16,7 @@
     <div style="max-height: 100vh;
 overflow: auto;">
     <?php
+    // checks if employees is not null
    if(!is_null($employees)):
     foreach ($employees as $employee) {
     ?>
@@ -28,13 +29,14 @@ overflow: auto;">
                     ?>
                 </div>
                 <div class="card-footer">
-
+                <!-- checks if employee is equal to 1 -->
                 <?php if ($employee['employee'] === 1) { ?>
                     <form method="POST" action="<?= URL_MAIN . URL_ROOT?>/medewerkers">
                         <input hidden type="text" name="id" value="<?= $employee['auth_id'] ?>">
                         <input hidden type="text" name="employee" value="0">
                         <button type='submit' class='btn btn-danger'>Medewerker inactief stellen</button>
                     </form>
+                    <!-- check if employee is not equal to 1 -->
                     <?php } else { ?>
                     <form method="POST" action="<?= URL_MAIN . URL_ROOT?>/medewerkers">
                         <input hidden type="text" name="id" value="<?= $employee['auth_id'] ?>">
