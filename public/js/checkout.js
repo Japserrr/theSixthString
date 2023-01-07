@@ -4,6 +4,11 @@ window.onload =() => {
 
 function getShoppingCartProducts() {
     const cart = getShoppingCart();
+
+    if (Object.keys(cart.items).length === 0) {
+        window.location = './home';
+    }
+
     let totalPrice = 0;
     let productList = "";
     let products = [];
