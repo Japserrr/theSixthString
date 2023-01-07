@@ -19,7 +19,7 @@ if (isLoggedIn() && check_expire_time()) {
 if (isLoggedIn() && !check_expire_time()) {
     extendSession();
 }
-
+var_dump(URL_MAIN . URL_ROOT);
 ?>
 <!DOCTYPE html>
 <html lang="nl">
