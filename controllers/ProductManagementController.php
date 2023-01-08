@@ -23,7 +23,9 @@ class ProductManagementController
     function isAuthorized(): void
     {
         if (!isLoggedIn() || !isAdmin()) {
-            header('Location: ' . URL_ROOT . '/home');
+            // refresh page with javascript because of Cannot modify header information - headers already sent by output" error
+            echo '<script>window.location.href = "' . URL_ROOT . '/home";</script>';
+            exit;
         }
     }
 
