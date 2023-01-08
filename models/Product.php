@@ -9,7 +9,9 @@ class Product
     public function get($id): array|null
     {
         if (!isset($id) && !is_numeric($_GET['product_id'])) {
-            header("Location: " . URL_ROOT . "/404");
+            // refresh page with javascript because of Cannot modify header information - headers already sent by output" error
+            echo '<script>window.location.href = "' . URL_ROOT . '/404";</script>';
+            exit;
         }
 
         $sql = 'SELECT `product`.`id`, `product_name`, `description`, `price`, `video_url`, `img_path`, `quantity`, `brand_name` FROM ' . $this->table . ' INNER JOIN `brand` ON `brand`.`id` = `product`.`brand_id` WHERE `product`.`id` LIKE :id LIMIT 1';
@@ -22,7 +24,8 @@ class Product
         $products = $sth->fetchAll() ?? null;
 
         if (count($products) !== 1) {
-            header("Location: " . URL_ROOT . "/404");
+            // refresh page with javascript because of Cannot modify header information - headers already sent by output" error
+            echo '<script>window.location.href = "' . URL_ROOT . '/404";</script>';
             exit;
         }
 

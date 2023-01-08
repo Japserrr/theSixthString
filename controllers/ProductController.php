@@ -6,11 +6,15 @@ function productShow(): void
 
     // Return when no product id is given
     if (!isset($_GET['product_id'])) {
-        header("Location: " . URL_ROOT . "/home");
+        // refresh page with javascript because of Cannot modify header information - headers already sent by output" error
+        echo '<script>window.location.href = "' . URL_ROOT . '/home";</script>';
+        exit();
     }
 
     if (!is_numeric($_GET['product_id'])) {
-        header("Location: " . URL_ROOT . "/404");
+        // refresh page with javascript because of Cannot modify header information - headers already sent by output" error
+        echo '<script>window.location.href = "' . URL_ROOT . '/404";</script>';
+        exit();
     }
 
     $id = intval($_GET['product_id']);
