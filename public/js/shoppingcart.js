@@ -50,10 +50,12 @@ function getItemCount() {
 }
 
 function setShoppingCartAmount() {
-  $("#shopping-cart-amount").html(getItemCount());
+  $(".shopping-cart-amount").html(getItemCount());
 }
 
 $(document).ready(function () {
+  setShoppingCartAmount();
+
   $("#shoppingCart").on("show.bs.modal", () => {
     const cart = getShoppingCart();
     $("#shopping-cart-body").html("");
