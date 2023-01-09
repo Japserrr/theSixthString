@@ -25,7 +25,7 @@ function check_email($conn, $email): bool
     if ($sth->rowCount() > 0) {
         return true;
     }
-
+    //record doesnt exist
     return false;
 }
 function register($error = null)

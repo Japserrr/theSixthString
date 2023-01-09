@@ -47,6 +47,7 @@ function updateEmployee()
 {
     // validation toevoegenb
     $id = $_POST['id'];
+
     $employee = intval($_POST['employee']);
     $conn = getDbConnection();
 

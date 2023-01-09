@@ -1,10 +1,10 @@
 <?php
 
-
-
-///GEBRUIK DIT VOOR OP DE PERSOONLIJKE PC
 //site name
 define('SITE_NAME', 'The Sixth String');
+
+///GEBRUIK DIT VOOR OP DE PERSOONLIJKE PC
+
 
 //App Root
 define('APP_ROOT', dirname(dirname(__FILE__)));
