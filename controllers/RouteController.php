@@ -34,9 +34,7 @@ switch ($request) {
     case URL_ROOT . '/product':
         productShow();
         break;
-    case URL_ROOT . '/profile':
-        profile();
-        break;
+
     case URL_ROOT . '/edit-info':
         require_once '../views/partials/member-gegevens.phtml';
         break;
